@@ -1,10 +1,10 @@
-
+import { Home }from './Pages/index.js'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './Routes/Router.jsx'
 
 const App = () => {
-  
-
   return (
-    <h1>My Links Hub</h1>
+    <RouterProvider router={router}/>
   )
 }
 

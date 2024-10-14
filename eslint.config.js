@@ -34,7 +34,7 @@ export default [
         { allowConstantExport: true },
       ],
       'no-unused-vars': 0,
-      'semi': 0
+      'semi': ['error', 'never']
     },
     
   },
