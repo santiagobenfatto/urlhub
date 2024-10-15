@@ -5,7 +5,7 @@ import Shortener from '../Shortener/Shortener'
 
 const Header = () => {
     return (
-        <Container maxWidth='none' sx={{
+        <Container maxWidth='false' sx={{
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
@@ -13,8 +13,7 @@ const Header = () => {
             alignItems: 'center',
             maxHeight: '70vh',
             width: '60%',
-            height: '70vh',
-            // flexGrow: 1
+            height: '70vh'
         }}>
         <Typography variant='h2' sx={{
                 alignSelf: 'center',

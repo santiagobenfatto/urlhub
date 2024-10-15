@@ -4,7 +4,7 @@ import Hub from './Hub.jsx'
 
 const HubContainer = () => {
     return (
-        <Container disableGutters maxWidth='none' sx={{
+        <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',

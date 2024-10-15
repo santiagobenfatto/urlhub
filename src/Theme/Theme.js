@@ -19,6 +19,21 @@ export const theme = createTheme({
         secondary: {
             main: '#FFFFFF'
         }
+    },
+    components: {
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#000000',
+                    fontFamily: 'Montserrat Variable',
+                    color: '#FFFFFF'
+                },
+                head: {
+                    letterSpacing: '1px',
+                    paddingBottom: '4px'
+                }
+            }
+        }
     }
 })
 

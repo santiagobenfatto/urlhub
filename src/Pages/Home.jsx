@@ -8,13 +8,14 @@ import Dashboard from './Dashboard.jsx'
 
 const Home = () => {
     return (
-        <Container disableGutters maxWidth='none' sx={{
+        <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
             backgroundColor: 'primary.main',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
+            height: '100vh',
             m: 0
         }}>
             <Navbar />
