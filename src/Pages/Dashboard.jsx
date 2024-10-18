@@ -1,36 +1,37 @@
 import React from 'react'
-import LinksTableContainer from '../Components/LinksTable/LinksTableContainer.jsx'
+import LinksManager from '../Components/LinksTable/LinksManager.jsx'
 import { Box, Container, Typography } from '@mui/material'
 
 
 const Dashboard = () => {
     return (
-        <Container disableGutters sx={{
+        <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
+            justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '1rem',
             width: '100%',
-            height: '100%'
+            minHeight: '100%',
+            m: 0
           }}>
             <Box sx={{
                 display: 'flex',
-                alignItems: 'center',
-                height: '200px',
+                alignItems: 'flex-end',
+                height: '125px',
                 width: '75%',
             }}>
                 <Typography
-                    variant='h3'
+                    variant='h2'
                     sx={{
                         fontFamily: 'kalam',
                         fontWeight: 600,
-                        color: '#ff6f00'
+                        color: '#ffb300'
                     }}>
                         Dashboard
                 </Typography>
             </Box>
-        <LinksTableContainer />
+        <LinksManager />
         </Container>
     )
 }

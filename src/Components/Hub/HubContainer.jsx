@@ -2,7 +2,9 @@ import { Container, Typography } from '@mui/material'
 import React from 'react'
 import Hub from './Hub.jsx'
 
-const HubContainer = () => {
+
+
+const HubContainer = ({isHome}) => {
     return (
         <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
@@ -10,11 +12,12 @@ const HubContainer = () => {
             flexDirection: 'column',
             justifyContent: 'space-around',
             alignItems: 'center',
-            width: '60%',
-            height: '80vh',
+            width: isHome ? '60%' : '50%',
+            height: isHome ? '80vh' : '100%',
             m: 0
         }}>
-        <Typography 
+        {isHome ?
+            <Typography 
             variant='h4' 
             gutterBottom
             sx={{
@@ -26,8 +29,10 @@ const HubContainer = () => {
                 textAlign: 'center',
                 color: 'secondary.main'
             }}
-            >Create your <span style={{ textDecoration: 'underline', color: '#ff6f00'}}>Personal Hub</span>.
-        </Typography>
+            >Create your <span style={{ textDecoration: 'underline', color: '#ffb300'}}>Personal Hub</span>.
+        </Typography> 
+        : null
+        }
             <Hub />
         </Container>
     )

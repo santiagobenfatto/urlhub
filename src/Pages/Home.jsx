@@ -1,9 +1,9 @@
 import React from 'react'
 import { Container } from '@mui/material'
 import Navbar from '../Components/NavBar/Navbar.jsx'
-//import Header from '../Components/Header/Header.jsx'
-// import HubContainer from '../Components/Hub/HubContainer.jsx'
-// import FooterContainer from '../Components/Footer/FooterContainer.jsx'
+import Header from '../Components/Header/Header.jsx'
+import HubContainer from '../Components/Hub/HubContainer.jsx'
+import FooterContainer from '../Components/Footer/FooterContainer.jsx'
 import Dashboard from './Dashboard.jsx'
 
 const Home = () => {
@@ -15,14 +15,14 @@ const Home = () => {
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
-            height: '100vh',
+            minHeight: '100vh',
             m: 0
         }}>
             <Navbar />
-            <Dashboard />
-            {/* <Header />
-            <HubContainer />
-            <FooterContainer /> */}
+            <Header />
+            <HubContainer isHome={true}/>
+            <FooterContainer />
+            {/* <Dashboard /> */}
         </Container>
     )
 }

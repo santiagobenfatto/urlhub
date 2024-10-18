@@ -21,6 +21,26 @@ export const theme = createTheme({
         }
     },
     components: {
+        MuiButton: {
+            styleOverrides: {
+                // root: {
+                //     backgroundColor: '#ffb300',
+                //     color: '#000000',
+                //     ':hover': {
+                //         backgroundColor: '#ff8f00'
+                //     }
+                // }
+                root: {
+                    backgroundColor: '#ffb300',
+                    color: '#000000',
+                    borderRadius: '8px',
+                    ':hover': {
+                        backgroundColor: '#ff8f00'
+                    }
+                }
+            }
+        }
+        ,
         MuiTableCell: {
             styleOverrides: {
                 root: {

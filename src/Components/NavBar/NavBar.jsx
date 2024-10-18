@@ -5,10 +5,14 @@ const Navbar = () => {
     return (
         <AppBar position='static'>
             <Toolbar sx={{ justifyContent: 'flex-end' }}>
-            <Button color='secondary' href='/login'>
+            <Button sx={{
+                mx: 1
+            }} href='/login'>
                 LOGIN
             </Button>
-            <Button color='secondary' href='/register'>
+            <Button sx={{
+                mx: 1
+            }} href='/register'>
                 REGISTER
             </Button>
             </Toolbar>

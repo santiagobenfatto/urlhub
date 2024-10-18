@@ -100,22 +100,9 @@ const Shortener = () => {
                 type='submit'
                 disableElevation
                 startIcon={<AutoFixHighIcon/>}
-                // sx={{
-                //     backgroundColor: '#ff6f00',
-                //     alignSelf: 'right',
-                //     width: '90%'
-                // }}
                 sx= {{
-                    backgroundColor: 'primary.main',
-                    color: 'secondary.main',
                     width: '100%',
-                    alignItems: 'flex-start',
-                    border: '1px solid white',
-                    borderRadius: '8px',
-                    ':hover': {
-                        color: '#ff6f00',
-                        border: '1px solid #ff6f00'
-                    } 
+                    alignItems: 'flex-start'
                 }}
                 >
                     SHORTEN URL

@@ -26,7 +26,7 @@ const Header = () => {
                 color: 'secondary.main',
                 mt: '1rem'
             }}
-            >Easy way to manage your links: <span style={{ fontFamily: 'kalam', color: '#ff6f00'}}> URL Hub!</span>
+            >Easy way to manage your links: <span style={{ fontFamily: 'kalam', color: '#ffb300'}}> URL Hub!</span>
         </Typography>
         <Shortener />
         </Container>
