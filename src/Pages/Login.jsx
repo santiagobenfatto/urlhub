@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
+import NavBar from '../Components/NavBar/NavBar.jsx'
 
 const Login = () => {
     
@@ -20,37 +21,43 @@ const Login = () => {
             backgroundColor: 'primary.main',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
             minHeight: '100vh',
             m: 0
         }}>
+            <NavBar />
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            flexGrow: 1
+        }}>
             <Box sx={{
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 width: '600px',
-                height: '350px',
-                padding: '8px'
+                height: '350px'
         }}>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'flex-start',
                 width: '100%',
-                heigh: '25%'
+                height: '25%'
             }}>
             <Typography 
                 variant='h4'
-                gutterBottom
                 color='secondary.main'
                 sx={{
                     fontFamily: 'Montserrat variable',
-                    fontWeight: 600,
+                    fontWeight: 600
                 }}>
-                Create your account and custom your <span style={{color: '#ffb300'}}>Links!</span>
+                Log in to manage your <span style={{color: '#ffb300'}}>Links!</span>
             </Typography>
 
             </Box>
@@ -77,7 +84,7 @@ const Login = () => {
                 >
                 <TextField 
                     size='small'
-                    placeholder='Correo electrónico'
+                    placeholder='Email'
                     type='email'
                     value={email}
                     error={error.error}
@@ -87,7 +94,7 @@ const Login = () => {
                 
                 <TextField 
                     size='small'
-                    placeholder='Contraseña'
+                    placeholder='Password'
                     type='password'
                     required
                     value={pass} 
@@ -95,33 +102,36 @@ const Login = () => {
                 
                 <Box sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-around',
+                    justifyContent: 'flex-end',
                     alignItems: 'center',
-                    width: '100%'
+                    width: '70%',
+                    mt: 1
                 }}>
-                    <Button
+                    <Button 
+                        component='a'
+                        href='/dashboard'
                         type='submit'
                         sx={{ width: '40%'}}
                         >
-                        Enviar
+                        Login
                     </Button>
                 </Box>               
             </Stack>
             <Box sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-around',
-                    width: '90%',
+                    justifyContent: 'center',
+                    width: '100%',
                     height:'auto'
                 }}>
-            <Typography variant="body1" gutterBottom sx={{
+            <Typography variant="body1" gutterBottom 
+                sx={{
+                width: '70%',
                 fontFamily: 'Montserrat variable',
                 color: 'secondary.main',
                 fontSize: '0.9rem',
-                alignSelf: 'start',
-                marginTop: '1rem'}}>
-                    ¿No tienes una cuenta?&nbsp;
+                m: 0
+                }}>
+                    Don&apos;t have an account?&nbsp;
                     <Typography 
                         variant='body1' 
                         component={'a'} 
@@ -134,9 +144,10 @@ const Login = () => {
                             ':hover': {
                                 fontWeight: 500
                             }
-                            }}>Regístrate aquí</Typography>
+                            }}>Sign up here</Typography>
                     </Typography>
             </Box>
+        </Box>
         </Box>
         </Container>
     )

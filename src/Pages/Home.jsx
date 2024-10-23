@@ -1,10 +1,9 @@
 import React from 'react'
 import { Container } from '@mui/material'
-import Navbar from '../Components/NavBar/Navbar.jsx'
+import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
 import FooterContainer from '../Components/Footer/FooterContainer.jsx'
-import Dashboard from './Dashboard.jsx'
 
 const Home = () => {
     return (
@@ -18,11 +17,10 @@ const Home = () => {
             minHeight: '100vh',
             m: 0
         }}>
-            <Navbar />
+            <NavBar isHome={true}/>
             <Header />
             <HubContainer isHome={true}/>
             <FooterContainer />
-            {/* <Dashboard /> */}
         </Container>
     )
 }

@@ -6,11 +6,6 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 const Shortener = () => {
 
     const [ link, setLink ] = useState('')
-    
-    useEffect(() => {
-        
-        
-    }, [link])
 
     return (
         <Box component='form'

@@ -7,12 +7,12 @@ const Dashboard = () => {
     return (
         <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
+            backgroundColor: 'primary.main',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
             alignItems: 'center',
             width: '100%',
-            minHeight: '100%',
+            minHeight: '100vh',
             m: 0
           }}>
             <Box sx={{
