@@ -9,6 +9,5 @@ export const linksListAdapter = (linkListData) => {
     }))
 
     return linkList
-    
 }
 
