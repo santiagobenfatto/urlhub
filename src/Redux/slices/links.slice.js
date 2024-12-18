@@ -1,7 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    links: []
+    links: [
+        {
+        id: 1,
+        big_link: 'https://instagram.com/blabla',
+        alias: '/4vQr7',
+        name: 'Instagram',
+        short_link: 'https://urlhub.io/4vQr7',
+        qr_link: ''
+    },
+    {
+        id: 2,
+        big_link: 'https://facebook.com/blabla',
+        alias: '/5vTr7',
+        name: 'Facebook',
+        short_link: 'https://urlhub.io/4vQr7',
+        qr_link: ''
+    }]
 }
 
 const linkSlice = createSlice({
@@ -10,13 +26,13 @@ const linkSlice = createSlice({
     reducers: {
         addLink(state, action) {
             state.links.push({
-            id: action.payload.id,
+            id: state.links.length +1,
             name: action.payload.name,
-            bigLink: action.payload.bigLink,
-            shortLink: action.payload.shortLink,
-            alias: action.payload.alias,
+            big_link: action.payload.big_link,
+            short_link: action.payload.short_link,
+            alias: `/${action.payload.alias}`,
             icon: action.payload.icon,
-            qrLink: action.payload.qrLink
+            qr_link: action.payload.qr_link
             })
         },
         updateLinkField(state, action) {
@@ -24,11 +40,14 @@ const linkSlice = createSlice({
             if (linkIndex !== -1) {
                 state.links[linkIndex][action.payload.field] = action.payload.value
             }
+        },
+        removeLink(state, action){
+            state.links = state.links.filter(link => link.id !== action.payload)
         }
         
     }
 
 })
 
-export const { addLink, updateLinkField } = linkSlice.actions
+export const { addLink, removeLink, updateLinkField } = linkSlice.actions
 export default linkSlice.reducer

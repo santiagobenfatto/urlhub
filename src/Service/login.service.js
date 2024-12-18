@@ -2,7 +2,7 @@ import config from '../../config.js'
 
 const URL = config.loginURL
 
-export const login = async (user) => {
+export const loginService = async (credentials) => {
     try {
         const response = await fetch (URL, {
             method: 'POST',
@@ -12,8 +12,8 @@ export const login = async (user) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email_register: user.email,
-                password: user.password
+                email_register: credentials.email,
+                password: credentials.password
             })
         })
         if(!response.ok){

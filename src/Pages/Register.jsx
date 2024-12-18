@@ -1,18 +1,58 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
 import NavBar from '../Components/NavBar/NavBar.jsx'
+import { registerAdapter } from '../Adapters/register.adapter.js'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     
     const [ email, setEmail ] = useState('')
     const [ pass, setPass ] = useState('')
+    const [ userName, setUserName ] = useState('')
     const [ error, setError ] = useState({
         error: false,
         message: ''
     })
 
-    const handleSubmit = (e) => {
-        //submit
+
+    const navigate = useNavigate()
+
+    const emailValidation = (email) => {
+        const regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i
+        return regex.test(email)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        if(!emailValidation(email)){
+            setError({
+                error:true,
+                message: 'Introduce un email válido'
+            })
+            return
+        }
+        setError({
+            error: false,
+            message: ''
+        })
+
+        try {
+            const userData = await registerAdapter({userName, email, pass})
+
+            setEmail('')
+            setPass('')
+
+            if(userData.response.ok){
+                navigate('/home')
+                //add message: "register succesfully"
+            }
+
+
+        } catch (error) {
+            throw new Error(`Error in register at ${error}`)
+        }
+
     }
     
     return (
@@ -26,7 +66,7 @@ const Login = () => {
             minHeight: '100vh',
             m: 0
         }}>
-            <NavBar />
+            <NavBar currentPage='register' />
         <Box sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -79,9 +119,26 @@ const Login = () => {
                         fontSize: '1rem',
                         borderRadius: '12px',
                         mb: '12px'
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'transparent',
+                        },
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'transparent',
+                        },
                     }
                 }}
                 >
+                    <TextField 
+                    size='small'
+                    placeholder='Name'
+                    type='text'
+                    value={userName}
+                    error={error.error}
+                    helperText={error.message}
+                    required 
+                    onChange={(e)=> setUserName(e.target.value)} />
                 <TextField 
                     size='small'
                     placeholder='Email'
@@ -142,7 +199,7 @@ const Login = () => {
                             ':hover': {
                                 fontWeight: 500
                             }
-                            }}>Log in here</Typography>
+                            }}>Login here</Typography>
                     </Typography>
             </Box>
         </Box>

@@ -12,7 +12,7 @@ const LinksManager = () => {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
             width: '95%',
             flexGrow: 1,
         }}>

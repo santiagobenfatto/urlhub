@@ -16,7 +16,22 @@ const Shortener = () => {
                 justifyContent: 'center',
                 width: '600px',
                 height: '280px',
-                padding: '8px'
+                padding: '8px',
+                '& .MuiTextField-root': {
+                    overflow: 'hidden',
+                    backgroundColor: 'white',
+                    fontFamily: 'Roboto',
+                    fontSize: '1rem',
+                    borderRadius: '12px',
+                },
+                '& .MuiOutlinedInput-root': {
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'blue', // Elimina el hover
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'blue', // Elimina el focus
+                    },
+                }
         }}>
             <Typography 
                 variant='h5' 
@@ -34,15 +49,7 @@ const Shortener = () => {
                 size='small'
                 placeholder='https://biglink.com/etc'
                 onChange={e => {setLink(e.target.value)}}
-                sx={{
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    width: '90%',
-                    fontFamily: 'Roboto',
-                    fontSize: '1rem',
-                    borderRadius: '12px',
-                    mb: '12px'
-                }}/>
+                sx={{ width: '90%', mb: '12px' }}/>
             <Box sx={{
                 display:'flex',
                 width:'100%',
@@ -58,16 +65,7 @@ const Shortener = () => {
                         readOnly: true,
                     }
                 }}
-                sx={{
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    width:'auto',
-                    maxWidth: '18ch',
-                    fontFamily: 'Roboto',
-                    fontSize: '1rem',
-                    borderRadius: '12px',
-                    mb: '8px'
-                }}/>
+                sx={{ width:'auto', maxWidth: '18ch', mb: '8px' }}/>
                 <TextField
                 variant="outlined"
                 size="small"
@@ -78,16 +76,7 @@ const Shortener = () => {
                         readOnly: true,
                     }
                 }}
-                sx={{
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    width:'auto',
-                    maxWidth: '10ch',
-                    fontFamily: 'Roboto',
-                    fontSize: '1rem',
-                    borderRadius: '12px',
-                    mb: '8px'
-                }}/>
+                sx={{ width:'auto', mb: '8px' }}/>
             </Box>
             
 

@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import NavBar from '../Components/NavBar/NavBar.jsx'
+import { useDispatch } from 'react-redux'
+import { loginAdapter } from '../Adapters/login.adapter.js'
+import { saveUser } from '../Redux/slices/user.slice.js'
 
 const Login = () => {
     
@@ -11,9 +15,49 @@ const Login = () => {
         message: ''
     })
 
-    const handleSubmit = (e) => {
-        //submit
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const emailValidation = (email) => {
+        const regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i
+        return regex.test(email)
     }
+
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        if(!emailValidation(email)){
+            setError({
+                error:true,
+                message: 'Introduce un email válido'
+            })
+            return
+        }
+        setError({
+            error: false,
+            message: ''
+        })
+
+        try {
+            const userData = await loginAdapter({email, pass})
+
+            dispatch(saveUser(userData))
+            
+            setEmail('')
+            setPass('')
+
+            if(userData.response.ok){
+                navigate('/dashboard')
+            }
+
+        } catch (error) {
+           console.log(error)
+        }
+
+    }
+    
     
     return (
         <Container disableGutters maxWidth='false' sx={{
@@ -26,7 +70,7 @@ const Login = () => {
             minHeight: '100vh',
             m: 0
         }}>
-            <NavBar />
+            <NavBar currentPage='login' />
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -74,11 +118,20 @@ const Login = () => {
                     '& .MuiTextField-root': { 
                         overflow: 'hidden',
                         backgroundColor: 'white',
-                        width: '70%',
+                        width: '60%',
                         fontFamily: 'Montserrat Variable',
                         fontSize: '1rem',
                         borderRadius: '12px',
-                        mb: '12px'
+                        borderWidth: 0,
+                        mb: '12px',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'transparent',
+                        },
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'transparent',
+                        },
                     }
                 }}
                 >
@@ -103,15 +156,13 @@ const Login = () => {
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    width: '70%',
+                    alignItems: 'flex-end',
+                    width: '60%',
                     mt: 1
                 }}>
                     <Button 
-                        component='a'
-                        href='/dashboard'
                         type='submit'
-                        sx={{ width: '40%'}}
+                        sx={{ width: '90%'}}
                         >
                         Login
                     </Button>

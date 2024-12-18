@@ -2,7 +2,7 @@ import config from '../../config.js'
 
 const URL = config.registerURL
 
-export const register = async (user) => {
+export const registerService = async (user) => {
     try {
         const response = await fetch(URL , {
             method: 'POST',
@@ -21,7 +21,7 @@ export const register = async (user) => {
         }
         return response
     } catch (error) {
-        console.log(`Error in Login: ${error}`)
+        console.log(`Error in Register: ${error}`)
         throw error
     }
     

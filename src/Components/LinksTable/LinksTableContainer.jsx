@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material'
 import React from 'react'
 import LinksTable from './LinksTable.jsx'
+import LinksProvider from '../../Context/LinksProvider.jsx'
 
 const LinksTableContainer = () => {
     return (
@@ -12,6 +13,7 @@ const LinksTableContainer = () => {
             width: '50%',
             height: '100%'
         }}>
+            <LinksProvider>
             <LinksTable />
             <Button 
             sx={{
@@ -20,6 +22,7 @@ const LinksTableContainer = () => {
             }}>
                 GENERATE HUB
             </Button>
+            </LinksProvider>
         </Box>
     )
 }

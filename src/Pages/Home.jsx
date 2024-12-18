@@ -17,7 +17,7 @@ const Home = () => {
             minHeight: '100vh',
             m: 0
         }}>
-            <NavBar isHome={true}/>
+            <NavBar currentPage='home' />
             <Header />
             <HubContainer isHome={true}/>
             <FooterContainer />
