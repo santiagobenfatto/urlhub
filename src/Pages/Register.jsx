@@ -22,6 +22,26 @@ const Login = () => {
         return regex.test(email)
     }
 
+    const TextFieldProps = {
+        '& .MuiTextField-root': { 
+            overflow: 'hidden',
+            backgroundColor: 'white',
+            width: '70%',
+            fontFamily: 'Montserrat Variable',
+            fontSize: '1rem',
+            borderRadius: '12px',
+            mb: '12px'
+        },
+        '& .MuiOutlinedInput-root': {
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'transparent',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'transparent',
+            },
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -110,25 +130,7 @@ const Login = () => {
                 onSubmit={handleSubmit}
                 noValidate
                 autoComplete='off'
-                sx={{
-                    '& .MuiTextField-root': { 
-                        overflow: 'hidden',
-                        backgroundColor: 'white',
-                        width: '70%',
-                        fontFamily: 'Montserrat Variable',
-                        fontSize: '1rem',
-                        borderRadius: '12px',
-                        mb: '12px'
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'transparent',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'transparent',
-                        },
-                    }
-                }}
+                sx={ TextFieldProps }
                 >
                     <TextField 
                     size='small'

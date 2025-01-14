@@ -26,13 +26,13 @@ const linkSlice = createSlice({
     reducers: {
         addLink(state, action) {
             state.links.push({
-            id: state.links.length +1,
+            id: state.links[state.links.length - 1]?.id +1 || 1,
             name: action.payload.name,
             big_link: action.payload.big_link,
             short_link: action.payload.short_link,
             alias: `/${action.payload.alias}`,
-            icon: action.payload.icon,
-            qr_link: action.payload.qr_link
+            icon: action.payload.icon || '',
+            qr_link: action.payload.qr_link || ''
             })
         },
         updateLinkField(state, action) {

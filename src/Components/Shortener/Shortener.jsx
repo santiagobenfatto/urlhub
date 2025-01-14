@@ -7,6 +7,24 @@ const Shortener = () => {
 
     const [ link, setLink ] = useState('')
 
+    const TextFieldProps = {
+        '& .MuiTextField-root': {
+                    overflow: 'hidden',
+                    backgroundColor: 'white',
+                    fontFamily: 'Roboto',
+                    fontSize: '1rem',
+                    borderRadius: '12px',
+                },
+                '& .MuiOutlinedInput-root': {
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'transparent', // Elimina el hover
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'transparent', // Elimina el focus
+                    },
+                }
+        }
+
     return (
         <Box component='form'
                 sx={{
@@ -17,22 +35,8 @@ const Shortener = () => {
                 width: '600px',
                 height: '280px',
                 padding: '8px',
-                '& .MuiTextField-root': {
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    fontFamily: 'Roboto',
-                    fontSize: '1rem',
-                    borderRadius: '12px',
-                },
-                '& .MuiOutlinedInput-root': {
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'blue', // Elimina el hover
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'blue', // Elimina el focus
-                    },
-                }
-        }}>
+                ...TextFieldProps }}>
+            
             <Typography 
                 variant='h5' 
                 gutterBottom

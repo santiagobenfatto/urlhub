@@ -1,29 +1,26 @@
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import React from 'react'
 import LinksTable from './LinksTable.jsx'
 import LinksProvider from '../../Context/LinksProvider.jsx'
+import AddLinkForm from './AddLinkForm.jsx'
 
 const LinksTableContainer = () => {
     return (
+        <LinksProvider>
         <Box sx={{
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'space-evenly',
+            minHeight: '50vh',
             width: '50%',
-            height: '100%'
+            height: 'auto',
+            maxHeight: '80vh',
         }}>
-            <LinksProvider>
             <LinksTable />
-            <Button 
-            sx={{
-                alignSelf: 'flex-end',
-                width: '200px'
-            }}>
-                GENERATE HUB
-            </Button>
-            </LinksProvider>
+            <AddLinkForm />
         </Box>
+            </LinksProvider>
     )
 }
 

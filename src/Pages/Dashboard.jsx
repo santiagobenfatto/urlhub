@@ -1,6 +1,9 @@
 import React from 'react'
-import LinksManager from '../Components/LinksTable/LinksManager.jsx'
 import { Box, Container, Typography } from '@mui/material'
+import NavBar from '../Components/NavBar/NavBar.jsx'
+import LinksTableContainer from '../Components/LinksTable/LinksTableContainer.jsx'
+import HubContainer from '../Components/Hub/HubContainer.jsx'
+import Footer from '../Components/Footer/Footer.jsx'
 
 
 const Dashboard = () => {
@@ -10,16 +13,20 @@ const Dashboard = () => {
             backgroundColor: 'primary.main',
             display: 'flex',
             flexDirection: 'column',
+            justifyContent: 'space-evenly',
             alignItems: 'center',
             width: '100%',
             minHeight: '100vh',
             m: 0
           }}>
+            <NavBar currentPage='home' />
             <Box sx={{
+                boxSizing: 'border-box',
                 display: 'flex',
+                justifyContent: 'flex-start',
                 alignItems: 'flex-end',
-                height: '125px',
-                width: '75%',
+                width: '60%',
+                height: '20vh'
             }}>
                 <Typography
                     variant='h2'
@@ -31,7 +38,9 @@ const Dashboard = () => {
                         Dashboard
                 </Typography>
             </Box>
-        <LinksManager />
+            <LinksTableContainer />
+            <HubContainer isHome={false}/>
+            <Footer />
         </Container>
     )
 }

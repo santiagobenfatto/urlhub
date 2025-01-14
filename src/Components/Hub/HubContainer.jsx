@@ -13,7 +13,7 @@ const HubContainer = ({isHome}) => {
             justifyContent: 'space-around',
             alignItems: 'center',
             width: isHome ? '60%' : '50%',
-            height: isHome ? '80vh' : '100%',
+            height: '80vh',
             m: 0
         }}>
         {isHome ?
