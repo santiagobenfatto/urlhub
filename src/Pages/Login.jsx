@@ -25,22 +25,8 @@ const Login = () => {
     
     const TextFieldProps = {
         '& .MuiTextField-root': { 
-            overflow: 'hidden',
-            backgroundColor: 'white',
             width: '60%',
-            fontFamily: 'Montserrat Variable',
-            fontSize: '1rem',
-            borderRadius: '12px',
-            borderWidth: 0,
             mb: '12px',
-        },
-        '& .MuiOutlinedInput-root': {
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'transparent',
-            },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'transparent',
-            },
         }
     }
     

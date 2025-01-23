@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Box, Button, Checkbox, FormControl, FormControlLabel, InputAdornment, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material'
-import { addLink as addLinkService } from '../../Service/linksList.service.js'
+
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
+import Icons from '../Icons/Icons.jsx'
 import AddIcon from '@mui/icons-material/Add'
 import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
 import { useDispatch } from 'react-redux'
@@ -44,6 +45,8 @@ const AddLinkForm = () => {
                     error: true,
                     message: 'La URL no es válida.',
                 })
+            } else {
+                setBigLinkError({error: false, message: '',})
             }
         }
         if(field === 'alias') {
@@ -52,6 +55,8 @@ const AddLinkForm = () => {
                     error: true,
                     message: 'Máx 5 caracteres, letras y números'
                 })
+            }  else {
+                setAliasError({ error: false, message: '' })
             }
         }
         if (field === 'name') {
@@ -89,31 +94,6 @@ const AddLinkForm = () => {
         }
     }
 
-    const TextFieldProps = {
-        '&.MuiTextField-root': {
-            overflow: 'hidden',
-            backgroundColor: 'white',
-            fontFamily: 'Roboto',
-            fontSize: '1rem',
-            borderRadius: '12px',
-            borderColor: 'transparent', // Elimina el hover
-        },
-        '& .MuiOutlinedInput-root': {
-            '.MuiOutlinedInput-notchedOutline': {
-                border: 'none'
-            },
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'transparent', // Elimina el hover
-            },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'transparent', // Elimina el focus
-            }
-        }
-    }
-    const CheckboxProps = {
-        color: '#ffffff'
-    }
-
     
     return (
         <Stack 
@@ -122,6 +102,7 @@ const AddLinkForm = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                gap: '16px',
                 width: '100%',
                 height: 'auto',
                 mt: '24px'
@@ -139,9 +120,7 @@ const AddLinkForm = () => {
                     helperText={bigLinkError.message}
                     required 
                     onChange={e => handleInputChange('big_link', e.target.value)}
-                    sx={{...TextFieldProps,
-                        width: '40%'
-                    }} />
+                    sx={{ width: '40%' }} />
                 <TextField 
                     size='small'
                     variant='outlined'
@@ -151,7 +130,7 @@ const AddLinkForm = () => {
                     required 
                     onChange={e => handleInputChange('alias', e.target.value)}
                     startadornment={<InputAdornment position="start">/</InputAdornment>}
-                    sx={{...TextFieldProps, width: '20%'}} />
+                    sx={{ width: '20%'}} />
                 <TextField 
                     size='small'
                     variant='outlined'
@@ -160,44 +139,68 @@ const AddLinkForm = () => {
                     helperText={nameError.message}
                     required 
                     onChange={e => handleInputChange('name', e.target.value)}
-                    sx={{...TextFieldProps, width: '20%'}} />
-                <FormControl>
-                    <FormControlLabel 
-                        sx={{ color: '#ffffff', fontFamily: 'Roboto', width: '20%'}}
-                        control={<Checkbox 
-                            color='secondary'
-                            defaultChecked 
-                            label='QR select'
-                            sx={CheckboxProps } /> }
-                        label='QR?' />
-                    
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                    labelId="Select Icon"
-                    // value={icon}
-                    label="Icon"
-                    //onChange={handleChange}
-                >{ DynamicIcon.map( icon => (
-                    <MenuItem 
-                        key={icon.icon}
-                        value={icon.icon}
-                        >Ten</MenuItem>
-                ))
-                    
-                }
-                </Select>
+                    sx={{ width: '20%'}} />
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                gap: '16px'
+            }}>
+            <FormControl sx={{
+                    display: 'flex',
+                    flexDirection: 'row'
+                }}>
+                <FormControlLabel 
+                    sx={{ color: '#ffffff', fontFamily: 'Roboto', width: '20%'}}
+                    control={<Checkbox 
+                        color='secondary'
+                        defaultChecked 
+                        label='QR select'
+                        /> 
+                    }
+                    label='QR?' />
                 </FormControl>
+                
+                <FormControl>
+                <Select
+                    size="small"
+                    value={formData.icon}
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    displayEmpty
+                    onChange={e => handleInputChange('icon', e.target.value)}
+                    renderValue={(selected) => (
+                        selected ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <DynamicIcon iconName={selected} />
+                            {selected}
+                        </Box>
+                        ) : (
+                        'None' // Valor por defecto
+                        )
+                    )}
+                    >
+                    <MenuItem value="">
+                        None
+                    </MenuItem>
+                    {Icons.map((icon) => (
+                        <MenuItem key={icon.name} value={icon.name} sx={{ display: 'flex', gap: '4px' }}>
+                        <DynamicIcon iconName={icon.name} />
+                        {icon.name}
+                        </MenuItem>
+                    ))}
+                    </Select>
+                    </FormControl>
+
                 <Button 
-                    type='submit'
-                    endIcon={<AddIcon/>}
-                    sx={{
-                        alignSelf: 'flex-end',
-                        width: '150px'
-                    }}>
-                    Add
+                        type='submit'
+                        endIcon={<AddIcon/>}
+                        sx={{
+                            width: '150px'
+                        }}>
+                        Add
                 </Button>
             </Box>
-                
         </Stack>
         
     )

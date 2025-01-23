@@ -18,9 +18,9 @@ const getLinkListById = async (linkListId) => {
     }
 }
 
-const addLink = async (link) => {
+const addLinkToList = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/link`, {
+        const response = await fetch(`${URL}/api/addLinkToList`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
@@ -39,7 +39,30 @@ const addLink = async (link) => {
     }
 }
 
+
+const createSimpleLink = async (link) => {
+    try {
+        const response = await fetch(`${URL}/api/createSimpleLink`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(link)
+        })
+
+        if(!response.ok){
+            throw new Error(`Error fetching ${URL}/api/createSimpleLink`)
+        }
+
+        const data = await response.json()
+        return data
+        
+    } catch (error) {
+        console.error('Error creating simple link', error)
+        throw error
+    }
+}
+
 export {
     getLinkListById,
-    addLink
+    addLinkToList,
+    createSimpleLink
 }

@@ -6,6 +6,7 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeLink } from  '../../Redux/slices/links.slice.js'
 import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
+import DynamicIcon from '../Icons/DynamicIcon.jsx'
 
 
 
@@ -37,6 +38,7 @@ const LinksTable = () => {
             sx={{maxHeight: '1rem'}}>
                 <TableCell>Big&nbsp;Link</TableCell>
                 <TableCell>/alias</TableCell>
+                <TableCell>Icon</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>QR</TableCell>
                 <TableCell>{/* Empty to hold the space */}</TableCell>
@@ -58,6 +60,9 @@ const LinksTable = () => {
                 >
                 <TableCell>{row.big_link}</TableCell>
                 <TableCell>{row.alias}</TableCell>
+                <TableCell>
+                    <DynamicIcon iconName={row.icon} />
+                </TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>
                   <QrCode2Icon />

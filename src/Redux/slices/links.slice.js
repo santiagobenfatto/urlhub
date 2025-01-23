@@ -7,6 +7,7 @@ const initialState = {
         big_link: 'https://instagram.com/blabla',
         alias: '/4vQr7',
         name: 'Instagram',
+        icon: 'Instagram',
         short_link: 'https://urlhub.io/4vQr7',
         qr_link: ''
     },
@@ -15,6 +16,7 @@ const initialState = {
         big_link: 'https://facebook.com/blabla',
         alias: '/5vTr7',
         name: 'Facebook',
+        icon: 'Facebook',
         short_link: 'https://urlhub.io/4vQr7',
         qr_link: ''
     }]
@@ -30,8 +32,8 @@ const linkSlice = createSlice({
             name: action.payload.name,
             big_link: action.payload.big_link,
             short_link: action.payload.short_link,
-            alias: `/${action.payload.alias}`,
             icon: action.payload.icon || '',
+            alias: `/${action.payload.alias}`,
             qr_link: action.payload.qr_link || ''
             })
         },

@@ -46,6 +46,64 @@ export const theme = createTheme({
                     paddingBottom: '4px'
                 }
             }
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    overflow: 'hidden',
+                    backgroundColor: 'white',
+                    fontFamily: 'Montserrat Variable',
+                    fontSize: '1rem',
+                    borderRadius: '12px'
+                }
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ff8f00',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ff8f00',
+                },
+              },
+              notchedOutline: {
+                border: '2px solid transparent'
+              },
+            },
+          },
+        MuiCheckbox: {
+            styleOverrides: {
+                backgroundColor: 'secondary.main'
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                select: {
+                    backgroundColor: 'white',
+                    fontFamily: 'Roboto',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                },
+                icon: {
+                    color: '#000000', // Cambia el color del ícono desplegable
+                },
+                outlined: {
+                    borderRadius: '12px',
+                },
+            }
+        },
+        MuiList: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: '12px',
+                },
+            }
         }
     }
 })

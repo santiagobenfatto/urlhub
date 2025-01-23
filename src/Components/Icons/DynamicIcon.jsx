@@ -1,16 +1,17 @@
 import React from 'react'
-import Icons from './Icons.jsx' 
+import Icons from './Icons.jsx'
 
 const DynamicIcon = ({ iconName }) => {
-    const IconComponent = Icons[iconName] 
+    const iconData = Icons.find(icon => icon.name === iconName)
 
-    
-    if (!IconComponent) {
+    if (!iconData) {
         console.error(`No se encontró un ícono para "${iconName}"`)
         return null
     }
 
-    return <IconComponent /> 
+    const IconComponent = iconData.Component
+
+    return <IconComponent />
 }
 
 export default DynamicIcon

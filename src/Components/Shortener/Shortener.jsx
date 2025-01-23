@@ -7,23 +7,6 @@ const Shortener = () => {
 
     const [ link, setLink ] = useState('')
 
-    const TextFieldProps = {
-        '& .MuiTextField-root': {
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    fontFamily: 'Roboto',
-                    fontSize: '1rem',
-                    borderRadius: '12px',
-                },
-                '& .MuiOutlinedInput-root': {
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'transparent', // Elimina el hover
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'transparent', // Elimina el focus
-                    },
-                }
-        }
 
     return (
         <Box component='form'
@@ -35,7 +18,7 @@ const Shortener = () => {
                 width: '600px',
                 height: '280px',
                 padding: '8px',
-                ...TextFieldProps }}>
+                }}>
             
             <Typography 
                 variant='h5' 
@@ -86,7 +69,6 @@ const Shortener = () => {
 
             <Button 
                 type='submit'
-                disableElevation
                 startIcon={<AutoFixHighIcon/>}
                 sx= {{
                     width: '100%',

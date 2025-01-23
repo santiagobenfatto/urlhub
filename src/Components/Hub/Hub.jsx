@@ -120,9 +120,6 @@ const Hub = () => {
             </Button>
         ))
     }
-        {/* <Button startIcon={<GitHubIcon />}> My Github </Button>
-        <Button startIcon={<LinkedInIcon />}> My Linkedin </Button>
-        <Button startIcon={<FacebookIcon />}> My Facebook </Button> */}
     </Stack>
         </Box>
     )
