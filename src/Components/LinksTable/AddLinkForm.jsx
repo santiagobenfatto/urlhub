@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Button, Checkbox, FormControl, FormControlLabel, InputAdornment, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material'
-
+import { Box, Button, Checkbox, FormControl, FormControlLabel, InputAdornment, MenuItem, Select, Stack, TextField } from '@mui/material'
+import { toast } from 'react-toastify'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
 import AddIcon from '@mui/icons-material/Add'
@@ -86,6 +86,7 @@ const AddLinkForm = () => {
             // } else {
             //     throw new Error(result.message || 'Error desconocido al añadir el enlace')
             // }
+            toast.success('Formulario enviado', { theme: 'dark'})
         } catch (err) {
             setBigLinkError({
                 error: true,
@@ -147,7 +148,7 @@ const AddLinkForm = () => {
                 width: '100%',
                 gap: '16px'
             }}>
-            <FormControl sx={{
+            {/* <FormControl sx={{
                     display: 'flex',
                     flexDirection: 'row'
                 }}>
@@ -160,7 +161,7 @@ const AddLinkForm = () => {
                         /> 
                     }
                     label='QR?' />
-                </FormControl>
+                </FormControl> */}
                 
                 <FormControl>
                 <Select
@@ -195,6 +196,10 @@ const AddLinkForm = () => {
                 <Button 
                         type='submit'
                         endIcon={<AddIcon/>}
+                        disabled={
+                            bigLinkError.error || aliasError.error || nameError.error || 
+                            !formData.big_link || !formData.alias || !formData.name
+                        }
                         sx={{
                             width: '150px'
                         }}>

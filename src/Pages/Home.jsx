@@ -4,6 +4,7 @@ import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
 import FooterContainer from '../Components/Footer/FooterContainer.jsx'
+import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
 
 const Home = () => {
     return (
@@ -18,6 +19,7 @@ const Home = () => {
             m: 0
         }}>
             <NavBar currentPage='home' />
+            <LinkDrawer />
             <Header />
             <HubContainer isHome={true}/>
             <FooterContainer />

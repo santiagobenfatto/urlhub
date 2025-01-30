@@ -17,7 +17,7 @@ const initialState = {
         alias: '/5vTr7',
         name: 'Facebook',
         icon: 'Facebook',
-        short_link: 'https://urlhub.io/4vQr7',
+        short_link: 'https://urlhub.io/5vTr7',
         qr_link: ''
     }]
 }
@@ -34,7 +34,7 @@ const linkSlice = createSlice({
             short_link: action.payload.short_link,
             icon: action.payload.icon || '',
             alias: `/${action.payload.alias}`,
-            qr_link: action.payload.qr_link || ''
+            // qr_link: action.payload.qr_link || ''
             })
         },
         updateLinkField(state, action) {

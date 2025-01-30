@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider, CssBaseline } from '@mui/material'
+import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import { store }from './Redux/store.js'
 import { theme } from './Theme/Theme.js'
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')).render(
       <ThemeProvider theme={theme}>
         <CssBaseline>
         <App />
+        <ToastContainer />
         </CssBaseline>
       </ThemeProvider>
     </Provider>

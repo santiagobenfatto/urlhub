@@ -32,8 +32,7 @@ export const theme = createTheme({
                     }
                 }
             }
-        }
-        ,
+        },        
         MuiTableCell: {
             styleOverrides: {
                 root: {
