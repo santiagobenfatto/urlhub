@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import { registerAdapter } from '../Adapters/register.adapter.js'
 import { useNavigate } from 'react-router-dom'
+import { emailValidation } from '../Utils/validateRegex.js'
 
 const Login = () => {
     
@@ -16,11 +17,6 @@ const Login = () => {
 
 
     const navigate = useNavigate()
-
-    const emailValidation = (email) => {
-        const regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i
-        return regex.test(email)
-    }
 
     const TextFieldProps = {
         '& .MuiTextField-root': { 
@@ -119,6 +115,7 @@ const Login = () => {
                 autoComplete='off'
                 sx={ TextFieldProps }
                 >
+                <Tooltip title='Insert your name or username.'>
                     <TextField 
                     size='small'
                     placeholder='Name'
@@ -128,6 +125,8 @@ const Login = () => {
                     helperText={error.message}
                     required 
                     onChange={(e)=> setUserName(e.target.value)} />
+                </Tooltip>
+                <Tooltip title='Insert your email.'>
                 <TextField 
                     size='small'
                     placeholder='Email'
@@ -137,7 +136,8 @@ const Login = () => {
                     helperText={error.message}
                     required 
                     onChange={(e)=> setEmail(e.target.value)} />
-                
+                </Tooltip>
+                <Tooltip title='Create a strong password.'>
                 <TextField 
                     size='small'
                     placeholder='Password'
@@ -145,7 +145,7 @@ const Login = () => {
                     required
                     value={pass} 
                     onChange={(e)=> setPass(e.target.value)} />
-                
+                </Tooltip>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -153,12 +153,14 @@ const Login = () => {
                     width: '70%',
                     mt: 1
                 }}>
+                <Tooltip title='Register user'>
                     <Button
                         type='submit'
                         sx={{ width: '40%'}}
                         >
                         Register
                     </Button>
+                </Tooltip>
                 </Box>               
             </Stack>
             <Box sx={{
@@ -176,8 +178,9 @@ const Login = () => {
                 m: 0
                 }}>
                     Already have an account?&nbsp;
+                    <Tooltip title='Login into your account.'>
                     <Typography 
-                        variant='body1' 
+                        variant='body1'
                         component={'a'} 
                         href='/login' 
                         sx={{
@@ -188,7 +191,9 @@ const Login = () => {
                             ':hover': {
                                 fontWeight: 500
                             }
-                            }}>Login here</Typography>
+                            }}>Login here
+                    </Typography>
+                    </Tooltip>
                     </Typography>
             </Box>
         </Box>

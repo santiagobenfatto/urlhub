@@ -103,6 +103,23 @@ export const theme = createTheme({
                     borderRadius: '12px',
                 },
             }
+        },
+        MuiTooltip: {
+            defaultProps:{
+                placement: 'bottom-end',
+                slotProps : {
+                    popper: {
+                        modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                            offset: [14, -10],
+                            },
+                        },
+                        ],
+                    },
+                }
+            }
         }
     }
 })

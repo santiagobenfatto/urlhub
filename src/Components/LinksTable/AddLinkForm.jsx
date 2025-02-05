@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Checkbox, FormControl, FormControlLabel, InputAdornment, MenuItem, Select, Stack, TextField } from '@mui/material'
+import { Box, Button, FormControl, InputAdornment, MenuItem, Select, Stack, TextField, Tooltip } from '@mui/material'
 import { toast } from 'react-toastify'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
@@ -53,7 +53,7 @@ const AddLinkForm = () => {
             if (!validateAlias(value)) {
                 setAliasError({
                     error: true,
-                    message: 'Máx 5 caracteres, letras y números'
+                    message: 'Máx 5 caracteres, letras y números.'
                 })
             }  else {
                 setAliasError({ error: false, message: '' })
@@ -113,25 +113,34 @@ const AddLinkForm = () => {
                 flexDirection: 'row',
                 gap: '12px'
             }}>
+            <Tooltip title='Enter the long URL you want to shorten'>
+            <TextField 
+                size='small'
+                variant='outlined'
+                placeholder='Big Link'
+                error={bigLinkError.error}
+                helperText={bigLinkError.message}
+                required 
+                onChange={e => handleInputChange('big_link', e.target.value)}
+                sx={{ width: '40%' }} 
+            />
+            </Tooltip>
+            <Tooltip title='Customize the alias or leave it blank for an auto-generated one'>
                 <TextField 
                     size='small'
                     variant='outlined'
-                    placeholder='Big Link'
-                    error={bigLinkError.error}
-                    helperText={bigLinkError.message}
-                    required 
-                    onChange={e => handleInputChange('big_link', e.target.value)}
-                    sx={{ width: '40%' }} />
-                <TextField 
-                    size='small'
-                    variant='outlined'
-                    placeholder='/alias'
+                    placeholder='alias'
                     error={aliasError.error}
                     helperText={aliasError.message}
                     required 
                     onChange={e => handleInputChange('alias', e.target.value)}
-                    startadornment={<InputAdornment position="start">/</InputAdornment>}
-                    sx={{ width: '20%'}} />
+                    InputProps={{
+                        startAdornment: <InputAdornment position='start'>/</InputAdornment>
+                    }}
+                    sx={{ width: '20%' }} 
+                />
+            </Tooltip>
+            <Tooltip title='Set a name for the button in your hub.'>
                 <TextField 
                     size='small'
                     variant='outlined'
@@ -140,7 +149,9 @@ const AddLinkForm = () => {
                     helperText={nameError.message}
                     required 
                     onChange={e => handleInputChange('name', e.target.value)}
-                    sx={{ width: '20%'}} />
+                    sx={{ width: '20%' }} 
+                />
+            </Tooltip>
             </Box>
             <Box sx={{
                 display: 'flex',
@@ -164,8 +175,9 @@ const AddLinkForm = () => {
                 </FormControl> */}
                 
                 <FormControl>
+                <Tooltip title='Select an icon for your hub button.'>
                 <Select
-                    size="small"
+                    size='small'
                     value={formData.icon}
                     inputProps={{ 'aria-label': 'Without label' }}
                     displayEmpty
@@ -181,7 +193,7 @@ const AddLinkForm = () => {
                         )
                     )}
                     >
-                    <MenuItem value="">
+                    <MenuItem value=''>
                         None
                     </MenuItem>
                     {Icons.map((icon) => (
@@ -190,21 +202,34 @@ const AddLinkForm = () => {
                         {icon.name}
                         </MenuItem>
                     ))}
-                    </Select>
-                    </FormControl>
-
-                <Button 
-                        type='submit'
-                        endIcon={<AddIcon/>}
-                        disabled={
-                            bigLinkError.error || aliasError.error || nameError.error || 
-                            !formData.big_link || !formData.alias || !formData.name
-                        }
-                        sx={{
-                            width: '150px'
-                        }}>
-                        Add
-                </Button>
+                </Select>
+                </Tooltip>
+                </FormControl>
+                <Tooltip 
+                    title={ 
+                        bigLinkError.error || aliasError.error || nameError.error || 
+                        !formData.big_link || !formData.alias || !formData.name 
+                        ? 'All fields must be completed to add a link.' 
+                        : 'Click to add your shortened link.' 
+                    }
+                    disableInteractive
+                >
+                    <span>
+                        <Button 
+                            type='submit'
+                            endIcon={<AddIcon/>}
+                            disabled={
+                                bigLinkError.error || aliasError.error || nameError.error || 
+                                !formData.big_link || !formData.alias || !formData.name
+                            }
+                            sx={{
+                                width: '150px'
+                            }}
+                        >
+                            Add
+                        </Button>
+                    </span>
+                </Tooltip>
             </Box>
         </Stack>
         

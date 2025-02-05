@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { Box, SwipeableDrawer,  IconButton } from '@mui/material/'
+import { Box, SwipeableDrawer,  IconButton, Tooltip } from '@mui/material/'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import { grey } from '@mui/material/colors'
-
-
+import { useSelector } from 'react-redux'
 
 
 
@@ -20,6 +18,7 @@ const LinkDrawer = () => {
 
   return (
     <>
+      <Tooltip title='Click to see your short URL'>
         <Box
             onClick={toggleDrawer(true)}
             sx={{
@@ -40,11 +39,12 @@ const LinkDrawer = () => {
                 '&:hover': {
                     backgroundColor: '#ff8f00'
                 }
-            }}
-        >   <IconButton sx={{color: '#000000'}}>
-                <KeyboardArrowLeftIcon />
+            }}>
+            <IconButton sx={{color: '#000000'}}>
+                  <KeyboardArrowLeftIcon />
             </IconButton>
-        </Box>
+          </Box>
+        </Tooltip>
       <SwipeableDrawer
         anchor="right"
         open={open}
@@ -56,7 +56,7 @@ const LinkDrawer = () => {
         }}
         PaperProps={{
           sx: {
-            backgroundColor: grey[900],
+            backgroundColor: '#121212',
             width: '400px',
             height: '200px',
             position: 'absolute',
@@ -65,8 +65,8 @@ const LinkDrawer = () => {
             transition: 'right 0.3s ease', 
             borderRadius: '16px'
           },
-        }}
-      >
+        }}>
+      <Tooltip title='Close'>
         <Box
             onClick={toggleDrawer(false)}
             sx={{
@@ -84,11 +84,12 @@ const LinkDrawer = () => {
                 '&:hover': {
                     backgroundColor: '#ff8f00'
                 }
-            }}
-        >   <IconButton sx={{color: '#000000'}}>
+            }}>
+            <IconButton sx={{color: '#000000'}}>
                 <KeyboardArrowRightIcon />
             </IconButton>
-        </Box>
+          </Box>
+        </Tooltip>
        Holis
       </SwipeableDrawer>
     </>

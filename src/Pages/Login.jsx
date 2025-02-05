@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import { useDispatch } from 'react-redux'
 import { loginAdapter } from '../Adapters/login.adapter.js'
 import { saveUser } from '../Redux/slices/user.slice.js'
+import { emailValidation } from '../Utils/validateRegex.js'
 
 const Login = () => {
     
@@ -17,11 +18,6 @@ const Login = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
-    const emailValidation = (email) => {
-        const regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i
-        return regex.test(email)
-    }
     
     const TextFieldProps = {
         '& .MuiTextField-root': { 
@@ -37,7 +33,7 @@ const Login = () => {
         if(!emailValidation(email)){
             setError({
                 error:true,
-                message: 'Introduce un email válido'
+                message: 'Please enter a valid email'
             })
             return
         }
@@ -122,6 +118,7 @@ const Login = () => {
                 autoComplete='off'
                 sx={ TextFieldProps }
                 >
+                <Tooltip title='Insert your email.'>
                 <TextField 
                     size='small'
                     placeholder='Email'
@@ -131,7 +128,8 @@ const Login = () => {
                     helperText={error.message}
                     required 
                     onChange={(e)=> setEmail(e.target.value)} />
-                
+                </Tooltip>
+                <Tooltip title='Insert your password.'>
                 <TextField 
                     size='small'
                     placeholder='Password'
@@ -139,7 +137,7 @@ const Login = () => {
                     required
                     value={pass} 
                     onChange={(e)=> setPass(e.target.value)} />
-                
+                </Tooltip>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -147,12 +145,15 @@ const Login = () => {
                     width: '60%',
                     mt: 1
                 }}>
+                   <Tooltip title='Login user.'
+   >
                     <Button 
                         type='submit'
-                        sx={{ width: '90%'}}
+                        sx={{ width: '40%'}}
                         >
                         Login
                     </Button>
+                </Tooltip>
                 </Box>               
             </Stack>
             <Box sx={{
@@ -170,6 +171,7 @@ const Login = () => {
                 m: 0
                 }}>
                     Don&apos;t have an account?&nbsp;
+                <Tooltip title='Create an account.'>
                     <Typography 
                         variant='body1' 
                         component={'a'} 
@@ -182,8 +184,11 @@ const Login = () => {
                             ':hover': {
                                 fontWeight: 500
                             }
-                            }}>Sign up here</Typography>
-                    </Typography>
+                            }}>Sign up here
+                            </Typography>
+                </Tooltip>
+                </Typography>
+                
             </Box>
         </Box>
         </Box>

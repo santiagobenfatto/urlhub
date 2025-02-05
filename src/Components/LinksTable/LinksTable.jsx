@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { removeLink } from  '../../Redux/slices/links.slice.js'
 import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
-
 
 
 
@@ -57,16 +56,22 @@ const LinksTable = () => {
                     </TableCell>
                 </TableRow>
             ) : (
-            
             rows.map((row) => (
                 <TableRow
                 key={row.alias}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                <TableCell>{row.big_link}</TableCell>
                 <TableCell>
+                    <Tooltip title='BigLink'>
+                        {row.big_link}
+                    </Tooltip>
+                </TableCell>
+                <TableCell>
+                    <Tooltip title='Alias'>
                     {row.alias}
+                    </Tooltip>
                     &nbsp;
+                    <Tooltip title='Copy'>
                     <IconButton
                         alt= 'Copy Short Url'
                         title='Copy Short Url'
@@ -88,18 +93,28 @@ const LinksTable = () => {
                         }}>
                         <ContentCopyIcon />
                     </IconButton>
+                    </Tooltip>
                 </TableCell>
                 <TableCell>
+                    <Tooltip title={row.icon || 'No icon'}>
+                    <span>
                     <DynamicIcon iconName={row.icon} />
+                    </span>
+                    </Tooltip>
                 </TableCell>
-                <TableCell>{row.name}</TableCell>
+                <TableCell>
+                <Tooltip title='This will be the button name in your hub'>
+                    {row.name}
+                </Tooltip>
+                </TableCell>
                 {/* <TableCell>
                   <QrCode2Icon />
                 </TableCell> */}
                 <TableCell sx={{ textAlign: 'center'}} >
+                    <Tooltip title='Delete URL'>
                     <IconButton
-                        alt= 'Delete Url'
-                        title='Delete Url'
+                        alt= 'Delete URL'
+                        title='Delete URL'
                         onClick={() => { 
                             dispatch(removeLink(row.id))
                             toast.warn('Link Eliminado', { theme: 'dark'})
@@ -113,6 +128,8 @@ const LinksTable = () => {
                         }}>
                     <DeleteIcon sx={{ fontSize: 'inherit' }}/> 
                     </IconButton>
+                    </Tooltip>
+                    <Tooltip title='Add the link to your hub'>
                     <IconButton
                         alt= 'Add Hub Icon'
                         title='Add URL to Hub'
@@ -125,10 +142,12 @@ const LinksTable = () => {
                             }
                         }}>
                     <AddToPhotosIcon sx={{ fontSize: 'inherit' }}/> 
-                    </IconButton>  
+                    </IconButton>
+                    </Tooltip>
+                    <Tooltip title='Edit your URL'>
                     <IconButton
-                        alt= 'Add Hub Icon'
-                        title='Add URL to Hub'
+                        alt= 'Edit Link Icon'
+                        title='Edit URL'
                         color='secondary'
                         sx={{
                             p: 0,
@@ -138,6 +157,7 @@ const LinksTable = () => {
                         }}>
                     <EditIcon /> 
                     </IconButton>  
+                    </Tooltip>
                 </TableCell>
                 </TableRow>
             )))}
