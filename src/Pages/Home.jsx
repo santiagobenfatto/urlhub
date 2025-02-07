@@ -5,6 +5,7 @@ import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
 import FooterContainer from '../Components/Footer/FooterContainer.jsx'
 import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
+import LinksProvider from '../Context/LinksProvider.jsx'
 
 const Home = () => {
     return (
@@ -18,11 +19,13 @@ const Home = () => {
             minHeight: '100vh',
             m: 0
         }}>
-            <NavBar currentPage='home' />
-            <LinkDrawer />
-            <Header />
-            <HubContainer isHome={true}/>
-            <FooterContainer />
+            <LinksProvider>
+                <NavBar currentPage='home' />
+                <LinkDrawer />
+                <Header />
+                <HubContainer isHome={true}/>
+                <FooterContainer />
+            </LinksProvider>
         </Container>
     )
 }

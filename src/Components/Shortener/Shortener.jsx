@@ -3,19 +3,25 @@ import { Box, Button, TextField, Tooltip, Typography } from '@mui/material'
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import { toast } from 'react-toastify'
 import { validateUrl } from '../../Utils/validateRegex'
+import { useLink } from '../../Context/useLink.jsx'
 
 
 const Shortener = () => {
 
-    const [ link, setLink ] = useState('')
+    const [ linkData, setLinkData ] = useState({
+        big_link: '',
+        short_link: ''
+    })
     const [ urlError, setUrlError] = useState({
         error: false,
         message: ''
     })
+    
+    const { addShortURL } = useLink()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!validateUrl(link)){
+        if(!validateUrl(linkData.big_link)){
             setUrlError({
                 error:true,
                 message: 'Please enter a valid URL'
@@ -25,7 +31,13 @@ const Shortener = () => {
         setUrlError({
             error: false,
             message: ''
-        })        
+        })
+        //shortLink comes from backend adapter before
+        addShortURL({ 
+                big_link: linkData.big_link,
+                short_link: 'https://urlhub.app/4vCl6'
+            })
+        
         toast.success('Link shortened successfully', { theme:'dark' })
     }
 
@@ -49,7 +61,8 @@ const Shortener = () => {
                 color='secondary.main'
                 sx={{
                     fontFamily: 'Montserrat variable',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.75)'
                 }}>
                 Short your link here!
             </Typography>
@@ -58,11 +71,11 @@ const Shortener = () => {
                 variant="outlined"
                 size='small'
                 placeholder='https://biglink.com/etc'
-                value={link}
+                value={linkData.big_link}
                 error={urlError.error}
                 helperText={urlError.message}
                 required 
-                onChange={e => {setLink(e.target.value)}}
+                onChange={e => {setLinkData((data) => ({...linkData, big_link: e.target.value}))}}
                 sx={{ width: '90%', mb: '12px' }}/>
             </Tooltip>
             <Box sx={{

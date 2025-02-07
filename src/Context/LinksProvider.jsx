@@ -2,25 +2,20 @@ import React, { createContext, useState } from 'react'
 
 export const LinksContext = createContext()
 
-
 const LinksProvider = ({children}) => {
 
-    const [ isEditing, setIsEditing ] = useState(false)
+    const [ urlData, setUrlData ] = useState({
+        big_link: '',
+        short_link: '',
+    })
 
-
-    const handleCancel = () => {
-        setIsEditing(false)
+    const addShortURL = (linkData) => {
+        setUrlData(prevData => ({...prevData, ...linkData}))
     }
-
-    const handleEditing = () => {
-        setIsEditing(true)
-    }
-
 
     const contextValue = {
-        handleCancel,
-        handleEditing,
-        isEditing: isEditing,
+        urlData: urlData,
+        addShortURL
     }
 
 
@@ -33,3 +28,5 @@ const LinksProvider = ({children}) => {
 
 
 export default LinksProvider
+
+

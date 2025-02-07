@@ -19,7 +19,7 @@ const Hub = () => {
             minHeight: '400px',
             height: 'auto',
             border: '1px solid white',
-            borderRadius: '16px'
+            borderRadius: '32px'
         }}
         >
         <Typography
