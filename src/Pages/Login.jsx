@@ -174,7 +174,7 @@ const Login = () => {
                 <Tooltip title='Create an account.'>
                     <Typography 
                         variant='body1' 
-                        component={'a'} 
+                        component='a'
                         href='/register' 
                         sx={{
                             fontFamily: 'Montserrat variable',
@@ -182,6 +182,7 @@ const Login = () => {
                             fontSize: '0.9rem',
                             textDecoration: 'none',
                             ':hover': {
+                                cursor: 'pointer',
                                 fontWeight: 500
                             }
                             }}>Sign up here

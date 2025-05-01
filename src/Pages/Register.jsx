@@ -181,14 +181,15 @@ const Login = () => {
                     <Tooltip title='Login into your account.'>
                     <Typography 
                         variant='body1'
-                        component={'a'} 
-                        href='/login' 
+                        component='a'
+                        href='/login'
                         sx={{
                             fontFamily: 'Montserrat variable',
                             color: '#ffb300',
                             fontSize: '0.9rem',
                             textDecoration: 'none',
                             ':hover': {
+                                cursor: 'pointer',
                                 fontWeight: 500
                             }
                             }}>Login here
