@@ -43,7 +43,7 @@ const LinksTable = () => {
                 <TableCell>Big&nbsp;Link</TableCell>
                 <TableCell>/alias</TableCell>
                 <TableCell>Icon</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>Title</TableCell>
                 {/* <TableCell>QR</TableCell> */}
                 <TableCell>{/* Empty to hold the space */}</TableCell>
             </TableRow>
@@ -63,7 +63,7 @@ const LinksTable = () => {
                 >
                 <TableCell>
                     <Tooltip title='BigLink'>
-                        {row.big_link}
+                        {row.bigLink}
                     </Tooltip>
                 </TableCell>
                 <TableCell>
@@ -76,7 +76,7 @@ const LinksTable = () => {
                         alt= 'Copy Short Url'
                         title='Copy Short Url'
                         onClick={ () =>{
-                            navigator.clipboard.writeText(row.short_link)
+                            navigator.clipboard.writeText(row.shortLink)
                             .then( () => {
                                 toast.success('Se ha copiado el link acortado', {theme: 'dark'})
                             })
@@ -103,8 +103,8 @@ const LinksTable = () => {
                     </Tooltip>
                 </TableCell>
                 <TableCell>
-                <Tooltip title='This will be the button name in your hub'>
-                    {row.name}
+                <Tooltip title='This will be the button title in your hub'>
+                    {row.title}
                 </Tooltip>
                 </TableCell>
                 {/* <TableCell>

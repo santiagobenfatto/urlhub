@@ -58,13 +58,13 @@ const Hub = () => {
     }}>{
         linkButtons.map( btn => (
             <Tooltip 
-                title={btn.name}
-                key={btn.name}>
+                title={btn.title}
+                key={btn.title}>
             <Button 
-            href={btn.short_link}
+            href={btn.shortLink}
             startIcon={<DynamicIcon iconName={btn.icon} />}
             >
-                {btn.name}
+                {btn.title}
             </Button>
             </Tooltip>
         ))

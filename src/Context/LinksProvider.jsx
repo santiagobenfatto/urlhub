@@ -5,8 +5,8 @@ export const LinksContext = createContext()
 const LinksProvider = ({children}) => {
 
     const [ urlData, setUrlData ] = useState({
-        big_link: '',
-        short_link: '',
+        bigLink: '',
+        shortLink: '',
     })
 
     const addShortURL = (linkData) => {

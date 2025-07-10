@@ -19,15 +19,15 @@ const AddLinkForm = () => {
         error: false,
         message: ''
     })
-    const [ nameError, setNameError ] = useState({
+    const [ titleError, setTitleError ] = useState({
         error: false,
         message: ''
     })
 
     const [formData, setFormData] = useState({
-        big_link: '',
+        bigLink: '',
         alias: '',
-        name: '',
+        title: '',
         icon: ''
     })
 
@@ -39,7 +39,7 @@ const AddLinkForm = () => {
             ...prevState,
             [field]: value,
         }))
-        if(field === 'big_link') {
+        if(field === 'bigLink') {
             if (!validateUrl(value)) {
                 setBigLinkError({
                     error: true,
@@ -59,14 +59,14 @@ const AddLinkForm = () => {
                 setAliasError({ error: false, message: '' })
             }
         }
-        if (field === 'name') {
+        if (field === 'title') {
             if (value.length > 15) {
-                setNameError({
+                setTitleError({
                     error: true,
                     message: 'Máximo 15 caracteres.',
                 })
             } else {
-                setNameError({ error: false, message: '' })
+                setTitleError({ error: false, message: '' })
             }
         }
     }
@@ -79,7 +79,7 @@ const AddLinkForm = () => {
             
             setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
-            setNameError({ error: false, message: '' })
+            setTitleError({ error: false, message: '' })
             if (result.status.ok) {s
                 dispatch(addLinkRedux(formattedLink))
             } else {
@@ -120,7 +120,7 @@ const AddLinkForm = () => {
                 error={bigLinkError.error}
                 helperText={bigLinkError.message}
                 required 
-                onChange={e => handleInputChange('big_link', e.target.value)}
+                onChange={e => handleInputChange('bigLink', e.target.value)}
                 sx={{ width: '40%' }} 
             />
             </Tooltip>
@@ -139,15 +139,15 @@ const AddLinkForm = () => {
                     sx={{ width: '20%' }} 
                 />
             </Tooltip>
-            <Tooltip title='Set a name for the button in your hub.'>
+            <Tooltip title='Set a title for the button in your hub.'>
                 <TextField 
                     size='small'
                     variant='outlined'
-                    placeholder='Name'
-                    error={nameError.error}
-                    helperText={nameError.message}
+                    placeholder='Title'
+                    error={titleError.error}
+                    helperText={titleError.message}
                     required 
-                    onChange={e => handleInputChange('name', e.target.value)}
+                    onChange={e => handleInputChange('title', e.target.value)}
                     sx={{ width: '20%' }} 
                 />
             </Tooltip>
@@ -191,8 +191,8 @@ const AddLinkForm = () => {
                 </FormControl>
                 <Tooltip 
                     title={ 
-                        bigLinkError.error || aliasError.error || nameError.error || 
-                        !formData.big_link || !formData.alias || !formData.name 
+                        bigLinkError.error || aliasError.error || titleError.error || 
+                        !formData.bigLink || !formData.alias || !formData.title 
                         ? 'All fields must be completed to add a link.' 
                         : 'Click to add your shortened link.' 
                     }
@@ -203,8 +203,8 @@ const AddLinkForm = () => {
                             type='submit'
                             endIcon={<AddIcon/>}
                             disabled={
-                                bigLinkError.error || aliasError.error || nameError.error || 
-                                !formData.big_link || !formData.alias || !formData.name
+                                bigLinkError.error || aliasError.error || titleError.error || 
+                                !formData.bigLink || !formData.alias || !formData.title
                             }
                             sx={{
                                 width: '150px'

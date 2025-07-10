@@ -119,7 +119,7 @@ const LinkDrawer = () => {
 				variant='body1'
 				color='secondary.main'
 				sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
-					{urlData.big_link === '' ? 'No links yet' : `${urlData.big_link}`}
+					{urlData.bigLink === '' ? 'No links yet' : `${urlData.bigLink}`}
 			</Typography>
 		</Box>
 		<Box sx={{display: 'flex', flexDirection: 'column'}}>
@@ -133,14 +133,14 @@ const LinkDrawer = () => {
 			variant='body1'
 			color='secondary.main'
 			sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
-			{urlData.short_link === '' ? 'No links yet' : (
+			{urlData.shortLink === '' ? 'No links yet' : (
         	<>
-            {urlData.short_link}
+            {urlData.shortLink}
             <Tooltip title='Copy'>
                 <IconButton
                     aria-label='Copy Short URL'
                     onClick={() => {
-                        navigator.clipboard.writeText(urlData.short_link)
+                        navigator.clipboard.writeText(urlData.shortLink)
                             .then(() => {
                                 toast.success('Short link copied to clipboard!', { theme: 'dark' })
                             })

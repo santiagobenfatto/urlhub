@@ -4,21 +4,19 @@ const initialState = {
     links: [
         {
         id: 1,
-        big_link: 'https://instagram.com/blabla',
+        bigLink: 'https://instagram.com/blabla',
         alias: '/4vQr7',
-        name: 'Instagram',
+        title: 'Instagram',
         icon: 'Instagram',
-        short_link: 'https://urlhub.io/4vQr7',
-        qr_link: ''
+        shortLink: 'https://urlhub.io/4vQr7'
     },
     {
         id: 2,
-        big_link: 'https://facebook.com/blabla',
+        bigLink: 'https://facebook.com/blabla',
         alias: '/5vTr7',
-        name: 'Facebook',
+        title: 'Facebook',
         icon: 'Facebook',
-        short_link: 'https://urlhub.io/5vTr7',
-        qr_link: ''
+        shortLink: 'https://urlhub.io/5vTr7'
     }]
 }
 
@@ -30,8 +28,8 @@ const linkSlice = createSlice({
             state.links.push({
                 id: state.links[state.links.length - 1]?.id +1 || 1,
                 title: action.payload.title,
-                big_link: action.payload.big_link,
-                short_link: action.payload.short_link,
+                bigLink: action.payload.big_link,
+                shortLink: action.payload.short_link,
                 icon: action.payload.icon || '',
                 alias: `/${action.payload.alias}`
             })

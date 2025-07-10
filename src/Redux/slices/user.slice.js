@@ -13,9 +13,9 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         saveUser(state, action) {
-            state.userName = action.payload.userName,
-            state.lastName =  action.payload.lastName,
-            state.nickname = action.payload.nickname
+            state.userName = action.payload.userName || '',
+            state.lastName =  action.payload.lastName || '',
+            state.nickname = action.payload.nickname || '',
             state.email = action.payload.email
         },
         updateUserInfo(state, action) {

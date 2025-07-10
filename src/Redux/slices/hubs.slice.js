@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-        title: 'My Urls Hub!',
+        name: 'My Urls Hub!',
         links:[
         {
             id: 1,
-            name: 'Instagram',
+            title: 'Instagram',
             short_link: 'https://urlhub.io/4vQr7',
             icon: 'Instagram'
         },
         {
             id: 2,
-            name: 'Facebook',
+            title: 'Facebook',
             short_link: 'https://urlhub.io/4vQr7',
             icon: 'Facebook'
         },
         {
             id: 3,
-            name: 'Github',
+            title: 'Github',
             short_link: 'https://urlhub.io/6v8r7',
             icon: 'GitHub',
         }
@@ -31,10 +31,9 @@ const hubSlice = createSlice({
         addLinkToHub(state, action){
             state.hub.links.push({
             id: state.links.hub[state.hub.links.length - 1]?.id +1 || 1,
-            name: action.payload.name,
-            short_link: action.payload.short_link,
-            icon: action.payload.icon || '',
-            qr_link: action.payload.qr_link || ''
+            title: action.payload.title,
+            shorLink: action.payload.short_link,
+            icon: action.payload.icon || ''
             })
         },
         removeLinkFromHub(state, action){

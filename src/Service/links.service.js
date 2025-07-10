@@ -40,7 +40,7 @@ const addNewLink = async (link) => {
 }
 
 
-addcreatePublicLink = async (link) => {
+const addPublicLink = async (link) => {
     try {
         const response = await fetch(`${URL}/api/v1/addPublicLink`, {
             method: 'POST',

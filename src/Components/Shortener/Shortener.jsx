@@ -9,8 +9,8 @@ import { useLink } from '../../Context/useLink.jsx'
 const Shortener = () => {
 
     const [ linkData, setLinkData ] = useState({
-        big_link: '',
-        short_link: ''
+        bigLink: '',
+        shortLink: ''
     })
     const [ urlError, setUrlError] = useState({
         error: false,
@@ -21,7 +21,7 @@ const Shortener = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!validateUrl(linkData.big_link)){
+        if(!validateUrl(linkData.bigLink)){
             setUrlError({
                 error:true,
                 message: 'Please enter a valid URL'
@@ -34,8 +34,8 @@ const Shortener = () => {
         })
         //shortLink comes from backend adapter before
         addShortURL({ 
-                big_link: linkData.big_link,
-                short_link: 'https://urlhub.app/4vCl6'
+                bigLink: linkData.bigLink,
+                shortLink: 'https://urlhub.app/4vCl6'
             })
         
         toast.success('Link shortened successfully', { theme:'dark' })
@@ -71,11 +71,11 @@ const Shortener = () => {
                 variant="outlined"
                 size='small'
                 placeholder='https://biglink.com/etc'
-                value={linkData.big_link}
+                value={linkData.bigLink}
                 error={urlError.error}
                 helperText={urlError.message}
                 required 
-                onChange={e => {setLinkData((data) => ({...linkData, big_link: e.target.value}))}}
+                onChange={e => {setLinkData((data) => ({...linkData, bigLink: e.target.value}))}}
                 sx={{ width: '90%', mb: '12px' }}/>
             </Tooltip>
             <Box sx={{
