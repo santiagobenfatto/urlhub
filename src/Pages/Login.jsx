@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { loginAdapter } from '../Adapters/login.adapter.js'
 import { saveUser } from '../Redux/slices/user.slice.js'
 import { emailValidation } from '../Utils/validateRegex.js'
+import { loginService } from '../Service/login.service.js'
 
 const Login = () => {
     
@@ -21,7 +22,7 @@ const Login = () => {
     
     const TextFieldProps = {
         '& .MuiTextField-root': { 
-            width: '60%',
+            width: '70%',
             mb: '12px',
         }
     }
@@ -43,8 +44,8 @@ const Login = () => {
         })
 
         try {
-            const userData = await loginAdapter({email, pass})
-
+            const result = await loginService({email, pass})
+            const userData = await loginAdapter(result)
             dispatch(saveUser(userData))
             
             setEmail('')
@@ -142,7 +143,7 @@ const Login = () => {
                     display: 'flex',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-end',
-                    width: '60%',
+                    width: '70%',
                     mt: 1
                 }}>
                    <Tooltip title='Login user.'

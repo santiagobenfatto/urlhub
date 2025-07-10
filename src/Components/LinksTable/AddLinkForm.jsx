@@ -74,18 +74,17 @@ const AddLinkForm = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            //const result = await addLinkService(formData)
-
-            dispatch(addLinkRedux(formData)) //Opción de prueba sin backend.
+            const result = await addnewLink(formData)
+            const formattedLink = addLinkAdapter(result)
+            
             setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
             setNameError({ error: false, message: '' })
-            // if (result.status.ok) {
-            //     // dispatch(addLinkRedux(result.data)) //Opción retorno del backend.
-            //     handleCancel() 
-            // } else {
-            //     throw new Error(result.message || 'Error desconocido al añadir el enlace')
-            // }
+            if (result.status.ok) {s
+                dispatch(addLinkRedux(formattedLink))
+            } else {
+                throw new Error(result.message || 'Error desconocido al añadir el enlace')
+            }
             toast.success('Formulario enviado', { theme: 'dark'})
         } catch (err) {
             setBigLinkError({
@@ -158,22 +157,7 @@ const AddLinkForm = () => {
                 flexDirection: 'row',
                 width: '100%',
                 gap: '16px'
-            }}>
-            {/* <FormControl sx={{
-                    display: 'flex',
-                    flexDirection: 'row'
-                }}>
-                <FormControlLabel 
-                    sx={{ color: '#ffffff', fontFamily: 'Roboto', width: '20%'}}
-                    control={<Checkbox 
-                        color='secondary'
-                        defaultChecked 
-                        label='QR select'
-                        /> 
-                    }
-                    label='QR?' />
-                </FormControl> */}
-                
+            }}>                
                 <FormControl>
                 <Tooltip title='Select an icon for your hub button.'>
                 <Select

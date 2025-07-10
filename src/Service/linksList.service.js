@@ -4,7 +4,7 @@ const URL = config.linksURL
 
 const getLinkListById = async (linkListId) => {
     try {
-        const response = await fetch(`${URL}/api/${linkListId}`)
+        const response = await fetch(`${URL}/api/v1/${linkListId}`)
         if(!response.ok) {
             throw new Error(`Error fetching ${URL}/api/${linkListId}. Status: ${response.status}`)
         }
@@ -18,16 +18,16 @@ const getLinkListById = async (linkListId) => {
     }
 }
 
-const addLinkToList = async (link) => {
+const addNewLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/addLinkToList`, {
+        const response = await fetch(`${URL}/api/v1/addNewLink`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/api/link`)
+            throw new Error(`Error fetching ${URL}/api/v1/:link`)
         }
 
         const data = await response.json()
@@ -40,16 +40,16 @@ const addLinkToList = async (link) => {
 }
 
 
-const createSimpleLink = async (link) => {
+addcreatePublicLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/createSimpleLink`, {
+        const response = await fetch(`${URL}/api/v1/addPublicLink`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/api/createSimpleLink`)
+            throw new Error(`Error fetching ${URL}/api/v1/addPublicLink`)
         }
 
         const data = await response.json()
@@ -63,6 +63,6 @@ const createSimpleLink = async (link) => {
 
 export {
     getLinkListById,
-    addLinkToList,
-    createSimpleLink
+    addNewLink,
+    addPublicLink
 }

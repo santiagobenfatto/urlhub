@@ -5,7 +5,7 @@ const initialState = {
     userName: '',
     email: '',
     linkList: '',
-    hubSetup: []
+    hubSetup: ''
 }
 
 const userSlice = createSlice({
@@ -14,9 +14,9 @@ const userSlice = createSlice({
     reducers: {
         saveUser(state, action) {
             state.userName = action.payload.userName,
-            state.email = action.payload.email,
-            state.linkList = action.payload.linkList, 
-            state.hub = action.payload.hubSetup
+            state.lastName =  action.payload.lastName,
+            state.nickname = action.payload.nickname
+            state.email = action.payload.email
         },
         updateUserInfo(state, action) {
             state.userName = action.payload.newUserName,
