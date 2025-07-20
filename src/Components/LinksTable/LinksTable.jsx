@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { removeLink } from  '../../Redux/slices/links.slice.js'
 import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
+import { deleteLink } from '../../Service/links.service.js'
+import { useLink } from '../../Context/useLink.jsx'
 
 
 
@@ -16,6 +18,23 @@ const LinksTable = () => {
     
     const rows = useSelector(state => state.links.links)
     const dispatch = useDispatch()
+
+    const { handleEditting } = useLink()
+    
+    const handleEdit = async (linkId) => { 
+        handleEditting(linkId)
+    }
+
+    const handleDelete = async (linkId) => { 
+        try {
+            await deleteLink(linkId)
+            dispatch(removeLink(linkId))
+            toast.warn('Link eliminado', { theme: 'dark'})
+        } catch (error) {
+            console.error('Error al eliminar en backend:', error)
+            toast.error('No se pudo eliminar el link', { theme: 'dark' })
+        }
+    }
 
     return (
             <TableContainer 
@@ -63,18 +82,17 @@ const LinksTable = () => {
                 >
                 <TableCell>
                     <Tooltip title='BigLink'>
-                        {row.bigLink}
+                        <span>{row.bigLink}</span>
                     </Tooltip>
                 </TableCell>
                 <TableCell>
                     <Tooltip title='Alias'>
-                    {row.alias}
+                    <span>{row.alias}</span>
                     </Tooltip>
                     &nbsp;
                     <Tooltip title='Copy'>
                     <IconButton
                         alt= 'Copy Short Url'
-                        title='Copy Short Url'
                         onClick={ () =>{
                             navigator.clipboard.writeText(row.shortLink)
                             .then( () => {
@@ -104,21 +122,14 @@ const LinksTable = () => {
                 </TableCell>
                 <TableCell>
                 <Tooltip title='This will be the button title in your hub'>
-                    {row.title}
+                    <span>{row.title}</span>
                 </Tooltip>
                 </TableCell>
-                {/* <TableCell>
-                  <QrCode2Icon />
-                </TableCell> */}
                 <TableCell sx={{ textAlign: 'center'}} >
                     <Tooltip title='Delete URL'>
                     <IconButton
                         alt= 'Delete URL'
-                        title='Delete URL'
-                        onClick={() => { 
-                            dispatch(removeLink(row.id))
-                            toast.warn('Link Eliminado', { theme: 'dark'})
-                        }}
+                        onClick={() => handleDelete(row.id)}
                         color='secondary'
                         sx={{
                             p: 0,
@@ -132,8 +143,7 @@ const LinksTable = () => {
                     <Tooltip title='Add the link to your hub'>
                     <IconButton
                         alt= 'Add Hub Icon'
-                        title='Add URL to Hub'
-                        onClick={() => dispatch(addLinkToHub(row.id))}
+                        onClick={() => dispatch(addLinkToHub(row.id))} //provisorio
                         color='secondary'
                         sx={{
                             p: 0,
@@ -147,7 +157,7 @@ const LinksTable = () => {
                     <Tooltip title='Edit your URL'>
                     <IconButton
                         alt= 'Edit Link Icon'
-                        title='Edit URL'
+                        onClick={() => handleEdit(row.id)}
                         color='secondary'
                         sx={{
                             p: 0,

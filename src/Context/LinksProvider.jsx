@@ -8,14 +8,31 @@ const LinksProvider = ({children}) => {
         bigLink: '',
         shortLink: '',
     })
+    
+    const  [ isEditting, setIsEditting ] = useState(false)
+
+    const [ linkId, setLinkId ] = useState(null)
 
     const addShortURL = (linkData) => {
         setUrlData(prevData => ({...prevData, ...linkData}))
     }
 
+    const handleEditting = (inputId) => {
+        if(linkId === inputId) {
+            setLinkId(null)
+            setIsEditting(false)
+        } else {
+            setLinkId(inputId)
+            setIsEditting(true)
+        }
+    }
+
     const contextValue = {
         urlData: urlData,
-        addShortURL
+        addShortURL,
+        isEditting,
+        handleEditting,
+        linkId
     }
 
 

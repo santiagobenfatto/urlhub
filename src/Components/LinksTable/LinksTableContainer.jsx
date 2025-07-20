@@ -1,26 +1,29 @@
-import { Box } from '@mui/material'
 import React from 'react'
+import { Box } from '@mui/material'
 import LinksTable from './LinksTable.jsx'
-import LinksProvider from '../../Context/LinksProvider.jsx'
 import AddLinkForm from './AddLinkForm.jsx'
+import EditLinkForm from './EditLinkForm.jsx'
+import { useLink } from '../../Context/useLink.jsx'
 
 const LinksTableContainer = () => {
+
+    const { isEditting, linkId } = useLink()
+
     return (
-        <LinksProvider>
-        <Box sx={{
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-evenly',
-            minHeight: '50vh',
-            width: '50%',
-            height: 'auto',
-            maxHeight: '80vh',
-        }}>
-            <LinksTable />
-            <AddLinkForm />
-        </Box>
-            </LinksProvider>
+            <Box sx={{
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
+                minHeight: '50vh',
+                width: '50%',
+                height: 'auto',
+                maxHeight: '80vh',
+            }}>
+                <LinksTable />
+                { !isEditting ? (<AddLinkForm />) : (<EditLinkForm linkId={linkId} />)}
+                
+            </Box>
     )
 }
 

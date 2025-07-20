@@ -5,20 +5,22 @@ import HubContainer from '../Hub/HubContainer.jsx'
 
 
 
+
+
 const LinksManager = () => {
     return (
-        <Box sx={{
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            width: '95%',
-            flexGrow: 1,
-        }}>
-            <LinksTableContainer />
-            <HubContainer isHome={false}/>
-        </Box>
+            <Box sx={{
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                width: '95%',
+                flexGrow: 1,
+            }}>
+                <LinksTableContainer />
+                <HubContainer isHome={false}/>
+            </Box>
     )
 }
 

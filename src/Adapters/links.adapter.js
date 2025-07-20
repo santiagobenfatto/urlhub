@@ -4,8 +4,8 @@ import { addNewLink as addNewLinkService,
 } from '../Service/links.service.js'
 
 
-export const linksListAdapter = async (userId) => {
-	const linkListData = await getLinkListById(userId)
+const linksListAdapter = async (userId) => {
+	const linkListData = await getLinkListByIdService(userId)
 	const linkList = linkListData.map(link => ({
 		title: link.title,
 		bigLink: link.big_link, 
@@ -17,7 +17,7 @@ return linkList
 }
 
 
-export const addLinkAdapter = async (linkData) => {
+const addLinkAdapter = async (linkData) => {
 	const linkService = await addNewLinkService(linkData)
 	const newLink = {
 		id: linkService.id,
@@ -31,7 +31,7 @@ export const addLinkAdapter = async (linkData) => {
 }
 
 
-export const addPublicLink = async (linkData) => {
+const addPublicLinkAdapter = async (linkData) => {
 	const linkService = await addPublicLinkService(linkData)
 	const newLink = {
 		id: linkService.id,
@@ -42,4 +42,10 @@ export const addPublicLink = async (linkData) => {
 		icon: linkService.icon || ''
 	}
 	return newLink
+}
+
+export { 
+	linksListAdapter,
+	addLinkAdapter,
+	addPublicLinkAdapter
 }

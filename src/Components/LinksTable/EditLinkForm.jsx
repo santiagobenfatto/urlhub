@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
-import { Box, Button, FormControl, InputAdornment, MenuItem, Select, Stack, TextField, Tooltip } from '@mui/material'
+import { Box, Button, FormControl, IconButton, InputAdornment, MenuItem, Select, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import { toast } from 'react-toastify'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
 import AddIcon from '@mui/icons-material/Add'
+import CloseIcon from '@mui/icons-material/Close'
 import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
 import { addNewLink as addNewLinkService } from '../../Service/links.service.js'
-import { useDispatch } from 'react-redux'
-import { validateUrl, validateAlias } from '../../Utils/validateRegex.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { validateAlias } from '../../Utils/validateRegex.js'
+import { useLink } from '../../Context/useLink.jsx'
 
 
-const AddLinkForm = () => {
-    const [ bigLinkError, setBigLinkError ] = useState({
-            error: false,
-            message: ''
-        })
-    
+const EditLinkForm = ({linkId}) => {
+
     const [ aliasError, setAliasError ] = useState({
         error: false,
         message: ''
@@ -27,30 +25,22 @@ const AddLinkForm = () => {
 
 
     const [formData, setFormData] = useState({
-        bigLink: '',
         alias: '',
         title: '',
         icon: ''
     })
 
-
+    const { setIsEdditing } = useLink()
     const dispatch = useDispatch()
+    const linksList = useSelector(state => state.links.links)
+    const [link] = linksList.filter(e => e.id === linkId )
+    
 
     const handleInputChange = (field, value) => {
         setFormData(prevState => ({
             ...prevState,
             [field]: value,
         }))
-        if(field === 'bigLink') {
-            if (!validateUrl(value)) {
-                setBigLinkError({
-                    error: true,
-                    message: 'La URL no es válida.',
-                })
-            } else {
-                setBigLinkError({error: false, message: '',})
-            }
-        }
         if(field === 'alias') {
             if (!validateAlias(value)) {
                 setAliasError({
@@ -78,7 +68,6 @@ const AddLinkForm = () => {
         try {
             const result = await addNewLinkService(formData)
             
-            setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
             if (result.status.ok) {
@@ -89,10 +78,7 @@ const AddLinkForm = () => {
             }
             toast.success('Formulario enviado', { theme: 'dark'})
         } catch (err) {
-            setBigLinkError({
-                error: true,
-                message: err.response?.data?.message || 'El alias ya existe o hubo un error.',
-            })
+            console.log(err)
         }
     }
 
@@ -109,6 +95,18 @@ const AddLinkForm = () => {
                 height: 'auto',
                 mt: '24px'
             }}>
+            <IconButton sx={{
+                alignSelf: 'flex-end',
+                width: '50px'
+                }}
+                color='secondary'
+                onClick={() => setIsEdditing(false)}
+                >
+                <CloseIcon/>
+            </IconButton>
+             <Typography color='secondary'>
+                Edit Link:
+            </Typography>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -119,11 +117,14 @@ const AddLinkForm = () => {
             <TextField 
                 size='small'
                 variant='outlined'
-                placeholder='Big Link'
-                error={bigLinkError.error}
-                helperText={bigLinkError.message}
-                required 
-                onChange={e => handleInputChange('bigLink', e.target.value)}
+                color='primary'
+                defaultValue={link.bigLink}
+                slotProps={{
+                    input: {
+                        readOnly: true,
+                    }
+                }}
+                // placeholder={link.bigLink}
                 sx={{ width: '40%' }} 
             />
             </Tooltip>
@@ -131,7 +132,7 @@ const AddLinkForm = () => {
                 <TextField 
                     size='small'
                     variant='outlined'
-                    placeholder='alias'
+                    placeholder={link.alias}
                     error={aliasError.error}
                     helperText={aliasError.message}
                     required 
@@ -148,7 +149,7 @@ const AddLinkForm = () => {
                 <TextField 
                     size='small'
                     variant='outlined'
-                    placeholder='Title'
+                    placeholder={link.title}
                     error={titleError.error}
                     helperText={titleError.message}
                     required 
@@ -196,8 +197,8 @@ const AddLinkForm = () => {
                 </FormControl>
                 <Tooltip 
                     title={ 
-                        bigLinkError.error || aliasError.error || titleError.error || 
-                        !formData.bigLink || !formData.alias || !formData.title 
+                        aliasError.error || titleError.error || 
+                        !formData.alias || !formData.title 
                         ? 'All fields must be completed to add a link.' 
                         : 'Click to add your shortened link.' 
                     }
@@ -208,14 +209,14 @@ const AddLinkForm = () => {
                             type='submit'
                             endIcon={<AddIcon/>}
                             disabled={
-                                bigLinkError.error || aliasError.error || titleError.error || 
-                                !formData.bigLink || !formData.alias || !formData.title
+                                aliasError.error || titleError.error || 
+                                !formData.alias || !formData.title
                             }
                             sx={{
                                 width: '150px'
                             }}
                         >
-                            Add
+                            Edit
                         </Button>
                     </span>
                 </Tooltip>
@@ -225,4 +226,4 @@ const AddLinkForm = () => {
     )
 }
 
-export default AddLinkForm
+export default EditLinkForm

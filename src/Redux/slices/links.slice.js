@@ -5,7 +5,7 @@ const initialState = {
         {
         id: 1,
         bigLink: 'https://instagram.com/blabla',
-        alias: '/4vQr7',
+        alias: '4vQr7',
         title: 'Instagram',
         icon: 'Instagram',
         shortLink: 'https://urlhub.io/4vQr7'
@@ -13,7 +13,7 @@ const initialState = {
     {
         id: 2,
         bigLink: 'https://facebook.com/blabla',
-        alias: '/5vTr7',
+        alias: '5vTr7',
         title: 'Facebook',
         icon: 'Facebook',
         shortLink: 'https://urlhub.io/5vTr7'
