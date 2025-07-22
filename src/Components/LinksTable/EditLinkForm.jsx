@@ -3,10 +3,10 @@ import { Box, Button, FormControl, IconButton, InputAdornment, MenuItem, Select,
 import { toast } from 'react-toastify'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
-import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
-import { addNewLink as addNewLinkService } from '../../Service/links.service.js'
+import { updateLink as updateLinkService } from '../../Service/links.service.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { validateAlias } from '../../Utils/validateRegex.js'
 import { useLink } from '../../Context/useLink.jsx'
@@ -66,7 +66,7 @@ const EditLinkForm = ({linkId}) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const result = await addNewLinkService(formData)
+            const result = await updateLinkService(formData)
             
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
@@ -104,7 +104,7 @@ const EditLinkForm = ({linkId}) => {
                 >
                 <CloseIcon/>
             </IconButton>
-             <Typography color='secondary'>
+             <Typography color='secondary' variant='h5'>
                 Edit Link:
             </Typography>
             <Box sx={{
@@ -207,11 +207,7 @@ const EditLinkForm = ({linkId}) => {
                     <span>
                         <Button 
                             type='submit'
-                            endIcon={<AddIcon/>}
-                            disabled={
-                                aliasError.error || titleError.error || 
-                                !formData.alias || !formData.title
-                            }
+                            endIcon={<EditIcon/>}
                             sx={{
                                 width: '150px'
                             }}

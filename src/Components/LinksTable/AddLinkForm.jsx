@@ -5,7 +5,6 @@ import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
 import AddIcon from '@mui/icons-material/Add'
 import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
-import { addNewLink as addNewLinkService } from '../../Service/links.service.js'
 import { useDispatch } from 'react-redux'
 import { validateUrl, validateAlias } from '../../Utils/validateRegex.js'
 
@@ -76,14 +75,14 @@ const AddLinkForm = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const result = await addNewLinkService(formData)
+            const result = await addLinkService(formData)
+            const linkAdapted = await addLinkAdapter(result)
             
             setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
             if (result.status.ok) {
-                const formattedLink = addLinkAdapter(result)
-                dispatch(addLinkRedux(formattedLink))
+                dispatch(addLinkRedux(linkAdapted))
             } else {
                 throw new Error(result.message || 'Error desconocido al añadir el enlace')
             }

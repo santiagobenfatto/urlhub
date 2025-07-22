@@ -4,13 +4,13 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import { toast } from 'react-toastify'
 import { validateUrl } from '../../Utils/validateRegex'
 import { useLink } from '../../Context/useLink.jsx'
+import { addPublicLinkAdapter } from '../../Adapters/links.adapter.js'
 
 
 const Shortener = () => {
 
     const [ linkData, setLinkData ] = useState({
-        bigLink: '',
-        shortLink: ''
+        bigLink: ''
     })
     const [ urlError, setUrlError] = useState({
         error: false,
@@ -18,6 +18,7 @@ const Shortener = () => {
     })
     
     const { addShortURL } = useLink()
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,17 +29,24 @@ const Shortener = () => {
             })
             return
         }
-        setUrlError({
-            error: false,
-            message: ''
-        })
         //shortLink comes from backend adapter before
-        addShortURL({ 
-                bigLink: linkData.bigLink,
-                shortLink: 'https://urlhub.app/4vCl6'
-            })
         
-        toast.success('Link shortened successfully', { theme:'dark' })
+        try {
+            const result = await addPublicLink(linkData)
+            const linkAdapted = await addPublicLinkAdapter(result)
+            setUrlError({ error: false, message: ''})
+            if(result.status.ok){
+                addShortURL(linkAdapted)
+            } else {
+                throw new Error(result.message || 'Error desconocido al añadir el enlace')
+            }
+            toast.success('Link shortened successfully', { theme:'dark' })
+        } catch (err) {
+            setUrlError({
+                error: true,
+                message: err.response?.data?.message || 'El alias ya existe o hubo un error.',
+            })
+        }
     }
 
     return (

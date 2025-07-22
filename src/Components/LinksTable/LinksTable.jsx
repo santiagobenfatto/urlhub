@@ -16,19 +16,19 @@ import { useLink } from '../../Context/useLink.jsx'
 
 const LinksTable = () => {
     
-    const rows = useSelector(state => state.links.links)
+    const linksMap = useSelector(state => state.links.links)
     const dispatch = useDispatch()
 
-    const { handleEditting } = useLink()
+    const { handleEditting, linkId } = useLink()
     
-    const handleEdit = async (linkId) => { 
-        handleEditting(linkId)
+    const handleEdit = async (linkIdData) => { 
+        handleEditting(linkIdData)
     }
 
-    const handleDelete = async (linkId) => { 
+    const handleDelete = async (linkIdData) => { 
         try {
-            await deleteLink(linkId)
-            dispatch(removeLink(linkId))
+            await deleteLink(linkIdData)
+            dispatch(removeLink(linkIdData))
             toast.warn('Link eliminado', { theme: 'dark'})
         } catch (error) {
             console.error('Error al eliminar en backend:', error)
@@ -63,38 +63,39 @@ const LinksTable = () => {
                 <TableCell>/alias</TableCell>
                 <TableCell>Icon</TableCell>
                 <TableCell>Title</TableCell>
-                {/* <TableCell>QR</TableCell> */}
                 <TableCell>{/* Empty to hold the space */}</TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
-            {rows.length === 0 ? (
+            {linksMap.length === 0 ? (
                 <TableRow>
                     <TableCell colSpan={5} sx={{ textAlign: 'center', color: 'gray' }}>
                         No links available. Add a new link to get started!
                     </TableCell>
                 </TableRow>
             ) : (
-            rows.map((row) => (
+            linksMap.map((link) => (
                 <TableRow
-                key={row.alias}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                key={link.alias}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 },
+                    '.MuiTableCell-root': {color: link.id === linkId ? '#ffb300' : '' }
+                }}
                 >
                 <TableCell>
                     <Tooltip title='BigLink'>
-                        <span>{row.bigLink}</span>
+                        <span>{link.bigLink}</span>
                     </Tooltip>
                 </TableCell>
                 <TableCell>
                     <Tooltip title='Alias'>
-                    <span>{row.alias}</span>
+                    <span>{link.alias}</span>
                     </Tooltip>
                     &nbsp;
                     <Tooltip title='Copy'>
                     <IconButton
                         alt= 'Copy Short Url'
-                        onClick={ () =>{
-                            navigator.clipboard.writeText(row.shortLink)
+                        onClick={ () =>{             
+                            navigator.clipboard.writeText(link.shortLink)
                             .then( () => {
                                 toast.success('Se ha copiado el link acortado', {theme: 'dark'})
                             })
@@ -102,9 +103,9 @@ const LinksTable = () => {
                                 toast.error('Ha ocurrido un error, si persiste contactate', {theme: 'dark'})
                             })
                         }}
-                        color='secondary'
                         sx={{
                             p: 0,
+                            color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
                             }
@@ -114,25 +115,25 @@ const LinksTable = () => {
                     </Tooltip>
                 </TableCell>
                 <TableCell>
-                    <Tooltip title={row.icon || 'No icon'}>
+                    <Tooltip title={link.icon || 'No icon'}>
                     <span>
-                    <DynamicIcon iconName={row.icon} />
+                    <DynamicIcon iconName={link.icon} />
                     </span>
                     </Tooltip>
                 </TableCell>
                 <TableCell>
                 <Tooltip title='This will be the button title in your hub'>
-                    <span>{row.title}</span>
+                    <span>{link.title}</span>
                 </Tooltip>
                 </TableCell>
                 <TableCell sx={{ textAlign: 'center'}} >
                     <Tooltip title='Delete URL'>
                     <IconButton
                         alt= 'Delete URL'
-                        onClick={() => handleDelete(row.id)}
-                        color='secondary'
+                        onClick={() => handleDelete(link.id)}
                         sx={{
                             p: 0,
+                            color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
                             }
@@ -143,10 +144,10 @@ const LinksTable = () => {
                     <Tooltip title='Add the link to your hub'>
                     <IconButton
                         alt= 'Add Hub Icon'
-                        onClick={() => dispatch(addLinkToHub(row.id))} //provisorio
-                        color='secondary'
+                        onClick={() => dispatch(addLinkToHub(link.id))} //provisorio
                         sx={{
                             p: 0,
+                            color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
                             }
@@ -157,10 +158,10 @@ const LinksTable = () => {
                     <Tooltip title='Edit your URL'>
                     <IconButton
                         alt= 'Edit Link Icon'
-                        onClick={() => handleEdit(row.id)}
-                        color='secondary'
+                        onClick={() => handleEdit(link.id)}
                         sx={{
                             p: 0,
+                            color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
                             }

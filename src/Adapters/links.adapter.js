@@ -1,11 +1,5 @@
-import { addNewLink as addNewLinkService,
-	getLinkListById as getLinkListByIdService,
-	addPublicLink as addPublicLinkService
-} from '../Service/links.service.js'
 
-
-const linksListAdapter = async (userId) => {
-	const linkListData = await getLinkListByIdService(userId)
+const linksListAdapter = async (linkListData) => {
 	const linkList = linkListData.map(link => ({
 		title: link.title,
 		bigLink: link.big_link, 
@@ -16,30 +10,37 @@ const linksListAdapter = async (userId) => {
 return linkList
 }
 
-
 const addLinkAdapter = async (linkData) => {
-	const linkService = await addNewLinkService(linkData)
 	const newLink = {
-		id: linkService.id,
-		title: linkService.title,
-		bigLink: linkService.big_link,
-		alias: `/${linkService.alias}`,
-		shortLink: linkService.short_link,
-		icon: linkService.icon || ''
+		id: linkData.id,
+		title: linkData.title,
+		bigLink: linkData.big_link,
+		alias: linkData.alias,
+		shortLink: linkData.short_link,
+		icon: linkData.icon || ''
 	}
 	return newLink
 }
 
-
 const addPublicLinkAdapter = async (linkData) => {
-	const linkService = await addPublicLinkService(linkData)
 	const newLink = {
-		id: linkService.id,
-		title: linkService.title,
-		bigLink: linkService.big_link,
-		alias: `/${linkService.alias}`,
-		shortLink: linkService.short_link,
-		icon: linkService.icon || ''
+		id: linkData.id,
+		title: linkData.title,
+		bigLink: linkData.big_link,
+		alias: linkData.alias,
+		shortLink: linkData.short_link,
+		icon: linkData.icon || ''
+	}
+	return newLink
+}
+const updateLinkAdapter = async (linkData) => {
+	const newLink = {
+		id: linkData.id,
+		title: linkData.title,
+		bigLink: linkData.big_link,
+		alias: linkData.alias,
+		shortLink: linkData.short_link,
+		icon: linkData.icon || ''
 	}
 	return newLink
 }
@@ -47,5 +48,6 @@ const addPublicLinkAdapter = async (linkData) => {
 export { 
 	linksListAdapter,
 	addLinkAdapter,
-	addPublicLinkAdapter
+	addPublicLinkAdapter,
+	updateLinkAdapter
 }

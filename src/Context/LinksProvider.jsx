@@ -5,8 +5,12 @@ export const LinksContext = createContext()
 const LinksProvider = ({children}) => {
 
     const [ urlData, setUrlData ] = useState({
+        id: '',
         bigLink: '',
-        shortLink: '',
+        alias: '',
+        title: '',
+        icon: '',
+        shortLink: ''
     })
     
     const  [ isEditting, setIsEditting ] = useState(false)
