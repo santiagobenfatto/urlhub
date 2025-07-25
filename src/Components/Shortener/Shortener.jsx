@@ -4,7 +4,9 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh'
 import { toast } from 'react-toastify'
 import { validateUrl } from '../../Utils/validateRegex'
 import { useLink } from '../../Context/useLink.jsx'
+import { addPublicLink as addPublicLinkService} from '../../Service/links.service.js'
 import { addPublicLinkAdapter } from '../../Adapters/links.adapter.js'
+import { getPublicLink, savePublicLink } from '../../Utils/utils.js'
 
 
 const Shortener = () => {
@@ -20,7 +22,7 @@ const Shortener = () => {
     const { addShortURL } = useLink()
     
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
         e.preventDefault()
         if(!validateUrl(linkData.bigLink)){
             setUrlError({
@@ -29,18 +31,23 @@ const Shortener = () => {
             })
             return
         }
-        //shortLink comes from backend adapter before
-        
         try {
-            const result = await addPublicLink(linkData)
+            const existingLinks = getPublicLink()
+            if (existingLinks.length >= 1) {
+            toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
+            return
+            }        
+            const result = await addPublicLinkService(linkData)
+            //Public link its saved in context and localStorage
             const linkAdapted = await addPublicLinkAdapter(result)
             setUrlError({ error: false, message: ''})
             if(result.status.ok){
                 addShortURL(linkAdapted)
-            } else {
-                throw new Error(result.message || 'Error desconocido al añadir el enlace')
-            }
-            toast.success('Link shortened successfully', { theme:'dark' })
+                savePublicLink(linkAdapted)
+        } else {
+            throw new Error(result.message || 'Error desconocido al añadir el enlace')
+        }
+        toast.success('Link shortened successfully', { theme:'dark' })
         } catch (err) {
             setUrlError({
                 error: true,
@@ -48,6 +55,7 @@ const Shortener = () => {
             })
         }
     }
+
 
     return (
         <Box 
@@ -83,7 +91,7 @@ const Shortener = () => {
                 error={urlError.error}
                 helperText={urlError.message}
                 required 
-                onChange={e => {setLinkData((data) => ({...linkData, bigLink: e.target.value}))}}
+                onChange={e => setLinkData({bigLink: e.target.value})}
                 sx={{ width: '90%', mb: '12px' }}/>
             </Tooltip>
             <Box sx={{

@@ -1,6 +1,6 @@
 import config from '../../config.js'
 
-const URL = config.loginURL
+const URL = config.apiLoginURL
 
 export const loginService = async (credentials) => {
     try {

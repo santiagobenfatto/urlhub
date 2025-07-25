@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
 import { useDispatch } from 'react-redux'
 import { validateUrl, validateAlias } from '../../Utils/validateRegex.js'
+import { addLinkAdapter } from '../../Adapters/links.adapter.js'
 
 
 const AddLinkForm = () => {

@@ -1,10 +1,10 @@
 import config from '../../config.js'
 
-const URL = config.registerURL
+const URL = config.apiRegisterURL
 
 export const registerService = async (user) => {
     try {
-        const response = await fetch(URL , {
+        const response = await fetch(`${URL}` , {
             method: 'POST',
             credentials: 'include',
             headers: {

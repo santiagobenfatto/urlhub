@@ -1,10 +1,10 @@
 import config from '../../config.js'
 
-const URL = config.linksURL
+const URL = config.apiLinksURL
 
 const getLinkListById = async (linkListId) => {
     try {
-        const response = await fetch(`${URL}/api/v1/${linkListId}`)
+        const response = await fetch(`${URL}/${linkListId}`)
         if(!response.ok) {
             throw new Error(`Error fetching ${URL}/api/${linkListId}. Status: ${response.status}`)
         }
@@ -20,7 +20,7 @@ const getLinkListById = async (linkListId) => {
 
 const addNewLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/v1/addNewLink`, {
+        const response = await fetch(URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
@@ -42,7 +42,7 @@ const addNewLink = async (link) => {
 
 const addPublicLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/v1/addPublicLink`, {
+        const response = await fetch(`${URL}/short`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
@@ -63,7 +63,7 @@ const addPublicLink = async (link) => {
 
 const updateLink = async (linkId, updates) => {
     try {
-        const response = await fetch(`${URL}/api/v1/${linkId}`, {
+        const response = await fetch(`${URL}/${linkId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates)
@@ -83,7 +83,7 @@ const updateLink = async (linkId, updates) => {
 
 const deleteLink = async (linkId) => { 
     try {
-        const response = await fetch(`${URL}/api/v1/${linkId}`, {
+        const response = await fetch(`${URL}/${linkId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         })

@@ -1,6 +1,6 @@
 
 export default{
-    loginURL: import.meta.env.VITE_LOGIN_URL,
-    registerURL: import.meta.env.VITE_register_URL,
-    linksURL: import.meta.env.VITE_SOCKET_URL
+    apiRegisterURL: import.meta.env.API_REGISTER_URL,
+    apiLoginURL: import.meta.env.API_LOGIN_URL,
+    apiLinksURL: import.meta.env.API_LINKS_URL
 }

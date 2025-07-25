@@ -13,12 +13,12 @@ const LinksProvider = ({children}) => {
         shortLink: ''
     })
     
-    const  [ isEditting, setIsEditting ] = useState(false)
-
+    const [ isEditting, setIsEditting ] = useState(false)
     const [ linkId, setLinkId ] = useState(null)
 
     const addShortURL = (linkData) => {
         setUrlData(prevData => ({...prevData, ...linkData}))
+        savePublicLink(linkData)
     }
 
     const handleEditting = (inputId) => {
