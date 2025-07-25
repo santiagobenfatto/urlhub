@@ -1,6 +1,6 @@
 import config from '../../config.js'
 
-const URL = config.apiLinksURL
+const URL = import.meta.env.VITE_API_LINKS_URL
 
 const getLinkListById = async (linkListId) => {
     try {

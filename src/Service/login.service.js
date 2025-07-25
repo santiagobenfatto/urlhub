@@ -1,6 +1,6 @@
-import config from '../../config.js'
 
-const URL = config.apiLoginURL
+
+const URL = import.meta.env.VITE_API_LOGIN_URL
 
 export const loginService = async (credentials) => {
     try {

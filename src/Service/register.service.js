@@ -1,11 +1,8 @@
-import config from '../../config.js'
-
-const URL = config.apiRegisterURL
+const URL = import.meta.env.VITE_API_REGISTER_URL
 
 export const registerService = async (user) => {
-    console.log(URL)
     try {
-        const response = await fetch(`https://urlhub-server-2beh.onrender.com/api/v1/register` , {
+        const response = await fetch(`${URL}` , {
             method: 'POST',
             credentials: 'include',
             headers: {
