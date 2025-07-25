@@ -3,8 +3,9 @@ import config from '../../config.js'
 const URL = config.apiRegisterURL
 
 export const registerService = async (user) => {
+    console.log(URL)
     try {
-        const response = await fetch(`${URL}` , {
+        const response = await fetch(`https://urlhub-server-2beh.onrender.com/api/v1/register` , {
             method: 'POST',
             credentials: 'include',
             headers: {
