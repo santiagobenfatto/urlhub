@@ -10,10 +10,12 @@ export const registerService = async (user) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                first_name: user.userName,
                 email_register: user.email,
                 password: user.pass
             })
         })
+        console.log(response)
         if(!response.ok){
             throw new Error(`Error fetching/post the ${URL}. Error status: ${response.status}`)
         }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import NavBar from '../Components/NavBar/NavBar.jsx'
-import { registerAdapter } from '../Adapters/register.adapter.js'
 import { useNavigate } from 'react-router-dom'
 import { emailValidation } from '../Utils/validateRegex.js'
+import { registerService } from '../Service/register.service.js'
 
 const Login = () => {
     
@@ -14,7 +14,6 @@ const Login = () => {
         error: false,
         message: ''
     })
-
 
     const navigate = useNavigate()
 
@@ -41,21 +40,21 @@ const Login = () => {
         })
 
         try {
-            const userData = await registerAdapter({userName, email, pass})
+            const userData = await registerService({userName, email, pass})
 
+            setUserName('')
             setEmail('')
             setPass('')
-
+            console.log('USER DATA:',userData)
             if(userData.response.ok){
                 navigate('/home')
-                //add message: "register succesfully"
+                //add message: "User: john doe, register succesfully"
             }
 
 
         } catch (error) {
             throw new Error(`Error in register at ${error}`)
         }
-
     }
     
     return (
@@ -85,7 +84,7 @@ const Login = () => {
                 justifyContent: 'space-between',
                 width: '600px',
                 height: '350px'
-        }}>
+            }}>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -102,7 +101,6 @@ const Login = () => {
                 }}>
                 Create your account and manage your <span style={{color: '#ffb300'}}>Links!</span>
             </Typography>
-
             </Box>
 
             <Stack 
