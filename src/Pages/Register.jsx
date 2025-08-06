@@ -45,8 +45,8 @@ const Login = () => {
             setUserName('')
             setEmail('')
             setPass('')
-            console.log('USER DATA:',userData)
-            if(userData.response.ok){
+            console.log('USER DATA  OK ???:',userData.ok)
+            if(userData.ok){
                 navigate('/home')
                 //add message: "User: john doe, register succesfully"
             }
