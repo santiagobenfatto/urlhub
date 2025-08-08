@@ -1,7 +1,6 @@
 const URL = import.meta.env.VITE_API_REGISTER_URL
 
 export const registerService = async (user) => {
-    console.log('======= Inside register service ========')
     try {
         const response = await fetch(`${URL}` , {
             method: 'POST',
@@ -16,7 +15,7 @@ export const registerService = async (user) => {
                 password: user.pass
             })
         })
-        console.log('This is the client response returned:', response)
+
         if(!response.ok){
             throw new Error(`Error fetching/post the ${URL}. Error status: ${response.status}`)
         }

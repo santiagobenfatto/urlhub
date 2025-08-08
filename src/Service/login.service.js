@@ -3,6 +3,7 @@
 const URL = import.meta.env.VITE_API_LOGIN_URL
 
 export const loginService = async (credentials) => {
+    console.log('THIS IS THE URL VAR ENVIRONMENT:', URL)
     try {
         const response = await fetch (URL, {
             method: 'POST',
