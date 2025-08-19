@@ -3,7 +3,7 @@
 const URL = import.meta.env.VITE_API_LOGIN_URL
 
 export const loginService = async (credentials) => {
-    console.log('THIS IS THE URL VAR ENVIRONMENT:', URL)
+    console.log('LOGIN CREDENTIALS : ', credentials)
     try {
         const response = await fetch (URL, {
             method: 'POST',
@@ -14,7 +14,7 @@ export const loginService = async (credentials) => {
             },
             body: JSON.stringify({
                 email_register: credentials.email,
-                password: credentials.password
+                password: credentials.pass
             })
         })
         if(!response.ok){
