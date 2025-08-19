@@ -1,13 +1,10 @@
-import { loginService } from '../Service/login.service.js'
-
-export const loginAdapter = async (credentials) => {
-    const rawData = await loginService(credentials)
+export const loginAdapter = async (userData) => {
     return {
-        id: rawData?._id || '',
-        userName: rawData?.name || '',
-        email: rawData?.email || '',
-        linkList: rawData?.link_list || [],
-        hubSetup: rawData?.hub_setup || null,
-        response: rawData?.response || {}
+        id: userData?._id || '',
+        userName: userData?.name || '',
+        email: userData?.email || '',
+        linkList: userData?.link_list || [],
+        hubSetup: userData?.hub_setup || null,
+        response: userData?.response || {}
     }
 }

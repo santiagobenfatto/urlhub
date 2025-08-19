@@ -30,7 +30,7 @@ const Login = () => {
         if(!emailValidation(email)){
             setError({
                 error:true,
-                message: 'Introduce un email válido'
+                message: 'Please enter a valid email'
             })
             return
         }
@@ -47,9 +47,7 @@ const Login = () => {
             setPass('')
             if(userData.ok){
                 navigate('/home')
-                console.log(`User ${userName} registered`)
             }
-
 
         } catch (error) {
             throw new Error(`Error in register at ${error}`)
