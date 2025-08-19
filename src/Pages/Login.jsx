@@ -51,7 +51,7 @@ const Login = () => {
             setEmail('')
             setPass('')
 
-            if(userData.response.ok){
+            if(userData.ok){
                 navigate('/dashboard')
             }
 
