@@ -15,25 +15,6 @@ import { useLink } from '../../Context/useLink.jsx'
 
 
 const LinksTable = () => {    
-    useEffect(() => {
-  const fetchLinks = async () => {
-    try {
-      const data = await getUserLinks()
-      console.log('======= DATA DEL getUserLinks ======', data)
-      dispatch(addLinksBulk(data))
-    } catch (error) {
-      if (error.message.includes('403') || error.message.includes('401')) {
-        window.location.href = '/home'
-        return
-      }
-
-      console.error('Error al cargar links:', error)
-      window.location.href = '/home'
-    }
-  }
-
-  fetchLinks()
-}, [dispatch])
 
     const linksMap = useSelector(state => state.links.links)
     const dispatch = useDispatch()
@@ -54,6 +35,26 @@ const LinksTable = () => {
             toast.error('No se pudo eliminar el link', { theme: 'dark' })
         }
     }
+
+    useEffect(() => {
+  const fetchLinks = async () => {
+    try {
+      const data = await getUserLinks()
+      console.log('======= DATA DEL getUserLinks ======', data)
+      dispatch(addLinksBulk(data))
+    } catch (error) {
+      if (error.message.includes('403') || error.message.includes('401')) {
+        window.location.href = '/home'
+        return
+      }
+
+      console.error('Error al cargar links:', error)
+      window.location.href = '/home'
+    }
+  }
+
+  fetchLinks()
+}, [dispatch])
 
     return (
             <TableContainer 
