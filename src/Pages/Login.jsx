@@ -27,7 +27,6 @@ const Login = () => {
         }
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -45,8 +44,8 @@ const Login = () => {
 
         try {
             const result = await loginService({email, pass})
-            const userData = await loginAdapter(result)
-            console.log('==== USER DATA ====', userData)
+            console.log('==== USER DATA, SERVICE LOGIN ====', result)//vacíoconst userData = await loginAdapter(result)
+            // console.log('==== USER DATA ====', userData)//vacío
             dispatch(saveUser(userData))
             
             setEmail('')
