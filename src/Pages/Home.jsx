@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container } from '@mui/material'
+import { useAuthRedirect } from '../Hooks/useAuth.jsx'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
@@ -8,6 +9,8 @@ import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
 import LinksProvider from '../Context/LinksProvider.jsx'
 
 const Home = () => {
+    useAuthRedirect()
+
     return (
         <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',

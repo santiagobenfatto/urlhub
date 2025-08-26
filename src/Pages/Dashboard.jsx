@@ -19,7 +19,7 @@ const Dashboard = () => {
             minHeight: '100vh',
             m: 0
           }}>
-            <NavBar currentPage='home' />
+            <NavBar currentPage='dashboard' />
             <Box sx={{
                 boxSizing: 'border-box',
                 display: 'flex',
