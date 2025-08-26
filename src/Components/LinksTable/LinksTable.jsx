@@ -16,25 +16,24 @@ import { useLink } from '../../Context/useLink.jsx'
 
 const LinksTable = () => {    
     useEffect(() => {
-        const fetchLinks = async () => {
-            try {
-                const res = getUserLinks()
-                console.log('Este es el RES del getUserLinks en el client:', res)
-            if (res.status === 403 || res.status === 401) {
-                window.location.href = '/home'
-                return
-            }
+  const fetchLinks = async () => {
+    try {
+      const data = await getUserLinks()
+      console.log('======= DATA DEL getUserLinks ======', data)
+      dispatch(addLinksBulk(data))
+    } catch (error) {
+      if (error.message.includes('403') || error.message.includes('401')) {
+        window.location.href = '/home'
+        return
+      }
 
-            const data = await res.json()
-            dispatch(addLinksBulk(data))
-            } catch (error) {
-            console.error('Error al cargar links:', error)
-            window.location.href = '/home'
-            }
-        }
+      console.error('Error al cargar links:', error)
+      window.location.href = '/home'
+    }
+  }
 
-        fetchLinks()
-    }, [])
+  fetchLinks()
+}, [dispatch])
 
     const linksMap = useSelector(state => state.links.links)
     const dispatch = useDispatch()
