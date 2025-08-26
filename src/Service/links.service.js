@@ -11,7 +11,7 @@ const getUserLinks = async () => {
         return data
         
     } catch (error) {
-        console.error('Error in getLinkListById:', error)
+        console.error('Error in getUserLinks:', error)
         throw error
     }
 }
