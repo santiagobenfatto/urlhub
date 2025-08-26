@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container } from '@mui/material'
-import { useAuthRedirect } from '../Hooks/useAuth.jsx'
+import { useAuthRedirect } from '../Hooks/useAuthRedirect.jsx'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'

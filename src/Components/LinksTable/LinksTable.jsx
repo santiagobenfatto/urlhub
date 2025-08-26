@@ -6,16 +6,36 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import EditIcon from '@mui/icons-material/Edit'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeLink } from  '../../Redux/slices/links.slice.js'
+import { addLinksBulk, removeLink } from  '../../Redux/slices/links.slice.js'
 import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
-import { deleteLink } from '../../Service/links.service.js'
+import { deleteLink, getUserLinks } from '../../Service/links.service.js'
 import { useLink } from '../../Context/useLink.jsx'
 
 
 
-const LinksTable = () => {
-    
+const LinksTable = () => {    
+    useEffect(() => {
+        const fetchLinks = async () => {
+            try {
+                const res = getUserLinks()
+                console.log('Este es el RES del getUserLinks en el client:', res)
+            if (res.status === 403 || res.status === 401) {
+                window.location.href = '/home'
+                return
+            }
+
+            const data = await res.json()
+            dispatch(addLinksBulk(data))
+            } catch (error) {
+            console.error('Error al cargar links:', error)
+            window.location.href = '/home'
+            }
+        }
+
+        fetchLinks()
+    }, [])
+
     const linksMap = useSelector(state => state.links.links)
     const dispatch = useDispatch()
 

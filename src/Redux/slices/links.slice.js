@@ -10,7 +10,7 @@ const linkSlice = createSlice({
     reducers: {
         addLink(state, action) {
             state.links.push({
-                id: state.links[state.links.length - 1]?.id +1 || 1,
+                id: action.payload.id,
                 title: action.payload.title,
                 bigLink: action.payload.big_link,
                 shortLink: action.payload.short_link,
@@ -18,6 +18,16 @@ const linkSlice = createSlice({
                 alias: `/${action.payload.alias}`
             })
         },
+        addLinksBulk(state, action) {
+            state.links = action.payload.map(link => ({
+                id: link.id,
+                title: link.title,
+                bigLink: link.big_link,
+                shortLink: link.short_link,
+                icon: link.icon || '',
+                alias: `/${link.alias}`
+                }))
+            },
         updateLinkField(state, action) {
             const linkIndex = state.links.findIndex(link => link.id === action.payload.id)
             if (linkIndex !== -1) {
@@ -31,5 +41,5 @@ const linkSlice = createSlice({
 
 })
 
-export const { addLink, removeLink, updateLinkField } = linkSlice.actions
+export const { addLink, addLinksBulk, removeLink, updateLinkField } = linkSlice.actions
 export default linkSlice.reducer

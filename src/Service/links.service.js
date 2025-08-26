@@ -1,10 +1,10 @@
 const URL = import.meta.env.VITE_API_LINKS_URL
 
-const getLinkListById = async (linkListId) => {
+const getUserLinks = async () => {
     try {
-        const response = await fetch(`${URL}/${linkListId}`)
+        const response = await fetch(URL)
         if(!response.ok) {
-            throw new Error(`Error fetching ${URL}/api/${linkListId}. Status: ${response.status}`)
+            throw new Error(`Error fetching ${URL}/api. Status: ${response.status}`)
         }
 
         const data = await response.json()
@@ -100,7 +100,7 @@ const deleteLink = async (linkId) => {
 }
 
 export {
-    getLinkListById,
+    getUserLinks,
     addNewLink,
     addPublicLink,
     updateLink,
