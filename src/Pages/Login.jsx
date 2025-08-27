@@ -44,8 +44,8 @@ const Login = () => {
 
         try {
             const response = await loginService({email, pass})
-            console.log('===== RESPONSE =====', response)
-            //console.log('==== USER DATA, SERVICE LOGIN ====', response.data.user)
+            const parsedResponse = await response.json()
+            console.log(parsedResponse)
             const userData = await loginAdapter(response.data.user)
             console.log('==== USER DATA ====', userData)
             dispatch(saveUser(userData))
