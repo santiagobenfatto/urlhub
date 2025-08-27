@@ -43,15 +43,16 @@ const Login = () => {
         })
 
         try {
-            const result = await loginService({email, pass})
-            console.log('==== USER DATA, SERVICE LOGIN ====', result)//vacíoconst userData = await loginAdapter(result)
-            // console.log('==== USER DATA ====', userData)//vacío
+            const response = await loginService({email, pass})
+            console.log('==== USER DATA, SERVICE LOGIN ====', response)
+            const userData = await loginAdapter(response.user)
+            console.log('==== USER DATA ====', userData)
             dispatch(saveUser(userData))
             
             setEmail('')
             setPass('')
 
-            if(userData.ok){
+            if(response.ok){
                 navigate('/dashboard')
             }
 
