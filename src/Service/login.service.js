@@ -19,7 +19,7 @@ export const loginService = async (credentials) => {
         if(!response.ok){
             throw new Error(`Error fetching/post the ${URL}. Error status: ${response.status}`)
         }
-        return response
+        return response.json()
     } catch (error) {
         console.log(`Error in Login: ${error}`)
         throw error
