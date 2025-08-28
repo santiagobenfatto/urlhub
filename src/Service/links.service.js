@@ -2,7 +2,6 @@ const URL = import.meta.env.VITE_API_LINKS_URL
 
 const getUserLinks = async () => {
     try {
-        console.log('===== URL GET LINKS =====', URL)
         const response = await fetch(URL)
         console.log('===== RESPONSE LINKS =====', response)
         if(!response.ok) {

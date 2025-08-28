@@ -46,7 +46,7 @@ const LinksTable = () => {
                 console.error('Error al cargar links:', error)
                 if (error.message.includes('403') || error.message.includes('401')) {
                     console.log('Este es el error message', error.message)
-                    window.location.href = '/home'
+                    //window.location.href = '/home'
                     return
                 }
             }
