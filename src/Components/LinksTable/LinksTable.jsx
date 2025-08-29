@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import EditIcon from '@mui/icons-material/Edit'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLinksBulk, removeLink } from  '../../Redux/slices/links.slice.js'
@@ -18,13 +19,13 @@ const LinksTable = () => {
 
     const linksMap = useSelector(state => state.links.links)
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const { handleEditting, linkId } = useLink()
     
     const handleEdit = async (linkIdData) => { 
         handleEditting(linkIdData)
     }
-
+    
     const handleDelete = async (linkIdData) => { 
         try {
             await deleteLink(linkIdData)
@@ -40,13 +41,19 @@ const LinksTable = () => {
         const fetchLinks = async () => {
             try {
                 const data = await getUserLinks()
-                console.log('======= DATA DEL getUserLinks ======', data)
+                console.log('==== DATA en getUserLinks ====', data)
+                
+                if(!data.ok){
+                    navigate('/home')
+                }
+    
                 dispatch(addLinksBulk(data))
+
             } catch (error) {
-                console.error('Error al cargar links:', error)
+                // console.error('Error al cargar links:', error)
                 if (error.message.includes('403') || error.message.includes('401')) {
                     console.log('Este es el error message', error.message)
-                    //window.location.href = '/home'
+                    navigate('/home')
                     return
                 }
             }
