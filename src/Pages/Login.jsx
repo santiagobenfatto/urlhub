@@ -46,7 +46,7 @@ const Login = () => {
             const response = await loginService({email, pass})
             const parsedResponse = await response.json() // data.user
             const userData = await loginAdapter(parsedResponse.data.user)
-            console.log('==== USER DATA ====', userData)
+            console.log('==== USER DATA ====', parsedResponse.data.user)//no está mandando un role
             dispatch(saveUser(userData))
             
             setEmail('')
