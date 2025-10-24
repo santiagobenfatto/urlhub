@@ -2,7 +2,10 @@ const URL = import.meta.env.VITE_API_LINKS_URL
 
 const getUserLinks = async () => {
     try {
-        const response = await fetch(URL)
+        const response = await fetch(URL, {
+            method: 'GET',
+            credentials: 'include',
+            })
         console.log('===== RESPONSE LINKS =====', response)
         if(!response.ok) {
             throw new Error(`Error fetching ${URL} Status: ${response.status}`)
@@ -21,6 +24,7 @@ const addNewLink = async (link) => {
     try {
         const response = await fetch(URL, {
             method: 'POST',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
         })
@@ -64,6 +68,7 @@ const updateLink = async (linkId, updates) => {
     try {
         const response = await fetch(`${URL}/${linkId}`, {
             method: 'PUT',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates)
         })
@@ -84,6 +89,7 @@ const deleteLink = async (linkId) => {
     try {
         const response = await fetch(`${URL}/${linkId}`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
         })
 

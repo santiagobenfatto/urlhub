@@ -2,6 +2,7 @@ const URL = import.meta.env.VITE_API_LOGOUT_URL
 
 export const logout = async () => {
     try {
+        console.log('LOGOUT FUNCTION')
         const response = await fetch(URL, {
             method: 'POST',
             credentials: 'include',
