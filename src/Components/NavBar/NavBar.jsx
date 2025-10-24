@@ -1,12 +1,16 @@
 import React from 'react'
 import { AppBar, Toolbar, Button, Tooltip } from '@mui/material'
 import { logout } from '../../Service/logout.service.js'
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = ({ currentPage }) => {
+
+    const navigate = useNavigate()
+
     const handleLogout = async () => {
     try {
       await logout()
-      window.location.href = '/home'
+      navigate('/home')
     } catch (err) {
       console.error('Logout failed', err)
     }
@@ -45,12 +49,14 @@ const NavBar = ({ currentPage }) => {
                         HOME
                     </Button>
                 </Tooltip>
-                <Button
-                    sx={{ letterSpacing: '1px', mx: 1 }}
-                    href="/login"
-                >
-                    LOGIN
-                </Button>
+                <Tooltip title='Login'>
+                    <Button
+                        sx={{ letterSpacing: '1px', mx: 1 }}
+                        href="/login"
+                    >
+                        LOGIN
+                    </Button>
+                </Tooltip>
                 </>
             )}
             {currentPage === 'login' && (
