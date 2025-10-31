@@ -9,7 +9,7 @@ import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
 import LinksProvider from '../Context/LinksProvider.jsx'
 
 const Home = () => {
-    useAuthRedirect()
+    //useAuthRedirect()
 
     return (
         <Container disableGutters maxWidth='false' sx={{
