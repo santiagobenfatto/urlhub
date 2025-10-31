@@ -30,7 +30,7 @@ const addNewLink = async (link) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/api/v1/:link`)
+            throw new Error(`Error fetching ${URL}/api/v1/link`)
         }
 
         const data = await response.json()
