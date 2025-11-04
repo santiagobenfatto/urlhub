@@ -8,6 +8,7 @@ import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
 import { useDispatch } from 'react-redux'
 import { validateUrl, validateAlias } from '../../Utils/validateRegex.js'
 import { addLinkAdapter } from '../../Adapters/links.adapter.js'
+import { addNewLink as addLinkService } from '../../Service/links.service.js'
 
 
 const AddLinkForm = () => {

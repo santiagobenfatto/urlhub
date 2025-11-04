@@ -84,7 +84,7 @@ const NavBar = ({ currentPage }) => {
                 <Tooltip title='Logout'>
                 <Button
                     sx={{ letterSpacing: '1px', mx: 1 }}
-                    onClick={ () => handleLogout }
+                    onClick={ () => handleLogout() }
                 >
                     LOGOUT
                 </Button>
