@@ -6,7 +6,7 @@ const getUserLinks = async () => {
             method: 'GET',
             credentials: 'include',
             })
-        console.log('===== RESPONSE LINKS =====', response)
+        
         if(!response.ok) {
             throw new Error(`Error fetching ${URL} Status: ${response.status}`)
         }

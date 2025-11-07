@@ -41,7 +41,6 @@ const LinksTable = () => {
         const fetchLinks = async () => {
             try {
                 const data = await getUserLinks()
-                console.log('==== DATA en getUserLinks ====', data)
                 
                 if((response.status >= 400)){
                     navigate('/home')
