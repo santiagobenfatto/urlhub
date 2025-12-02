@@ -43,7 +43,7 @@ const Shortener = () => {
             setUrlError({ error: false, message: ''})
             if(result.status.ok){
                 addShortURL(linkAdapted)
-                savePublicLink(linkAdapted)
+                savePublicLink(linkAdapted) //localStorage
         } else {
             throw new Error(result.message || 'Error desconocido al añadir el enlace')
         }
