@@ -37,11 +37,12 @@ const Shortener = () => {
             toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
             return
             }        
-            const result = await addPublicLinkService(linkData)
+            const response = await addPublicLinkService(linkData)
             //Public link its saved in context and localStorage
-            const linkAdapted = await addPublicLinkAdapter(result)
+            const linkAdapted = await addPublicLinkAdapter(response)
             setUrlError({ error: false, message: ''})
-            if(result.status.ok){
+            console.log('response.STATUS')
+            if(response.ok){
                 addShortURL(linkAdapted)
                 savePublicLink(linkAdapted) //localStorage
         } else {
