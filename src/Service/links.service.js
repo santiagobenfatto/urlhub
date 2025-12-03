@@ -48,8 +48,13 @@ const addPublicLink = async (link) => {
         const response = await fetch(`${URL}/short`, {
             method: 'POST',
             credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(link)
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                big_link: link.bigLink
+            })
         })
 
         console.log(response)
