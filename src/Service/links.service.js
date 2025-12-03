@@ -45,14 +45,14 @@ const addNewLink = async (link) => {
 
 const addPublicLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/api/v1/addPublicLink`, {
+        const response = await fetch(`${URL}/short`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(link)
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/api/v1/addPublicLink`)
+            throw new Error(`Error fetching ${URL}/short`)
         }
 
         const data = await response.json()
