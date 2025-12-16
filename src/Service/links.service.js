@@ -47,7 +47,6 @@ const addPublicLink = async (link) => {
     try {
         const response = await fetch(`${URL}/short`, {
             method: 'POST',
-            credentials: 'include',
             headers: { 
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
