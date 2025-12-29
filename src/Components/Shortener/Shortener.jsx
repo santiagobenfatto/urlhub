@@ -52,9 +52,10 @@ const Shortener = () => {
             throw new Error(response.message || 'Error desconocido al añadir el enlace')
         }
         } catch (err) {
+            console.log(err)
             setUrlError({
                 error: true,
-                message: err.response?.data?.message || 'El alias ya existe o hubo un error.',
+                message: 'El alias ya existe o hubo un error.',
             })
         }
     }
