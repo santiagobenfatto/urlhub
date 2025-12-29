@@ -34,10 +34,11 @@ const Shortener = () => {
         try {
             const existingLinks = getPublicLink()
             if (existingLinks.length >= 1) {
-            toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
-            return
+                toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
+                return
             }        
             const response = await addPublicLinkService(linkData)
+            
             //Public link its saved in context and localStorage
             const linkAdapted = await addPublicLinkAdapter(response)
             setUrlError({ error: false, message: ''})
@@ -46,10 +47,10 @@ const Shortener = () => {
                 addShortURL(linkAdapted)
                 savePublicLink(linkAdapted) //localStorage
                 setLinkData({bigLink: ''})
+                toast.success('Link shortened successfully', { theme:'dark' })
         } else {
-            throw new Error(result.message || 'Error desconocido al añadir el enlace')
+            throw new Error(response.message || 'Error desconocido al añadir el enlace')
         }
-        toast.success('Link shortened successfully', { theme:'dark' })
         } catch (err) {
             setUrlError({
                 error: true,
