@@ -41,10 +41,11 @@ const Shortener = () => {
             //Public link its saved in context and localStorage
             const linkAdapted = await addPublicLinkAdapter(response)
             setUrlError({ error: false, message: ''})
-            console.log('response.STATUS')
+
             if(response.ok){
                 addShortURL(linkAdapted)
                 savePublicLink(linkAdapted) //localStorage
+                setLinkData({bigLink: ''})
         } else {
             throw new Error(result.message || 'Error desconocido al añadir el enlace')
         }
@@ -92,7 +93,16 @@ const Shortener = () => {
                 error={urlError.error}
                 helperText={urlError.message}
                 required 
-                onChange={e => setLinkData({bigLink: e.target.value})}
+                onChange={e => {
+                    const value = e.target.value
+                    setLinkData({ bigLink: value })
+                    //Real time validation
+                    if (validateUrl(value)) {
+                        setUrlError({ error: false, message: '' })
+                    } else {
+                        setUrlError({ error: true, message: 'Please enter a valid URL' })
+                    }
+                }}
                 sx={{ width: '90%', mb: '12px' }}/>
             </Tooltip>
             <Box sx={{

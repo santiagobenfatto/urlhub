@@ -56,7 +56,6 @@ const addPublicLink = async (link) => {
             })
         })
 
-        console.log(response)
         if(!response.ok){
             throw new Error(`Error fetching ${URL}/short`)
         }
