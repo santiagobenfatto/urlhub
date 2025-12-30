@@ -60,8 +60,7 @@ const addPublicLink = async (link) => {
             throw new Error(`Error fetching ${URL}/short`)
         }
 
-        const data = await response.json()
-        return data
+        return response
         
     } catch (error) {
         console.error('Error creating simple link', error)
