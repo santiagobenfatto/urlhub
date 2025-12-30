@@ -97,11 +97,11 @@ const Shortener = () => {
                 required 
                 onChange={e => {
                     const value = e.target.value
-                    setBigLink(value)
+                    setLinkData(prev => ({ ...prev, bigLink: value }))
                     if (value === '' || validateUrl(value)) {
-                    setUrlError({ error: false, message: '' })
+                        setUrlError({ error: false, message: '' })
                     } else {
-                    setUrlError({ error: true, message: 'Please enter a valid URL' })
+                        setUrlError({ error: true, message: 'Please enter a valid URL' })
                     }
                 }}
                 sx={{ width: '90%', mb: '12px' }}/>
