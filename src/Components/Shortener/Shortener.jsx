@@ -44,6 +44,7 @@ const Shortener = () => {
             setUrlError({ error: false, message: ''})
 
             if(response.ok){
+                console.log(linkAdapted)
                 addShortURL(linkAdapted)
                 savePublicLink(linkAdapted) //localStorage
                 setLinkData({bigLink: ''})
