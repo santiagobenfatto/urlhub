@@ -1,8 +1,8 @@
-const URL = import.meta.env.VITE_API_REGISTER_URL
+const URL = import.meta.env.VITE_API_SERVER_URL
 
 export const registerService = async (user) => {
     try {
-        const response = await fetch(`${URL}` , {
+        const response = await fetch(`${URL}/users/register` , {
             method: 'POST',
             credentials: 'include',
             headers: {
