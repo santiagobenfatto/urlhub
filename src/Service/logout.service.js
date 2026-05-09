@@ -1,8 +1,9 @@
-const URL = import.meta.env.VITE_API_SERVER_URL
+const serverURL = import.meta.env.VITE_API_SERVER_URL
+const URL = `${serverURL}/api/v1/users/logout`
 
 export const logout = async () => {
     try {
-        const response = await fetch(`${URL}/users/logout`, {
+        const response = await fetch(URL, {
             method: 'POST',
             credentials: 'include',
         })
