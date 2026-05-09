@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const serverUrl = import.meta.env.VITE_API_SERVER_URL
-const URL = `${serverURL}/api/v1/users/auth/verify`
+const URL = import.meta.env.VITE_API_SERVER_URL
 
 export const useAuthRedirect = () => {
   const navigate = useNavigate()
@@ -10,7 +9,7 @@ export const useAuthRedirect = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await fetch(URL, {
+        const response = await fetch(`${URL}/users/auth/verify`, {
           method: 'POST',
           credentials: 'include'
         })
