@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Home, Login, Register, Dashboard } from '../Pages/index.js'
+import { Home, Login, Register, Dashboard, UserHub } from '../Pages/index.js'
 
 export const router = createBrowserRouter([
     {
@@ -17,5 +17,9 @@ export const router = createBrowserRouter([
     {
         path:'/dashboard',
         element:<Dashboard />
+    },
+    {
+        path:'/hub',
+        element:<UserHub />
     }
 ])

@@ -22,7 +22,7 @@ const getUserLinks = async () => {
 
 const addNewLink = async (link) => {
     try {
-        const response = await fetch(URL, {
+        const response = await fetch(`${URL}/link`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -30,7 +30,7 @@ const addNewLink = async (link) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/api/v1/link`)
+            throw new Error(`Error fetching ${URL}/link. Status: ${response.status}`)
         }
 
         const data = await response.json()
@@ -70,7 +70,7 @@ const addPublicLink = async (link) => {
 
 const updateLink = async (linkId, updates) => {
     try {
-        const response = await fetch(`${URL}/${linkId}`, {
+        const response = await fetch(`${URL}/link/${linkId}`, {
             method: 'PUT',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -78,20 +78,20 @@ const updateLink = async (linkId, updates) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error deleting link. Status: ${response.status}`)
+            throw new Error(`Error updating link. Status: ${response.status}`)
         }
 
         const data = await response.json()
         return data
     } catch (error) {
-        console.error('Error creating the link', error)
+        console.error('Error updating the link', error)
         throw error
     }
 }
 
 const deleteLink = async (linkId) => { 
     try {
-        const response = await fetch(`${URL}/${linkId}`, {
+        const response = await fetch(`${URL}/link/${linkId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
@@ -105,7 +105,7 @@ const deleteLink = async (linkId) => {
         return data
         
     } catch (error) {
-        console.error('Error creating simple link', error)
+        console.error('Error deleting link', error)
         throw error
     }
 }

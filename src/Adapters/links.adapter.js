@@ -3,7 +3,7 @@ const linksListAdapter = async (linkListData) => {
 	const linkList = linkListData.map(link => ({
 		title: link.title,
 		bigLink: link.big_link, 
-		shorLink: link.short_link,
+		shortLink: link.short_link,
 		alias: link.alias,
 		icon: link.icon
 }))

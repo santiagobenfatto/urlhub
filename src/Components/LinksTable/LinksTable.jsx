@@ -41,17 +41,9 @@ const LinksTable = () => {
         const fetchLinks = async () => {
             try {
                 const data = await getUserLinks()
-                
-                if((response.status >= 400)){
-                    navigate('/home')
-                }
-    
                 dispatch(addLinksBulk(data))
-
             } catch (error) {
-                // console.error('Error al cargar links:', error)
                 if (error.message.includes('403') || error.message.includes('401')) {
-                    console.log('Este es el error message', error.message)
                     navigate('/home')
                     return
                 }
@@ -168,7 +160,7 @@ const LinksTable = () => {
                     <Tooltip title='Add the link to your hub'>
                     <IconButton
                         alt= 'Add Hub Icon'
-                        onClick={() => dispatch(addLinkToHub(link.id))} //provisorio
+                        onClick={() => dispatch(addLinkToHub(link))}
                         sx={{
                             p: 0,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',
