@@ -1,8 +1,9 @@
-const URL = import.meta.env.VITE_API_SERVER_URL
+const serverURL = import.meta.env.VITE_API_SERVER_URL
+const URL = `${serverURL}/api/v1/users`
 
 export const loginService = async (credentials) => {
     try {
-        const response = await fetch (`${URL}/users/login`, {
+        const response = await fetch (`${URL}/login`, {
             method: 'POST',
             credentials: 'include',
             headers: {

@@ -1,8 +1,9 @@
-const URL = import.meta.env.VITE_API_SERVER_URL
+const serverURL = import.meta.env.VITE_API_SERVER_URL
+const URL = `${serverURL}/api/v1/links`
 
 const getUserLinks = async () => {
     try {
-        const response = await fetch(`${URL}/links`, {
+        const response = await fetch(URL, {
             method: 'GET',
             credentials: 'include',
             })
@@ -22,7 +23,7 @@ const getUserLinks = async () => {
 
 const addNewLink = async (link) => {
     try {
-        const response = await fetch(`${URL}/link`, {
+        const response = await fetch(URL, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },

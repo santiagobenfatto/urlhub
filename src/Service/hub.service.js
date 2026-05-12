@@ -1,8 +1,9 @@
-const URL = import.meta.env.VITE_API_SERVER_URL
+const serverURL = import.meta.env.VITE_API_SERVER_URL
+const URL = `${serverURL}/api/v1/hubs`
 
 const getUserHub = async () => {
     try {
-        const response = await fetch(`${URL}/hub`, {
+        const response = await fetch(URL, {
             method: 'GET',
             credentials: 'include'
         })
@@ -19,7 +20,7 @@ const getUserHub = async () => {
 
 const saveHub = async (hubData) => {
     try {
-        const response = await fetch(`${URL}/hub`, {
+        const response = await fetch(URL, {
             method: 'PUT',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -38,7 +39,7 @@ const saveHub = async (hubData) => {
 
 const addLinkToHubService = async (linkId) => {
     try {
-        const response = await fetch(`${URL}/hub/links`, {
+        const response = await fetch(`${URL}/links`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -57,7 +58,7 @@ const addLinkToHubService = async (linkId) => {
 
 const removeLinkFromHubService = async (linkId) => {
     try {
-        const response = await fetch(`${URL}/hub/links/${linkId}`, {
+        const response = await fetch(`${URL}/links/${linkId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
