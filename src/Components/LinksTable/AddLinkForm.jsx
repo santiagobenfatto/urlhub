@@ -77,8 +77,11 @@ const AddLinkForm = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const { bigLink, ...rest } = formData
+            const { bigLink, icon, ...rest } = formData
             const linkData = { big_link: bigLink, ...rest }
+            if (icon) {
+                linkData.icon = icon
+            }
             const result = await addLinkService(linkData)
             const linkAdapted = await addLinkAdapter(result)
             
