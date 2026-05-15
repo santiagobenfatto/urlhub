@@ -59,6 +59,7 @@ const Shortener = () => {
                 error: true,
                 message: 'El alias ya existe o hubo un error.',
             })
+            toast.error('Error al acortar el link', { theme: 'dark' })
         }
     }
 

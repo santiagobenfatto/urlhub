@@ -44,9 +44,11 @@ const LinksTable = () => {
                 dispatch(addLinksBulk(data))
             } catch (error) {
                 if (error.message.includes('403') || error.message.includes('401')) {
+                    toast.error('Sesión expirada. Redirigiendo...', { theme: 'dark' })
                     navigate('/home')
                     return
                 }
+                toast.error('Error al cargar los links', { theme: 'dark' })
             }
         }
         fetchLinks()

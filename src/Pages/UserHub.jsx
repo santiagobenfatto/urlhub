@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, Container, Typography } from '@mui/material'
 import NavBar from '../Components/NavBar/NavBar.jsx'
-import LinksManager from '../Components/LinksTable/LinksManager.jsx'
 import Footer from '../Components/Footer/Footer.jsx'
 import LinksProvider from '../Context/LinksProvider.jsx'
+import HubContainer from '../Components/Hub/HubContainer.jsx'
 
 function UserHub() {
     return (
@@ -38,7 +38,7 @@ function UserHub() {
                         My Hub
                     </Typography>
                 </Box>
-                <LinksManager />
+                <HubContainer />
                 <Footer />
             </LinksProvider>
         </Container>

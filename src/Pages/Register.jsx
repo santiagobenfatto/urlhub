@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import { useNavigate } from 'react-router-dom'
 import { emailValidation } from '../Utils/validateRegex.js'
@@ -46,11 +47,12 @@ const Login = () => {
             setEmail('')
             setPass('')
             if(userData.ok){
+                toast.success('Cuenta creada exitosamente', { theme: 'dark' })
                 navigate('/home')
             }
 
         } catch (error) {
-            throw new Error(`Error in register at ${error}`)
+            toast.error('Error al registrarse. Intenta de nuevo.', { theme: 'dark' })
         }
     }
     

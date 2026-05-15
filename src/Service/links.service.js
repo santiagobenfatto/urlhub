@@ -31,7 +31,7 @@ const addNewLink = async (link) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/link. Status: ${response.status}`)
+            throw new Error(`Error fetching ${URL}. Status: ${response.status}`)
         }
 
         const data = await response.json()
@@ -43,8 +43,8 @@ const addNewLink = async (link) => {
     }
 }
 
-
 const addPublicLink = async (link) => {
+    console.log(serverURL)
     try {
         const response = await fetch(`${URL}/short`, {
             method: 'POST',

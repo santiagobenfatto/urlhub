@@ -17,7 +17,7 @@ const NavBar = ({ currentPage }) => {
   }
 
     return (
-        <AppBar>
+        <AppBar position='static'>
             <Toolbar sx={{ justifyContent: 'flex-end' }}>
             {currentPage === 'home' && (
                 <>

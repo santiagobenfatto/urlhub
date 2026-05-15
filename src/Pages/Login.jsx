@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import { useDispatch } from 'react-redux'
 import { loginAdapter } from '../Adapters/login.adapter.js'
@@ -52,11 +53,13 @@ const Login = () => {
             setPass('')
 
             if(response.ok){
+                toast.success('Inicio de sesión exitoso', { theme: 'dark' })
                 navigate('/dashboard')
             }
 
         } catch (error) {
-           console.log(error)
+            console.log(error)
+            toast.error('Error al iniciar sesión. Verifica tus credenciales.', { theme: 'dark' })
         }
 
     }

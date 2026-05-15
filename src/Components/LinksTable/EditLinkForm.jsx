@@ -76,9 +76,10 @@ const EditLinkForm = ({linkId}) => {
             } else {
                 throw new Error(result.message || 'Error desconocido al añadir el enlace')
             }
-            toast.success('Formulario enviado', { theme: 'dark'})
+            toast.success('Link actualizado exitosamente', { theme: 'dark'})
         } catch (err) {
             console.log(err)
+            toast.error('Error al actualizar el link', { theme: 'dark' })
         }
     }
 

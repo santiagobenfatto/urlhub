@@ -77,7 +77,9 @@ const AddLinkForm = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const result = await addLinkService(formData)
+            const { bigLink, ...rest } = formData
+            const linkData = { big_link: bigLink, ...rest }
+            const result = await addLinkService(linkData)
             const linkAdapted = await addLinkAdapter(result)
             
             setBigLinkError({ error: false, message: '' })
@@ -88,12 +90,13 @@ const AddLinkForm = () => {
             } else {
                 throw new Error(result.message || 'Error desconocido al añadir el enlace')
             }
-            toast.success('Formulario enviado', { theme: 'dark'})
+            toast.success('Link creado exitosamente', { theme: 'dark'})
         } catch (err) {
             setBigLinkError({
                 error: true,
                 message: err.response?.data?.message || 'El alias ya existe o hubo un error.',
             })
+            toast.error(err.response?.data?.message || 'Error al crear el link', { theme: 'dark' })
         }
     }
 
