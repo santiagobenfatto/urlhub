@@ -6,7 +6,7 @@ import { validateUrl } from '../../Utils/validateRegex'
 import { useLink } from '../../Context/useLink.jsx'
 import { addPublicLink as addPublicLinkService} from '../../Service/links.service.js'
 import { addPublicLinkAdapter } from '../../Adapters/links.adapter.js'
-import { getPublicLink, savePublicLink } from '../../Utils/utils.js'
+import { getPublicLink } from '../../Utils/utils.js'
 
 
 const Shortener = () => {
@@ -39,15 +39,15 @@ const Shortener = () => {
             }        
             const response = await addPublicLinkService(linkData)
             console.log('Response:', response)
-            console.log('RESPONSE JSON:', response.json())
+            
             //Public link its saved in context and localStorage
-            const linkAdapted = await addPublicLinkAdapter(response.json())
+            const data = await response.json()
+            const linkAdapted = addPublicLinkAdapter(data)
             setUrlError({ error: false, message: ''})
 
             if(response.ok){
                 console.log('Link Adaptado:', linkAdapted)
                 addShortURL(linkAdapted)
-                savePublicLink(linkAdapted) //localStorage
                 setLinkData({bigLink: ''})
                 toast.success('Link shortened successfully', { theme:'dark' })
         } else {

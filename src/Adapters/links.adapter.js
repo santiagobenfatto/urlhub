@@ -22,7 +22,7 @@ const addLinkAdapter = async (linkData) => {
 	return newLink
 }
 
-const addPublicLinkAdapter = async (linkData) => {
+const addPublicLinkAdapter = (linkData) => {
 	const newLink = {
 		id: linkData.id,
 		title: linkData.title,
