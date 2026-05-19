@@ -7,13 +7,10 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { toast } from 'react-toastify'
 import { useLink } from '../../Context/useLink.jsx'
 
-
-
-
 const LinkDrawer = () => {
     const [open, setOpen] = useState(false)
-    
-    const drawerHeight = 200
+
+    const drawerHeight = 280
 
 	const { urlData } = useLink()
 
@@ -21,6 +18,7 @@ const LinkDrawer = () => {
 		setOpen(newOpen)
 	}
 
+	const hasLink = urlData.shortLink !== ''
 
   return (
     <>
@@ -72,7 +70,7 @@ const LinkDrawer = () => {
 			transition: 'right 0.3s ease',
 			borderRadius: '16px',
 			display: 'flex',
-			flexDirection: 'row', // Para mantener el botón y el contenido en línea
+			flexDirection: 'row',
 			alignItems: 'center'
           },
         }}>
@@ -99,79 +97,109 @@ const LinkDrawer = () => {
             </IconButton>
           </Box>
         </Tooltip>
-       <Box 
+       <Box
 	   sx={{
 		display: 'flex',
 		flexDirection: 'column',
 		height: '100%',
 		width: '100%',
 		p: '16px 12px 24px 12px',
-		gap: '16px'
+		gap: '12px',
+		overflow: 'auto'
 	   }}>
-		<Box sx={{display: 'flex', flexDirection: 'column'}}>
-			<Typography
-				variant='body1'
-				color='secondary.main'
-				sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
-					Big Link:
-			</Typography>
-			<Typography 
-				variant='body1'
-				color='secondary.main'
-				sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
-					{urlData.bigLink === '' ? 'No links yet' : `${urlData.bigLink}`}
-			</Typography>
-		</Box>
-		<Box sx={{display: 'flex', flexDirection: 'column'}}>
-		<Typography
-		variant='body1'
-		color='secondary.main'
-		sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
-			Short Link:
-		</Typography>
-		<Typography 
-			variant='body1'
-			color='secondary.main'
-			sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
-			{urlData.shortLink === '' ? 'No links yet' : (
-        	<>
-            {urlData.shortLink}
-            <Tooltip title='Copy'>
-                <IconButton
-                    aria-label='Copy Short URL'
-                    onClick={() => {
-                        navigator.clipboard.writeText(urlData.shortLink)
-                            .then(() => {
-                                toast.success('Short link copied to clipboard!', { theme: 'dark' })
-                            })
-                            .catch(() => {
-                                toast.error('An error occurred. Please try again.', { theme: 'dark' })
-                            })
-                    }}
-                    color='secondary'
-                    sx={{
-                        p: 0,
-                        ':hover': {
-                            filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
-                        }
-                    }}
-                >
-					<ContentCopyIcon />
-				</IconButton>
-			</Tooltip>
+		{!hasLink ? (
+			<Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+				<Typography variant='body1' color='secondary.main' sx={{ fontSize: '1rem' }}>
+					No links yet
+				</Typography>
+			</Box>
+		) : (
+			<>
+				{urlData.title && (
+					<Box sx={{display: 'flex', flexDirection: 'column'}}>
+						<Typography
+							variant='body1'
+							sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
+								Title:
+						</Typography>
+						<Typography
+							variant='body1'
+							sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+							{urlData.title}
+						</Typography>
+					</Box>
+				)}
+				<Box sx={{display: 'flex', flexDirection: 'column'}}>
+					<Typography
+						variant='body1'
+						sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
+							Big Link:
+					</Typography>
+					<Typography
+						variant='body1'
+						sx={{ fontSize: '1.1rem', paddingLeft: '8px', wordBreak: 'break-all' }}>
+						{urlData.bigLink}
+					</Typography>
+				</Box>
+				<Box sx={{display: 'flex', flexDirection: 'column'}}>
+					<Typography
+					variant='body1'
+					sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
+						Short Link:
+					</Typography>
+					<Typography
+						variant='body1'
+						sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+						{urlData.shortLink}
+						<Tooltip title='Copy'>
+							<IconButton
+								aria-label='Copy Short URL'
+								onClick={() => {
+									navigator.clipboard.writeText(urlData.shortLink)
+										.then(() => {
+											toast.success('Short link copied to clipboard!', { theme: 'dark' })
+										})
+										.catch(() => {
+											toast.error('An error occurred. Please try again.', { theme: 'dark' })
+										})
+								}}
+								color='secondary'
+								sx={{
+									p: 0,
+									':hover': {
+										filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
+									}
+								}}
+							>
+								<ContentCopyIcon />
+							</IconButton>
+						</Tooltip>
+					</Typography>
+				</Box>
+				{urlData.alias && (
+					<Box sx={{display: 'flex', flexDirection: 'column'}}>
+						<Typography
+							variant='body1'
+							sx={{ fontSize: '.9rem', color: 'rgba(255, 255, 255, 0.8)'}}>
+								Alias:
+						</Typography>
+						<Typography
+							variant='body1'
+							sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+							{urlData.alias}
+						</Typography>
+					</Box>
+				)}
+				<Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+					<Box sx={{ display: 'flex', alignItems: 'center' }}>
+						<WarningAmberIcon sx={{ color: 'rgba(255, 193, 7, 0.8)' }} />
+						<Typography variant='body2' sx={{ color: 'rgba(255, 193, 7, 0.8)', ml: 1 }}>
+							To customize your link, you need to sign up.
+						</Typography>
+					</Box>
+				</Box>
 			</>
-			)}
-		</Typography>
-		</Box>
-		<Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'flex-end' }}>
-		<Box sx={{ display: 'flex', alignItems: 'center' }}>
-			<WarningAmberIcon sx={{ color: 'rgba(255, 193, 7, 0.8)' }} />
-			<Typography variant='body2' sx={{ color: 'rgba(255, 193, 7, 0.8)', ml: 1 }}>
-				To customize your link, you need to sign up.
-			</Typography>
-		</Box>
-</Box>
-
+		)}
       </Box>
       </SwipeableDrawer>
     </>
