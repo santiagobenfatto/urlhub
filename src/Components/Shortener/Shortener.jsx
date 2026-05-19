@@ -34,6 +34,7 @@ const Shortener = () => {
         try {
             const existingLinks = getPublicLink()
             if (existingLinks.length >= 1) {
+                addShortURL(existingLinks[0])
                 toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
                 return
             }        

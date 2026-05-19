@@ -1,17 +1,23 @@
-import React, { createContext, useState } from 'react'
-import { savePublicLink } from '../Utils/utils.js'
+import React, { createContext, useEffect, useState } from 'react'
+import { savePublicLink, getPublicLink } from '../Utils/utils.js'
 
 export const LinksContext = createContext()
 
 const LinksProvider = ({children}) => {
 
-    const [ urlData, setUrlData ] = useState({
-        id: '',
-        bigLink: '',
-        alias: '',
-        title: '',
-        icon: '',
-        shortLink: ''
+    const [ urlData, setUrlData ] = useState(() => {
+        const existing = getPublicLink()
+        if (existing.length >= 1) {
+            return existing[0]
+        }
+        return {
+            id: '',
+            bigLink: '',
+            alias: '',
+            title: '',
+            icon: '',
+            shortLink: ''
+        }
     })
     
     const [ isEditting, setIsEditting ] = useState(false)
