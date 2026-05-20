@@ -6,13 +6,15 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { toast } from 'react-toastify'
 import { useLink } from '../../Context/useLink.jsx'
+import { getPublicLink } from '../../Utils/utils.js'
 
 const LinkDrawer = () => {
     const [open, setOpen] = useState(false)
 
     const drawerHeight = 280
 
-	const { urlData } = useLink()
+	const { urlData: contextData } = useLink()
+	const urlData = contextData.shortLink ? contextData : (getPublicLink()[0] || contextData)
 
 	const toggleDrawer = (newOpen) => () => {
 		setOpen(newOpen)
