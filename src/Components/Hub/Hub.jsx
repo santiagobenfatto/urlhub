@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 const Hub = () => {
     
     const linkButtons = useSelector(state => state.hub.links)
-   
+    
     return (
     <Box 
         sx={{
@@ -36,6 +36,7 @@ const Hub = () => {
                 }}>
                 My UrlsHub
             </Typography>
+        
         
         <Stack 
         spacing={4}

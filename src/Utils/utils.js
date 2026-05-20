@@ -1,6 +1,5 @@
 const savePublicLink = (link) => {
-  const links = JSON.parse(localStorage.getItem('publicLinks')) || []
-  localStorage.setItem('publicLinks', JSON.stringify([...links, link]))
+  localStorage.setItem('publicLinks', JSON.stringify([link]))
 }
 
 const getPublicLink = () => {

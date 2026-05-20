@@ -20,24 +20,6 @@ function UserHub() {
         }}>
             <LinksProvider>
                 <NavBar currentPage='hub' />
-                <Box sx={{
-                    boxSizing: 'border-box',
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-end',
-                    width: '60%',
-                    height: '20vh'
-                }}>
-                    <Typography
-                        variant='h2'
-                        sx={{
-                            fontFamily: 'kalam',
-                            fontWeight: 600,
-                            color: '#ffb300'
-                        }}>
-                        My Hub
-                    </Typography>
-                </Box>
                 <HubContainer />
                 <Footer />
             </LinksProvider>
