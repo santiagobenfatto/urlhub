@@ -78,6 +78,28 @@ src/
 | `npm run build`   | Build for production          |
 | `npm run lint`    | Run ESLint across the project |
 | `npm run preview` | Preview the production build  |
+| `npm test`        | Run integration tests         |
+| `npm run test:watch` | Run tests in watch mode    |
+
+## Tests
+
+Integration tests covering the app's critical flows:
+
+| File | Tests | Description |
+|------|-------|-------------|
+| `tests/integration/register.test.jsx` | 2 | Success redirects to `/login`; API error shows toast |
+| `tests/integration/login.test.jsx` | 2 | Success dispatches user + redirects to `/`; bad credentials show toast |
+| `tests/integration/public-links.test.jsx` | 3 | Shorten URL saves to context/localStorage; nested API response; duplicate link shows info toast |
+| `tests/integration/private-links.test.jsx` | 4 | Load links table, create, edit, and delete links |
+| `tests/integration/hub.test.jsx` | 2 | Fetch hub from API; add link to hub from LinksTable |
+| `tests/integration/auth.test.jsx` | 2 | Expired session redirects to `/home`; logout clears store and redirects |
+
+**Stack:** Vitest, Testing Library, user-event, jsdom, MSW-free (service functions mocked directly with `vi.mock`).
+
+```bash
+npm test          # Run once
+npm run test:watch  # Watch mode
+```
 
 ## Routes
 

@@ -42,7 +42,8 @@ const Shortener = () => {
             
             //Public link its saved in context and localStorage
             const data = await response.json()
-            const linkAdapted = addPublicLinkAdapter(data)
+            const linkPayload = data.link || data
+            const linkAdapted = addPublicLinkAdapter(linkPayload)
             setUrlError({ error: false, message: ''})
 
             if(response.ok){
