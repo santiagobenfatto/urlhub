@@ -7,9 +7,10 @@ const LinksProvider = ({children}) => {
 
     const [ urlData, setUrlData ] = useState(() => {
         const existing = getPublicLink()
-        if (existing.length >= 1) {
+        if (existing.length >= 1 && existing[0].shortLink) {
             return existing[0]
         }
+        localStorage.removeItem('publicLinks')
         return {
             id: '',
             bigLink: '',

@@ -111,10 +111,27 @@ npm run test:watch  # Watch mode
 | `/dashboard` | Dashboard  | Link CRUD management       |
 | `/hub`       | User Hub   | Personal hub display       |
 
+## Public Link Flow (non-authenticated users)
+
+1. **Shortener** sends `POST /api/v1/links/short` with `{ big_link }`.
+2. **Service** normalizes the nested API response (`data.data?.data || data.link || data`) and returns a flat link object.
+3. **Shortener** adapts the fields into camelCase and saves via context (`addShortURL`) and to `localStorage` (`publicLinks` key).
+4. **LinkDrawer** reads the public link from context, falling back to `localStorage` if the context is empty.
+5. **Login** checks `localStorage` for a public link on success. If found, calls `PATCH /api/v1/links/migrate` to associate it with the user, then clears `localStorage`.
+
+## Migration on Register / Login
+
+When a user creates a public link (without logging in) and later registers:
+
+- **Register** creates the account and redirects to `/login`.
+- **Login** detects the public link in `localStorage` and calls `migratePublicLink(id)` to associate it with the authenticated user.
+- If the backend endpoint is not yet available, the call fails gracefully and shows an informational toast.
+- After successful migration, `localStorage` is cleared and the link appears in the user's dashboard.
+
 ## Architectural Notes
 
 - **Redux** manages three slices: `links` (all user links), `hub` (links displayed on the hub page), and `user` (user profile info).
 - **Service layer** (`src/Service/`) isolates all `fetch` calls to the backend API.
 - **Adapters** (`src/Adapters/`) convert API responses from snake_case to camelCase.
-- **Context** (`src/Context/LinksProvider.jsx`) manages editing state separate from Redux.
+- **Context** (`src/Context/LinksProvider.jsx`) manages public link state and editing state.
 - **API endpoints** are configured via the `VITE_API_SERVER_URL` environment variable.

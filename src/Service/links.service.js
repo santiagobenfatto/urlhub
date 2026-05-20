@@ -44,7 +44,6 @@ const addNewLink = async (link) => {
 }
 
 const addPublicLink = async (link) => {
-    console.log(serverURL)
     try {
         const response = await fetch(`${URL}/short`, {
             method: 'POST',
@@ -58,10 +57,12 @@ const addPublicLink = async (link) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}/short`)
+            const json = await response.json()
+            throw new Error(json.message || `Error fetching ${URL}/short`)
         }
 
-        return response
+        const json = await response.json()
+        return json.data?.data || json.link || json
         
     } catch (error) {
         console.error('Error creating simple link', error)
@@ -111,10 +112,32 @@ const deleteLink = async (linkId) => {
     }
 }
 
+const migratePublicLink = async (linkId) => {
+    try {
+        const response = await fetch(`${URL}/migrate`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: linkId })
+        })
+
+        if (!response.ok) {
+            const json = await response.json()
+            throw new Error(json.message || 'Error migrating link')
+        }
+
+        return response.json()
+    } catch (error) {
+        console.error('Error migrating public link:', error)
+        throw error
+    }
+}
+
 export {
     getUserLinks,
     addNewLink,
     addPublicLink,
     updateLink,
-    deleteLink
+    deleteLink,
+    migratePublicLink
 }

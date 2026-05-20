@@ -33,27 +33,26 @@ const Shortener = () => {
         }
         try {
             const existingLinks = getPublicLink()
-            if (existingLinks.length >= 1) {
+            if (existingLinks.length >= 1 && existingLinks[0].shortLink) {
                 toast.info(`You've already shortened a link. Please register!`, { theme: 'dark' })
                 return
-            }        
-            const response = await addPublicLinkService(linkData)
-            console.log('Response:', response)
-            
-            //Public link its saved in context and localStorage
-            const data = await response.json()
-            const linkPayload = data.link || data
-            const linkAdapted = addPublicLinkAdapter(linkPayload)
+            }
+            if (existingLinks.length >= 1) {
+                localStorage.removeItem('publicLinks')
+            }
+            const src = await addPublicLinkService(linkData)
+            const linkAdapted = {
+                id: src.id,
+                title: src.title || '',
+                bigLink: src.big_link || src.bigLink || src.original_url,
+                alias: src.alias || '',
+                shortLink: src.short_link || src.shortLink || src.short_url,
+                icon: src.icon || ''
+            }
             setUrlError({ error: false, message: ''})
-
-            if(response.ok){
-                console.log('Link Adaptado:', linkAdapted)
-                addShortURL(linkAdapted)
-                setLinkData({bigLink: ''})
-                toast.success('Link shortened successfully', { theme:'dark' })
-        } else {
-            throw new Error(response.message || 'Error desconocido al añadir el enlace')
-        }
+            addShortURL(linkAdapted)
+            setLinkData({bigLink: ''})
+            toast.success('Link shortened successfully', { theme:'dark' })
         } catch (err) {
             console.log(err)
             setUrlError({
