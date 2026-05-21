@@ -88,18 +88,14 @@ const AddLinkForm = () => {
             setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
-            if (result.status.ok) {
-                dispatch(addLinkRedux(linkAdapted))
-            } else {
-                throw new Error(result.message || 'Error desconocido al añadir el enlace')
-            }
+            dispatch(addLinkRedux(linkAdapted))
             toast.success('Link creado exitosamente', { theme: 'dark'})
         } catch (err) {
             setBigLinkError({
                 error: true,
-                message: err.response?.data?.message || 'El alias ya existe o hubo un error.',
+                message: err.message || 'El alias ya existe o hubo un error.',
             })
-            toast.error(err.response?.data?.message || 'Error al crear el link', { theme: 'dark' })
+            toast.error(err.message || 'Error al crear el link', { theme: 'dark' })
         }
     }
 

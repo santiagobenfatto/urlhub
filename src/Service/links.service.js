@@ -31,11 +31,12 @@ const addNewLink = async (link) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching ${URL}. Status: ${response.status}`)
+            const errorBody = await response.json().catch(() => ({}))
+            throw new Error(errorBody.error || `Error al crear el link. Status: ${response.status}`)
         }
 
         const data = await response.json()
-        return data
+        return data.data?.data || data
         
     } catch (error) {
         console.error('Error in addLink', error)
