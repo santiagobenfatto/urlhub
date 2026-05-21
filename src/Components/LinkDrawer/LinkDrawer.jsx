@@ -126,7 +126,7 @@ const LinkDrawer = () => {
 						</Typography>
 						<Typography
 							variant='body1'
-							sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+							sx={{ fontSize: '1.1rem', paddingLeft: '8px', color: 'secondary.main' }}>
 							{urlData.title}
 						</Typography>
 					</Box>
@@ -139,7 +139,7 @@ const LinkDrawer = () => {
 					</Typography>
 					<Typography
 						variant='body1'
-						sx={{ fontSize: '1.1rem', paddingLeft: '8px', wordBreak: 'break-all' }}>
+						sx={{ fontSize: '1.1rem', paddingLeft: '8px', wordBreak: 'break-all', color: 'secondary.main' }}>
 						{urlData.bigLink}
 					</Typography>
 				</Box>
@@ -151,7 +151,7 @@ const LinkDrawer = () => {
 					</Typography>
 					<Typography
 						variant='body1'
-						sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+						sx={{ fontSize: '1.1rem', paddingLeft: '8px', color: 'secondary.main' }}>
 						{urlData.shortLink}
 						<Tooltip title='Copy'>
 							<IconButton
@@ -187,7 +187,7 @@ const LinkDrawer = () => {
 						</Typography>
 						<Typography
 							variant='body1'
-							sx={{ fontSize: '1.1rem', paddingLeft: '8px' }}>
+							sx={{ fontSize: '1.1rem', paddingLeft: '8px', color: 'secondary.main' }}>
 							{urlData.alias}
 						</Typography>
 					</Box>

@@ -12,7 +12,7 @@ const linkSlice = createSlice({
             state.links.push({
                 id: action.payload.id,
                 title: action.payload.title,
-                bigLink: action.payload.big_link,
+                bigLink: action.payload.bigLink,
                 shortLink: action.payload.short_link,
                 icon: action.payload.icon || '',
                 alias: `/${action.payload.alias}`

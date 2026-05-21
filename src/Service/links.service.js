@@ -73,7 +73,7 @@ const addPublicLink = async (link) => {
 
 const updateLink = async (linkId, updates) => {
     try {
-        const response = await fetch(`${URL}/link/${linkId}`, {
+        const response = await fetch(`${URL}/${linkId}`, {
             method: 'PUT',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -81,11 +81,12 @@ const updateLink = async (linkId, updates) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error updating link. Status: ${response.status}`)
+            const errorBody = await response.json().catch(() => ({}))
+            throw new Error(errorBody.error || `Error al actualizar el link. Status: ${response.status}`)
         }
 
         const data = await response.json()
-        return data
+        return data.data?.data || data
     } catch (error) {
         console.error('Error updating the link', error)
         throw error
@@ -94,14 +95,15 @@ const updateLink = async (linkId, updates) => {
 
 const deleteLink = async (linkId) => { 
     try {
-        const response = await fetch(`${URL}/link/${linkId}`, {
+        const response = await fetch(`${URL}/${linkId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
         })
 
         if(!response.ok){
-            throw new Error(`Error deleting link. Status: ${response.status}`)
+            const errorBody = await response.json().catch(() => ({}))
+            throw new Error(errorBody.error || `Error al eliminar el link. Status: ${response.status}`)
         }
 
         const data = await response.json()

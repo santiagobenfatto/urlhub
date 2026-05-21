@@ -6,7 +6,7 @@ import Icons from '../Icons/Icons.jsx'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import { addLinkAdapter } from '../../Adapters/links.adapter.js'
-import { addLink as addLinkRedux } from '../../Redux/slices/links.slice.js'
+import { updateLinkField } from '../../Redux/slices/links.slice.js'
 import { updateLink as updateLinkService } from '../../Service/links.service.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { validateAlias } from '../../Utils/validateRegex.js'
@@ -25,16 +25,16 @@ const EditLinkForm = ({linkId}) => {
     })
 
 
-    const [formData, setFormData] = useState({
-        alias: '',
-        title: '',
-        icon: ''
-    })
-
     const { setIsEdditing } = useLink()
     const dispatch = useDispatch()
     const linksList = useSelector(state => state.links.links)
     const [link] = linksList.filter(e => e.id === linkId )
+
+    const [formData, setFormData] = useState({
+        alias: link?.alias?.replace(/^\//, '') || '',
+        title: link?.title || '',
+        icon: link?.icon || ''
+    })
     
 
     const handleInputChange = (field, value) => {
@@ -67,20 +67,17 @@ const EditLinkForm = ({linkId}) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const result = await updateLinkService(formData)
+            const result = await updateLinkService(linkId, formData)
             
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
-            if (result.status.ok) {
-                const formattedLink = addLinkAdapter(result)
-                dispatch(addLinkRedux(formattedLink))
-            } else {
-                throw new Error(result.message || 'Error desconocido al añadir el enlace')
-            }
+            dispatch(updateLinkField({ id: linkId, field: 'title', value: result.title }))
+            dispatch(updateLinkField({ id: linkId, field: 'alias', value: `/${result.alias}` }))
+            dispatch(updateLinkField({ id: linkId, field: 'icon', value: result.icon || '' }))
             toast.success('Link actualizado exitosamente', { theme: 'dark'})
         } catch (err) {
             console.log(err)
-            toast.error('Error al actualizar el link', { theme: 'dark' })
+            toast.error(err.message || 'Error al actualizar el link', { theme: 'dark' })
         }
     }
 
