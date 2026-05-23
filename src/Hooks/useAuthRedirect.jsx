@@ -9,7 +9,7 @@ export const useAuthRedirect = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await fetch(`${URL}/users/auth/verify`, {
+        const response = await fetch(`${URL}/api/v1/users/auth/verify`, {
           method: 'POST',
           credentials: 'include'
         })

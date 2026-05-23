@@ -1,6 +1,6 @@
-import React from 'react'
-import { Container } from '@mui/material'
-import { useAuthRedirect } from '../Hooks/useAuthRedirect.jsx'
+import React, { useEffect, useState } from 'react'
+import { Box, CircularProgress, Container } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
@@ -8,8 +8,37 @@ import FooterContainer from '../Components/Footer/FooterContainer.jsx'
 import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
 import LinksProvider from '../Context/LinksProvider.jsx'
 
+const URL = import.meta.env.VITE_API_SERVER_URL
+
 const Home = () => {
-    //useAuthRedirect()
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        fetch(`${URL}/api/v1/users/auth/verify`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(res => {
+            if (res.ok) navigate('/dashboard')
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false))
+    }, [])
+
+    if (loading) {
+        return (
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+                backgroundColor: 'primary.main'
+            }}>
+                <CircularProgress color='secondary' />
+            </Box>
+        )
+    }
 
     return (
         <Container disableGutters maxWidth='false' sx={{
