@@ -9,7 +9,7 @@ const FooterContainer = () => {
             alignItems: 'flex-end',
             justifyContent: 'center',
             width: '100%',
-            height: '150px',
+            minHeight: { xs: '60px', sm: '100px', md: '150px' },
             mb: '12px'
         }}>
            <Footer />

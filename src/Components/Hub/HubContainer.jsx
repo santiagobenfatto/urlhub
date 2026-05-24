@@ -12,8 +12,9 @@ const HubContainer = ({isHome}) => {
             flexDirection: 'column',
             justifyContent: 'space-around',
             alignItems: 'center',
-            width: isHome ? '60%' : '50%',
-            height: '80vh',
+            width: isHome ? { xs: '90%', sm: '70%', md: '60%' } : { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
+            minHeight: { xs: 'auto', sm: '60vh', md: '80vh' },
+            py: { xs: 4, sm: 0 },
             m: 0
         }}>
         {isHome ?
@@ -22,8 +23,7 @@ const HubContainer = ({isHome}) => {
             gutterBottom
             sx={{
                 width: '100%',
-                maxHeight : '120px',
-                fontSize: '2.5rem',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                 fontFamily:'Montserrat variable',
                 fontWeight: 600,
                 textAlign: 'center',

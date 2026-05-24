@@ -15,7 +15,7 @@ const Hub = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            width: '325px',
+            width: { xs: '100%', sm: '325px' },
             minHeight: '400px',
             height: 'auto',
             border: '1px solid white',
@@ -32,6 +32,7 @@ const Hub = () => {
                     fontWeight: 700,
                     color: 'secondary.main',
                     height: '75px',
+                    fontSize: { xs: '1.8rem', sm: '2.4rem', md: '3rem' },
                     my: '12px'
                 }}>
                 My UrlsHub

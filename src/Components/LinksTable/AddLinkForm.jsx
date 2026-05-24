@@ -114,8 +114,8 @@ const AddLinkForm = () => {
             }}>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-start',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'stretch', sm: 'flex-start' },
                 gap: '12px'
             }}>
             <Tooltip title='Enter the long URL you want to shorten'>
@@ -127,7 +127,7 @@ const AddLinkForm = () => {
                 helperText={bigLinkError.message}
                 required 
                 onChange={e => handleInputChange('bigLink', e.target.value)}
-                sx={{ width: '40%' }} 
+                sx={{ width: { xs: '100%', sm: '40%' } }} 
             />
             </Tooltip>
             <Tooltip title='Customize the alias or leave it blank for an auto-generated one'>
@@ -144,7 +144,7 @@ const AddLinkForm = () => {
                             startAdornment: (<InputAdornment position='start'>/</InputAdornment>)
                         }
                     }}
-                    sx={{ width: '20%' }} 
+                    sx={{ width: { xs: '100%', sm: '20%' } }} 
                 />
             </Tooltip>
             <Tooltip title='Set a title for the button in your hub.'>
@@ -156,13 +156,14 @@ const AddLinkForm = () => {
                     helperText={titleError.message}
                     required 
                     onChange={e => handleInputChange('title', e.target.value)}
-                    sx={{ width: '20%' }} 
+                    sx={{ width: { xs: '100%', sm: '20%' } }} 
                 />
             </Tooltip>
             </Box>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'flex-start', sm: 'center' },
                 width: '100%',
                 gap: '16px'
             }}>                
@@ -215,7 +216,7 @@ const AddLinkForm = () => {
                                 !formData.bigLink || !formData.alias || !formData.title
                             }
                             sx={{
-                                width: '150px'
+                                width: { xs: '100%', sm: '150px' }
                             }}
                         >
                             Add

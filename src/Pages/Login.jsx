@@ -102,8 +102,8 @@ const Login = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                width: '600px',
-                height: '350px'
+                width: { xs: '90%', sm: '500px', md: '600px' },
+                minHeight: '350px'
         }}>
             <Box sx={{
                 display: 'flex',
@@ -117,7 +117,9 @@ const Login = () => {
                 color='secondary.main'
                 sx={{
                     fontFamily: 'Montserrat variable',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    fontSize: { xs: '1.6rem', sm: '2rem', md: '2.125rem' },
+                    textAlign: { xs: 'center', sm: 'left' }
                 }}>
                 Log in to manage your <span style={{color: '#ffb300'}}>Links!</span>
             </Typography>

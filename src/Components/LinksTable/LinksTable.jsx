@@ -61,18 +61,21 @@ const LinksTable = () => {
                 boxSizing: 'border-box',
                 width: '100%',
                 height: 'auto',
-                maxHeight: '40vh',
+                maxHeight: { xs: '50vh', sm: '40vh' },
                 alignSelf: 'flex-start',
                 color: 'primary.main',
                 my: '1rem',
-                borderRadius: 0
+                borderRadius: 0,
+                overflowX: 'auto'
             }}
         >
             <Table size='small'
                 sx={{ 
                     overflowY: 'hidden',
-                    width: '100%',
-                    border: 'none'
+                    minWidth: { xs: '600px', sm: '100%' },
+                    width: { xs: 'auto', sm: '100%' },
+                    border: 'none',
+                    tableLayout: 'auto'
                 }}>
             <TableHead>
             <TableRow
@@ -99,9 +102,17 @@ const LinksTable = () => {
                     '.MuiTableCell-root': {color: link.id === linkId ? '#ffb300' : '' }
                 }}
                 >
-                <TableCell>
-                    <Tooltip title='BigLink'>
-                        <span>{link.bigLink}</span>
+                <TableCell sx={{ maxWidth: { xs: '150px', sm: 'none' } }}>
+                    <Tooltip title={link.bigLink}>
+                        <span style={{
+                            display: 'block',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            maxWidth: { xs: '150px', sm: 'none' }
+                        }}>
+                            {link.bigLink}
+                        </span>
                     </Tooltip>
                 </TableCell>
                 <TableCell>

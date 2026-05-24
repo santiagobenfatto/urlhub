@@ -15,10 +15,10 @@ const LinksTableContainer = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
-                minHeight: '50vh',
-                width: '50%',
+                minHeight: { xs: 'auto', sm: '40vh', md: '50vh' },
+                width: { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
                 height: 'auto',
-                maxHeight: '80vh',
+                maxHeight: { xs: 'none', md: '80vh' },
             }}>
                 <LinksTable />
                 { !isEditting ? (<AddLinkForm />) : (<EditLinkForm linkId={linkId} />)}

@@ -23,17 +23,18 @@ const Dashboard = () => {
             <Box sx={{
                 boxSizing: 'border-box',
                 display: 'flex',
-                justifyContent: 'flex-start',
+                justifyContent: { xs: 'center', sm: 'flex-start' },
                 alignItems: 'flex-end',
-                width: '60%',
-                height: '20vh'
+                width: { xs: '90%', sm: '70%', md: '60%' },
+                minHeight: { xs: '10vh', sm: '15vh', md: '20vh' }
             }}>
                 <Typography
                     variant='h2'
                     sx={{
                         fontFamily: 'kalam',
                         fontWeight: 600,
-                        color: '#ffb300'
+                        color: '#ffb300',
+                        fontSize: { xs: '2rem', sm: '2.8rem', md: '3.75rem' }
                     }}>
                         Dashboard
                 </Typography>

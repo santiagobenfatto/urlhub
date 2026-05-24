@@ -67,7 +67,27 @@ const EditLinkForm = ({linkId}) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         try {
-            const result = await updateLinkService(linkId, formData)
+            const updates = {}
+            const originalAlias = link?.alias?.replace(/^\//, '') || ''
+            const originalTitle = link?.title || ''
+            const originalIcon = link?.icon || ''
+
+            if (formData.alias !== originalAlias) {
+                updates.alias = formData.alias
+            }
+            if (formData.title !== originalTitle) {
+                updates.title = formData.title
+            }
+            if (formData.icon !== originalIcon) {
+                updates.icon = formData.icon
+            }
+
+            if (Object.keys(updates).length === 0) {
+                toast.info('No se detectaron cambios', { theme: 'dark' })
+                return
+            }
+
+            const result = await updateLinkService(linkId, { updates })
             
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
@@ -108,8 +128,8 @@ const EditLinkForm = ({linkId}) => {
             </Typography>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-start',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'stretch', sm: 'flex-start' },
                 gap: '12px'
             }}>
             <Tooltip title='Enter the long URL you want to shorten'>
@@ -123,14 +143,14 @@ const EditLinkForm = ({linkId}) => {
                         readOnly: true,
                     }
                 }}
-                // placeholder={link.bigLink}
-                sx={{ width: '40%' }} 
+                sx={{ width: { xs: '100%', sm: '40%' } }} 
             />
             </Tooltip>
-            <Tooltip title='Customize the alias or leave it blank for an auto-generated one'>
+            <Tooltip title='Customize the alias or leave it unchanged'>
                 <TextField 
                     size='small'
                     variant='outlined'
+                    value={formData.alias}
                     placeholder={link.alias}
                     error={aliasError.error}
                     helperText={aliasError.message}
@@ -141,7 +161,7 @@ const EditLinkForm = ({linkId}) => {
                             startAdornment: (<InputAdornment position='start'>/</InputAdornment>)
                         }
                     }}
-                    sx={{ width: '20%' }} 
+                    sx={{ width: { xs: '100%', sm: '20%' } }} 
                 />
             </Tooltip>
             <Tooltip title='Set a title for the button in your hub.'>
@@ -153,13 +173,14 @@ const EditLinkForm = ({linkId}) => {
                     helperText={titleError.message}
                     required 
                     onChange={e => handleInputChange('title', e.target.value)}
-                    sx={{ width: '20%' }} 
+                    sx={{ width: { xs: '100%', sm: '20%' } }} 
                 />
             </Tooltip>
             </Box>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'flex-start', sm: 'center' },
                 width: '100%',
                 gap: '16px'
             }}>                
@@ -208,7 +229,7 @@ const EditLinkForm = ({linkId}) => {
                             type='submit'
                             endIcon={<EditIcon/>}
                             sx={{
-                                width: '150px'
+                                width: { xs: '100%', sm: '150px' }
                             }}
                         >
                             Edit

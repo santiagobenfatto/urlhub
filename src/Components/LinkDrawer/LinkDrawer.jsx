@@ -64,11 +64,11 @@ const LinkDrawer = () => {
           sx: {
 			boxSizing: 'border-box',
 			backgroundColor: '#121212',
-			width: '400px',
+			width: { xs: '300px', sm: '400px' },
 			height: `${drawerHeight}px`,
 			position: 'absolute',
 			top: 'calc(15%)',
-			right: '20px',
+			right: { xs: '8px', sm: '20px' },
 			transition: 'right 0.3s ease',
 			borderRadius: '16px',
 			display: 'flex',

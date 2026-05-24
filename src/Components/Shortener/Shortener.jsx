@@ -73,8 +73,7 @@ const Shortener = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                width: '600px',
-                height: '280px',
+                width: { xs: '100%', sm: '500px', md: '600px' },
                 padding: '8px',
                 }}>
             
@@ -125,7 +124,7 @@ const Shortener = () => {
                         readOnly: true,
                     }
                 }}
-                sx={{ width:'auto', maxWidth: '18ch', mb: '8px' }}/>
+                sx={{ width:'auto', maxWidth: { xs: '100%', sm: '18ch' }, mb: '8px' }}/>
             </Tooltip>
             <Tooltip title={`Sign up to customize your alias otherwise, it's auto-generated.`}>
             <TextField

@@ -11,18 +11,17 @@ const Header = () => {
             flexDirection: 'column',
             justifyContent: 'space-evenly',
             alignItems: 'center',
-            maxHeight: '70vh',
-            width: '60%',
-            height: '70vh'
+            width: { xs: '90%', sm: '70%', md: '60%' },
+            minHeight: { xs: 'auto', sm: '50vh', md: '70vh' },
+            py: { xs: 4, sm: 0 }
         }}>
         <Typography variant='h2' sx={{
                 alignSelf: 'center',
-                width: '80%',
-                maxHeight : '120px',
-                fontSize: '3rem',
+                width: { xs: '100%', sm: '80%' },
+                fontSize: { xs: '1.8rem', sm: '2.5rem', md: '3rem' },
                 fontFamily:'Montserrat variable',
                 fontWeight: 600,
-                textAlign: 'left',
+                textAlign: { xs: 'center', sm: 'left' },
                 color: 'secondary.main',
                 mt: '1rem'
             }}
