@@ -3,6 +3,7 @@ import { Box, SwipeableDrawer,  IconButton, Tooltip, Typography, Alert } from '@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import LinkIcon from '@mui/icons-material/Link'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { toast } from 'react-toastify'
 import { useLink } from '../../Context/useLink.jsx'
@@ -35,19 +36,25 @@ const LinkDrawer = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                top: 'calc(15%)',
+                top: { xs: '50%', sm: 'calc(15%)' },
                 right: 0,
-                width: '50px',
-                height: `${drawerHeight}px`,
+                width: { xs: '48px', sm: '50px' },
+                height: { xs: '48px', sm: `${drawerHeight}px` },
                 visibility: open ? 'hidden' : 'visible',
-                borderRadius: '16px 0 0 16px',
+                borderRadius: { xs: '50% 0 0 50%', sm: '16px 0 0 16px' },
                 cursor: 'pointer',
+                transform: { xs: 'translateY(-50%)', sm: 'none' },
                 '&:hover': {
                     backgroundColor: '#ff8f00'
                 }
             }}>
-            <IconButton sx={{color: '#000000'}}>
-                  <KeyboardArrowLeftIcon />
+            <IconButton sx={{color: '#000000', p: { xs: '4px', sm: '8px' }}}>
+                <Box component='span' sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
+                    <KeyboardArrowLeftIcon />
+                </Box>
+                <Box component='span' sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
+                    <LinkIcon />
+                </Box>
             </IconButton>
           </Box>
         </Tooltip>
@@ -64,13 +71,15 @@ const LinkDrawer = () => {
           sx: {
 			boxSizing: 'border-box',
 			backgroundColor: '#121212',
-			width: { xs: '300px', sm: '400px' },
-			height: `${drawerHeight}px`,
+			width: { xs: '280px', sm: '400px' },
+			height: { xs: 'auto', sm: `${drawerHeight}px` },
+			minHeight: { xs: '200px', sm: 'auto' },
 			position: 'absolute',
-			top: 'calc(15%)',
-			right: { xs: '8px', sm: '20px' },
+			top: { xs: '50%', sm: 'calc(15%)' },
+			right: { xs: '0', sm: '20px' },
+			transform: { xs: 'translateY(-50%)', sm: 'none' },
 			transition: 'right 0.3s ease',
-			borderRadius: '16px',
+			borderRadius: { xs: '16px 0 16px 16px', sm: '16px' },
 			display: 'flex',
 			flexDirection: 'row',
 			alignItems: 'center'
@@ -86,15 +95,15 @@ const LinkDrawer = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 left: '0',
-                width: '50px',
-                height: `${drawerHeight}px`,
+                width: { xs: '40px', sm: '50px' },
+                height: { xs: '100%', sm: `${drawerHeight}px` },
                 borderRadius: '16px 0 0 16px',
                 cursor: 'pointer',
                 '&:hover': {
                     backgroundColor: '#ff8f00'
                 }
             }}>
-            <IconButton sx={{color: '#000000'}}>
+            <IconButton sx={{color: '#000000', p: { xs: '4px', sm: '8px' }}}>
                 <KeyboardArrowRightIcon />
             </IconButton>
           </Box>
