@@ -14,7 +14,7 @@ const HubContainer = ({isHome}) => {
             alignItems: 'center',
             width: isHome ? { xs: '90%', sm: '70%', md: '60%' } : { xs: '95%', sm: '80%', md: '60%', lg: '50%' },
             minHeight: { xs: 'auto', sm: '60vh', md: '80vh' },
-            py: { xs: 4, sm: 0 },
+            py: { xs: 6, sm: 0 },
             m: 0
         }}>
         {isHome ?
@@ -27,7 +27,8 @@ const HubContainer = ({isHome}) => {
                 fontFamily:'Montserrat variable',
                 fontWeight: 600,
                 textAlign: 'center',
-                color: 'secondary.main'
+                color: 'secondary.main',
+                mb: { xs: 3, sm: 4 }
             }}
             >Create your <span style={{ textDecoration: 'underline', color: '#ffb300'}}>Personal Hub</span>.
         </Typography> 

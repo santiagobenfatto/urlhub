@@ -36,14 +36,14 @@ const LinkDrawer = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                top: { xs: '50%', sm: 'calc(15%)' },
-                right: 0,
+                top: { xs: '64px', sm: 'calc(15%)' },
+                right: { xs: '16px', sm: 0 },
                 width: { xs: '48px', sm: '50px' },
                 height: { xs: '48px', sm: `${drawerHeight}px` },
                 visibility: open ? 'hidden' : 'visible',
-                borderRadius: { xs: '50% 0 0 50%', sm: '16px 0 0 16px' },
+                borderRadius: { xs: '50%', sm: '16px 0 0 16px' },
                 cursor: 'pointer',
-                transform: { xs: 'translateY(-50%)', sm: 'none' },
+                transform: 'none',
                 '&:hover': {
                     backgroundColor: '#ff8f00'
                 }

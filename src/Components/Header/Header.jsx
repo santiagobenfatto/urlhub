@@ -13,7 +13,7 @@ const Header = () => {
             alignItems: 'center',
             width: { xs: '90%', sm: '70%', md: '60%' },
             minHeight: { xs: 'auto', sm: '50vh', md: '70vh' },
-            py: { xs: 4, sm: 0 }
+            py: { xs: 6, sm: 0 }
         }}>
         <Typography variant='h2' sx={{
                 alignSelf: 'center',
