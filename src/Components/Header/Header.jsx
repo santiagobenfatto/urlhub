@@ -13,17 +13,18 @@ const Header = () => {
             alignItems: 'center',
             width: { xs: '90%', sm: '70%', md: '60%' },
             minHeight: { xs: 'auto', sm: '50vh', md: '70vh' },
-            py: { xs: 6, sm: 0 }
+            py: { xs: 6, sm: 6 }
         }}>
         <Typography variant='h2' sx={{
                 alignSelf: 'center',
-                width: { xs: '100%', sm: '80%' },
-                fontSize: { xs: '1.8rem', sm: '2.5rem', md: '3rem' },
+                width: { xs: '90%', sm: '100%' },
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                 fontFamily:'Montserrat variable',
                 fontWeight: 600,
-                textAlign: { xs: 'center', sm: 'left' },
+                textAlign: 'left',
                 color: 'secondary.main',
-                mt: '1rem'
+                mt: '1rem',
+                py: { xs: 4 }
             }}
             >Easy way to manage your links: <span style={{ fontFamily: 'kalam', color: '#ffb300'}}> URL Hub!</span>
         </Typography>

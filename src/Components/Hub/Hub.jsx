@@ -15,7 +15,7 @@ const Hub = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            width: { xs: '100%', sm: '325px' },
+            width: { xs: '80%', sm: '325px', md: '350px' },
             minHeight: '400px',
             height: 'auto',
             border: '1px solid white',
@@ -32,46 +32,45 @@ const Hub = () => {
                     fontWeight: 700,
                     color: 'secondary.main',
                     height: '75px',
-                    fontSize: { xs: '1.8rem', sm: '2.4rem', md: '3rem' },
+                    fontSize: { xs: '2rem', sm: '2.4rem', md: '3rem' },
                     my: '12px'
                 }}>
                 My UrlsHub
             </Typography>
-        
-        
-        <Stack 
-        spacing={4}
-        sx={{
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        flexGrow: 1,
-        '& .MuiButton-root': {
-            width: '45%',
-            justifyContent: 'flex-start',
-            textAlign: 'center'
-        },
-        '& .MuiButton-startIcon': {
-            marginLeft: 0
-        }
-    }}>{
-        linkButtons.map( btn => (
-            <Tooltip 
-                title={btn.title}
-                key={btn.title}>
-            <Button 
-            href={btn.shortLink}
-            startIcon={<DynamicIcon iconName={btn.icon} />}
-            >
-                {btn.title}
-            </Button>
-            </Tooltip>
-        ))
-    }
-    </Stack>
+                
+                <Stack 
+                spacing={4}
+                sx={{
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                flexGrow: 1,
+                '& .MuiButton-root': {
+                    width: {xs: '50%', sm:'45%'},
+                    justifyContent: 'flex-start',
+                    textAlign: 'center'
+                },
+                '& .MuiButton-startIcon': {
+                    marginLeft: 0
+                }
+            }}>{
+                linkButtons.map( btn => (
+                    <Tooltip 
+                        title={btn.title}
+                        key={btn.title}>
+                    <Button 
+                    href={btn.shortLink}
+                    startIcon={<DynamicIcon iconName={btn.icon} />}
+                    >
+                        {btn.title}
+                    </Button>
+                    </Tooltip>
+                ))
+            }
+            </Stack>
         </Box>
     )
 }

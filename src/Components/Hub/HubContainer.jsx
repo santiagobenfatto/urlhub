@@ -23,7 +23,7 @@ const HubContainer = ({isHome}) => {
             gutterBottom
             sx={{
                 width: '100%',
-                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+                fontSize: { xs: '1.8rem', sm: '2rem', md: '2.5rem' },
                 fontFamily:'Montserrat variable',
                 fontWeight: 600,
                 textAlign: 'center',
