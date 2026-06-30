@@ -16,7 +16,11 @@ createRoot(document.getElementById('root')).render(
         <ThemeProvider theme={theme}>
           <CssBaseline>
           <App />
-          <ToastContainer />
+          <ToastContainer
+                style={{ width: 'auto', maxWidth: '90vw' }}
+                toastStyle={{ fontSize: '0.9rem' }}
+                limit={3}
+            />
           </CssBaseline>
         </ThemeProvider>
       </Provider>

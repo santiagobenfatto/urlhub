@@ -12,6 +12,7 @@ import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { deleteLink, getUserLinks } from '../../Service/links.service.js'
 import { useLink } from '../../Context/useLink.jsx'
+import MobileLinkCards from './MobileLinkCards.jsx'
 
 
 
@@ -48,13 +49,22 @@ const LinksTable = () => {
                     navigate('/home')
                     return
                 }
-                toast.error('Error al cargar los links', { theme: 'dark' })
+                console.error('Error al cargar los links:', error)
             }
         }
         fetchLinks()
     }, [dispatch])
 
     return (
+            <>
+            <MobileLinkCards
+                links={linksMap}
+                linkId={linkId}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+                dispatch={dispatch}
+                addLinkToHub={addLinkToHub}
+            />
             <TableContainer 
             component={Paper}
             sx={{
@@ -66,7 +76,8 @@ const LinksTable = () => {
                 color: 'primary.main',
                 my: '1rem',
                 borderRadius: 0,
-                overflowX: 'auto'
+                overflowX: 'auto',
+                display: { xs: 'none', sm: 'block' }
             }}
         >
             <Table size='small'
@@ -204,6 +215,7 @@ const LinksTable = () => {
             </TableBody>
             </Table>
             </TableContainer>
+            </>
     )
 }
 
