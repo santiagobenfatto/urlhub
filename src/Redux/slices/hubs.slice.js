@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { arrayMove } from '@dnd-kit/sortable'
 
 const initialState = {
     name: 'My Urls Hub!',
@@ -54,9 +55,13 @@ const hubSlice = createSlice({
         },
         resetHub() {
             return initialState
+        },
+        reorderLinks(state, action) {
+            const { oldIndex, newIndex } = action.payload
+            state.links = arrayMove(state.links, oldIndex, newIndex)
         }
     }
 })
 
-export const { addLinkToHub, removeLinkFromHub, addLinksBulkToHub, resetHub, modifyTitle } = hubSlice.actions
+export const { addLinkToHub, removeLinkFromHub, addLinksBulkToHub, resetHub, modifyTitle, reorderLinks } = hubSlice.actions
 export default hubSlice.reducer

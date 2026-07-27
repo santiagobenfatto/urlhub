@@ -6,8 +6,12 @@ const getPublicLink = () => {
   return JSON.parse(localStorage.getItem('publicLinks')) || []
 }
 
+const removePublicLink = () => {
+  localStorage.removeItem('publicLinks')
+}
 
 export { 
     savePublicLink,
-    getPublicLink
+    getPublicLink,
+    removePublicLink
 }

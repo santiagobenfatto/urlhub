@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import EditIcon from '@mui/icons-material/Edit'
+import ClearIcon from '@mui/icons-material/Clear'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
@@ -22,6 +23,7 @@ const LinksTable = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { handleEditting, linkId } = useLink()
+    const [expandedLink, setExpandedLink] = useState(null)
     
     const handleEdit = async (linkIdData) => { 
         handleEditting(linkIdData)
@@ -76,15 +78,14 @@ const LinksTable = () => {
                 color: 'primary.main',
                 my: '1rem',
                 borderRadius: 0,
-                overflowX: 'auto',
-                display: { xs: 'none', sm: 'block' }
+                overflowX: 'hidden',
+                display: { xs: 'none', md: 'block' }
             }}
         >
             <Table size='small'
                 sx={{ 
                     overflowY: 'hidden',
-                    minWidth: { xs: '600px', sm: '100%' },
-                    width: { xs: 'auto', sm: '100%' },
+                    width: '100%',
                     border: 'none',
                     tableLayout: 'auto'
                 }}>
@@ -113,15 +114,18 @@ const LinksTable = () => {
                     '.MuiTableCell-root': {color: link.id === linkId ? '#ffb300' : '' }
                 }}
                 >
-                <TableCell sx={{ maxWidth: { xs: '150px', sm: 'none' } }}>
+                <TableCell sx={{ maxWidth: { xs: '120px', sm: '200px' } }}>
                     <Tooltip title={link.bigLink}>
-                        <span style={{
-                            display: 'block',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            maxWidth: { xs: '150px', sm: 'none' }
-                        }}>
+                        <span
+                            onClick={() => setExpandedLink(expandedLink === link.id ? null : link.id)}
+                            style={{
+                                display: 'block',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: expandedLink === link.id ? 'normal' : 'nowrap',
+                                cursor: 'pointer'
+                            }}
+                        >
                             {link.bigLink}
                         </span>
                     </Tooltip>
@@ -144,7 +148,7 @@ const LinksTable = () => {
                             })
                         }}
                         sx={{
-                            p: 0,
+                            p: 0.5,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
@@ -155,9 +159,12 @@ const LinksTable = () => {
                     </Tooltip>
                 </TableCell>
                 <TableCell>
-                    <Tooltip title={link.icon || 'No icon'}>
+                    <Tooltip title={link.icon ? link.icon : 'No icon assigned'}>
                     <span>
-                    <DynamicIcon iconName={link.icon} />
+                    {link.icon
+                        ? <DynamicIcon iconName={link.icon} />
+                        : <ClearIcon sx={{ color: 'error.main', fontSize: '1.2rem' }} />
+                    }
                     </span>
                     </Tooltip>
                 </TableCell>
@@ -166,13 +173,13 @@ const LinksTable = () => {
                     <span>{link.title}</span>
                 </Tooltip>
                 </TableCell>
-                <TableCell sx={{ textAlign: 'center'}} >
+                <TableCell sx={{ textAlign: 'center', whiteSpace: 'nowrap' }} >
                     <Tooltip title='Delete URL'>
                     <IconButton
                         alt= 'Delete URL'
                         onClick={() => handleDelete(link.id)}
                         sx={{
-                            p: 0,
+                            p: 0.5,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
@@ -186,7 +193,7 @@ const LinksTable = () => {
                         alt= 'Add Hub Icon'
                         onClick={() => dispatch(addLinkToHub(link))}
                         sx={{
-                            p: 0,
+                            p: 0.5,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
@@ -200,7 +207,7 @@ const LinksTable = () => {
                         alt= 'Edit Link Icon'
                         onClick={() => handleEdit(link.id)}
                         sx={{
-                            p: 0,
+                            p: 0.5,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',
                             ':hover': {
                             filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'

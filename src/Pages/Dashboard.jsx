@@ -36,7 +36,8 @@ const Dashboard = () => {
                         fontFamily: 'kalam',
                         fontWeight: 600,
                         color: '#ffb300',
-                        fontSize: { xs: '1.6rem', sm: '2.8rem', md: '3.75rem' }
+                        fontSize: { xs: '3rem', md: '3.75rem' },
+                        marginLeft: 4
                     }}>
                         Dashboard
                 </Typography>

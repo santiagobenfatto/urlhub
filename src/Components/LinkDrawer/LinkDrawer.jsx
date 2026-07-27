@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Box, SwipeableDrawer,  IconButton, Tooltip, Typography, Alert } from '@mui/material/'
+import { Box, SwipeableDrawer, IconButton, Tooltip, Typography, Alert, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material/'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import DeleteIcon from '@mui/icons-material/Delete'
 import LinkIcon from '@mui/icons-material/Link'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { toast } from 'react-toastify'
@@ -11,10 +12,11 @@ import { getPublicLink } from '../../Utils/utils.js'
 
 const LinkDrawer = () => {
     const [open, setOpen] = useState(false)
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     const drawerHeight = 280
 
-	const { urlData: contextData } = useLink()
+	const { urlData: contextData, clearUrlData } = useLink()
 	const urlData = contextData.shortLink ? contextData : (getPublicLink()[0] || contextData)
 
 	const toggleDrawer = (newOpen) => () => {
@@ -185,6 +187,21 @@ const LinkDrawer = () => {
 								<ContentCopyIcon />
 							</IconButton>
 						</Tooltip>
+						<Tooltip title='Delete'>
+							<IconButton
+								aria-label='Delete Short URL'
+								onClick={() => setConfirmDelete(true)}
+								color='secondary'
+								sx={{
+									p: 0,
+									':hover': {
+										filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 1))'
+									}
+								}}
+							>
+								<DeleteIcon />
+							</IconButton>
+						</Tooltip>
 					</Typography>
 				</Box>
 				{urlData.alias && (
@@ -213,6 +230,26 @@ const LinkDrawer = () => {
 		)}
       </Box>
       </SwipeableDrawer>
+
+      <Dialog open={confirmDelete} onClose={() => setConfirmDelete(false)}>
+        <DialogTitle>Delete this link?</DialogTitle>
+        <DialogContent>
+          <Typography>This action cannot be undone.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDelete(false)}>Cancel</Button>
+          <Button
+            color='error'
+            onClick={() => {
+              clearUrlData()
+              setConfirmDelete(false)
+              toast.warn('Link deleted', { theme: 'dark' })
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

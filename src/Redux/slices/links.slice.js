@@ -19,14 +19,14 @@ const linkSlice = createSlice({
             })
         },
         addLinksBulk(state, action) {
-            state.links = action.payload.map(link => ({
+            state.links = Array.isArray(action.payload) ? action.payload.map(link => ({
                 id: link.id,
                 title: link.title,
                 bigLink: link.big_link,
                 shortLink: link.short_link,
                 icon: link.icon || '',
                 alias: `/${link.alias}`
-                }))
+                })) : []
             },
         updateLinkField(state, action) {
             const linkIndex = state.links.findIndex(link => link.id === action.payload.id)

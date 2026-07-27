@@ -11,9 +11,8 @@ const getUserLinks = async () => {
         if(!response.ok) {
             throw new Error(`Error fetching ${URL} Status: ${response.status}`)
         }
-
         const data = await response.json()
-        return data
+        return data.data.data
         
     } catch (error) {
         console.error('Error in getUserLinks:', error)
@@ -86,6 +85,7 @@ const updateLink = async (linkId, updates) => {
         }
 
         const data = await response.json()
+        
         return data.data?.data || data
     } catch (error) {
         console.error('Error updating the link', error)
@@ -121,11 +121,12 @@ const migratePublicLink = async (linkId) => {
             method: 'PATCH',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: linkId })
+            body: JSON.stringify({ linkId })
         })
 
         if (!response.ok) {
             const json = await response.json()
+            console.error('Migration error response:', json)
             throw new Error(json.message || 'Error migrating link')
         }
 

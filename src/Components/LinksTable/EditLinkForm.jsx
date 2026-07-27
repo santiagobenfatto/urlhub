@@ -25,7 +25,7 @@ const EditLinkForm = ({linkId}) => {
     })
 
 
-    const { setIsEdditing } = useLink()
+    const { handleEditting } = useLink()
     const dispatch = useDispatch()
     const linksList = useSelector(state => state.links.links)
     const [link] = linksList.filter(e => e.id === linkId )
@@ -87,14 +87,15 @@ const EditLinkForm = ({linkId}) => {
                 return
             }
 
-            const result = await updateLinkService(linkId, { updates })
+            const result = await updateLinkService(linkId, updates)
             
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
-            dispatch(updateLinkField({ id: linkId, field: 'title', value: result.title }))
-            dispatch(updateLinkField({ id: linkId, field: 'alias', value: `/${result.alias}` }))
-            dispatch(updateLinkField({ id: linkId, field: 'icon', value: result.icon || '' }))
+            dispatch(updateLinkField({ id: linkId, field: 'title', value: formData.title }))
+            dispatch(updateLinkField({ id: linkId, field: 'alias', value: `/${formData.alias}` }))
+            dispatch(updateLinkField({ id: linkId, field: 'icon', value: formData.icon }))
             toast.success('Link actualizado exitosamente', { theme: 'dark'})
+            handleEditting(linkId)
         } catch (err) {
             console.log(err)
             toast.error(err.message || 'Error al actualizar el link', { theme: 'dark' })
@@ -119,7 +120,7 @@ const EditLinkForm = ({linkId}) => {
                 width: '50px'
                 }}
                 color='secondary'
-                onClick={() => setIsEdditing(false)}
+                onClick={() => handleEditting(linkId)}
                 >
                 <CloseIcon/>
             </IconButton>
@@ -168,6 +169,7 @@ const EditLinkForm = ({linkId}) => {
                 <TextField 
                     size='small'
                     variant='outlined'
+                    value={formData.title}
                     placeholder={link.title}
                     error={titleError.error}
                     helperText={titleError.message}

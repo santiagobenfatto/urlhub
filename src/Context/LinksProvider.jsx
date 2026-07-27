@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { savePublicLink, getPublicLink } from '../Utils/utils.js'
+import { savePublicLink, getPublicLink, removePublicLink } from '../Utils/utils.js'
 
 export const LinksContext = createContext()
 
@@ -39,9 +39,15 @@ const LinksProvider = ({children}) => {
         }
     }
 
+    const clearUrlData = () => {
+        setUrlData({ id: '', bigLink: '', alias: '', title: '', icon: '', shortLink: '' })
+        removePublicLink()
+    }
+
     const contextValue = {
         urlData: urlData,
         addShortURL,
+        clearUrlData,
         isEditting,
         handleEditting,
         linkId
