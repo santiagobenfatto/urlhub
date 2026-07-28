@@ -5,7 +5,7 @@ import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import Icons from '../Icons/Icons.jsx'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
-import { addLinkAdapter } from '../../Adapters/links.adapter.js'
+import { updateLinkAdapter } from '../../Adapters/links.adapter.js'
 import { updateLinkField } from '../../Redux/slices/links.slice.js'
 import { updateLink as updateLinkService } from '../../Service/links.service.js'
 import { useDispatch, useSelector } from 'react-redux'
@@ -88,12 +88,14 @@ const EditLinkForm = ({linkId}) => {
             }
 
             const result = await updateLinkService(linkId, updates)
-            
+            const adapted = await updateLinkAdapter(result)
+
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
-            dispatch(updateLinkField({ id: linkId, field: 'title', value: formData.title }))
-            dispatch(updateLinkField({ id: linkId, field: 'alias', value: `/${formData.alias}` }))
-            dispatch(updateLinkField({ id: linkId, field: 'icon', value: formData.icon }))
+            dispatch(updateLinkField({ id: linkId, field: 'title', value: adapted.title }))
+            dispatch(updateLinkField({ id: linkId, field: 'alias', value: adapted.alias }))
+            dispatch(updateLinkField({ id: linkId, field: 'icon', value: adapted.icon }))
+            dispatch(updateLinkField({ id: linkId, field: 'shortLink', value: adapted.shortLink }))
             toast.success('Link actualizado exitosamente', { theme: 'dark'})
             handleEditting(linkId)
         } catch (err) {

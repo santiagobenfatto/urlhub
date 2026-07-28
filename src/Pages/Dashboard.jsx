@@ -1,5 +1,9 @@
 import React from 'react'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Button, Container, IconButton, Tooltip, Typography } from '@mui/material'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import LinksTableContainer from '../Components/LinksTable/LinksTableContainer.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
@@ -7,6 +11,13 @@ import Footer from '../Components/Footer/Footer.jsx'
 
 
 const Dashboard = () => {
+    const hubUrl = useSelector(state => state.hub.shortLink) || ''
+
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(hubUrl)
+        toast.success('Hub link copied!', { theme: 'dark' })
+    }
+
     return (
         <Container disableGutters maxWidth='false' sx={{
             boxSizing: 'border-box',
@@ -43,6 +54,30 @@ const Dashboard = () => {
                 </Typography>
             </Box>
             <LinksTableContainer />
+            <Box sx={{ display: 'flex', gap: 1, my: 2, alignItems: 'center' }}>
+                <Tooltip title={hubUrl ? 'View your public hub' : 'Hub not available yet'}>
+                    <span>
+                        <Button
+                            variant='outlined'
+                            color='secondary'
+                            size='small'
+                            href={hubUrl || '#'}
+                            target='_blank'
+                            disabled={!hubUrl}
+                            endIcon={<OpenInNewIcon />}
+                        >
+                            View Hub
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title={hubUrl ? 'Copy hub link to clipboard' : 'Hub link not available'}>
+                    <span>
+                        <IconButton color='secondary' onClick={handleCopyLink} disabled={!hubUrl}>
+                            <ContentCopyIcon />
+                        </IconButton>
+                    </span>
+                </Tooltip>
+            </Box>
             <HubContainer isHome={false}/>
             <Footer />
         </Container>

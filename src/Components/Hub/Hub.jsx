@@ -1,36 +1,67 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 import { DndContext, closestCenter } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { reorderLinks, removeLinkFromHub, addLinksBulkToHub } from '../../Redux/slices/hubs.slice.js'
-import { getUserHub, removeLinkFromHubService, saveHub } from '../../Service/hub.service.js'
+import { reorderLinks, removeLinkFromHub, addLinksBulkToHub, setHubId, setHubShortLink } from '../../Redux/slices/hubs.slice.js'
+import { getUserHub, getHubLinks, removeLinkFromHubService, saveHub } from '../../Service/hub.service.js'
+import { store } from '../../Redux/store.js'
 import SortableLink from './SortableLink.jsx'
 
 
-const Hub = () => {
+const Hub = ({ isHome = false }) => {
 
     const linkButtons = useSelector(state => state.hub.links)
+    const hubId = useSelector(state => state.hub.hubId)
     const dispatch = useDispatch()
+    const hubLinksFetched = useRef(false)
 
     useEffect(() => {
+        if (isHome) return
         const fetchHub = async () => {
             try {
                 const data = await getUserHub()
-                if (data?.links?.length) {
-                    dispatch(addLinksBulkToHub(data.links))
+                if (data?.id) {
+                    dispatch(setHubId(data.id))
+                }
+                if (data?.short_link) {
+                    dispatch(setHubShortLink(data.short_link))
                 }
             } catch (error) {
                 console.error('Error fetching hub:', error)
             }
         }
         fetchHub()
-    }, [dispatch])
+    }, [dispatch, isHome])
+
+    useEffect(() => {
+        if (isHome || !hubId || hubLinksFetched.current) return
+
+        const fetchHubLinks = async () => {
+            try {
+                const rawLinks = await getHubLinks(hubId)
+                const userLinks = store.getState().links.links
+                const resolved = rawLinks.map(hl => {
+                    const full = userLinks.find(l => l.id === hl.link_id)
+                    return full
+                        ? { id: full.id, title: full.title, bigLink: full.bigLink, shortLink: full.shortLink, icon: full.icon }
+                        : null
+                }).filter(Boolean)
+                if (resolved.length) {
+                    dispatch(addLinksBulkToHub(resolved))
+                }
+                hubLinksFetched.current = true
+            } catch (error) {
+                console.error('Error fetching hub links:', error)
+            }
+        }
+        fetchHubLinks()
+    }, [hubId, dispatch, isHome])
 
     const handleDelete = async (linkId) => {
         try {
-            await removeLinkFromHubService(linkId)
+            await removeLinkFromHubService(hubId, linkId)
             dispatch(removeLinkFromHub(linkId))
             toast.warn('Link removed from hub', { theme: 'dark' })
         } catch (error) {
@@ -121,6 +152,18 @@ const Hub = () => {
                         ))}
                     </SortableContext>
                 </DndContext>
+                {linkButtons.length === 0 && (
+                    <Typography
+                        variant='body1'
+                        sx={{
+                            color: 'rgba(255,255,255,0.5)',
+                            textAlign: 'center',
+                            py: 4,
+                            fontFamily: 'Montserrat variable'
+                        }}>
+                        No links added yet. Add links from the table above.
+                    </Typography>
+                )}
             </Stack>
         </Box>
     )

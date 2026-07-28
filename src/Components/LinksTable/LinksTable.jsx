@@ -12,6 +12,7 @@ import { addLinksBulk, removeLink } from  '../../Redux/slices/links.slice.js'
 import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { deleteLink, getUserLinks } from '../../Service/links.service.js'
+import { addLinkToHubService } from '../../Service/hub.service.js'
 import { useLink } from '../../Context/useLink.jsx'
 import MobileLinkCards from './MobileLinkCards.jsx'
 
@@ -20,6 +21,8 @@ import MobileLinkCards from './MobileLinkCards.jsx'
 const LinksTable = () => {    
 
     const linksMap = useSelector(state => state.links.links)
+    const hubId = useSelector(state => state.hub.hubId)
+    const hubLinks = useSelector(state => state.hub.links)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { handleEditting, linkId } = useLink()
@@ -62,6 +65,8 @@ const LinksTable = () => {
             <MobileLinkCards
                 links={linksMap}
                 linkId={linkId}
+                hubId={hubId}
+                hubLinks={hubLinks}
                 handleEdit={handleEdit}
                 handleDelete={handleDelete}
                 dispatch={dispatch}
@@ -191,7 +196,24 @@ const LinksTable = () => {
                     <Tooltip title='Add the link to your hub'>
                     <IconButton
                         alt= 'Add Hub Icon'
-                        onClick={() => dispatch(addLinkToHub(link))}
+                        onClick={async () => {
+                            if (!hubId) {
+                                toast.info('Hub is still loading, please wait', { theme: 'dark' })
+                                return
+                            }
+                            if (hubLinks.some(l => l.id === link.id)) {
+                                toast.info('This link is already in your hub', { theme: 'dark' })
+                                return
+                            }
+                            try {
+                                await addLinkToHubService(hubId, link.id)
+                                dispatch(addLinkToHub(link))
+                                toast.success('Link added to hub', { theme: 'dark' })
+                            } catch (error) {
+                                console.error('Error adding link to hub:', error)
+                                toast.error('Failed to add link to hub', { theme: 'dark' })
+                            }
+                        }}
                         sx={{
                             p: 0.5,
                             color: link.id === linkId ? '#ffb300' : 'secondary.main',

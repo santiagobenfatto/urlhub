@@ -13,7 +13,7 @@ const linkSlice = createSlice({
                 id: action.payload.id,
                 title: action.payload.title,
                 bigLink: action.payload.bigLink,
-                shortLink: action.payload.short_link,
+                shortLink: action.payload.shortLink,
                 icon: action.payload.icon || '',
                 alias: `/${action.payload.alias}`
             })

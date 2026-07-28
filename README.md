@@ -10,6 +10,8 @@ A **URL shortening** and **personal hub management** web application. Shorten lo
 - **Redux Toolkit 2** — State management
 - **React Router 6** — Client-side routing
 - **React Toastify 11** — Toast notifications
+- **@dnd-kit** — Drag-and-drop for hub link reordering
+- **@fontsource** — Self-hosted fonts (Kalam, Montserrat, Roboto)
 
 ## Features
 
@@ -109,7 +111,8 @@ npm run test:watch  # Watch mode
 | `/login`     | Login      | User login                 |
 | `/register`  | Register   | User registration          |
 | `/dashboard` | Dashboard  | Link CRUD management       |
-| `/hub`       | User Hub   | Personal hub display       |
+| `/hub/:hubId` | User Hub  | Public hub by ID           |
+| `/*`         | AliasResolver | Resolves alias to public hub |
 
 ## Public Link Flow (non-authenticated users)
 

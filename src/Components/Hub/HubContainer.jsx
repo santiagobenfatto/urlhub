@@ -34,7 +34,7 @@ const HubContainer = ({isHome}) => {
         </Typography> 
         : null
         }
-            <Hub />
+            <Hub isHome={isHome} />
         </Container>
     )
 }

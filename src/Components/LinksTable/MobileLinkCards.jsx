@@ -6,8 +6,9 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import EditIcon from '@mui/icons-material/Edit'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { toast } from 'react-toastify'
+import { addLinkToHubService } from '../../Service/hub.service.js'
 
-const MobileLinkCards = ({ links, linkId, handleEdit, handleDelete, dispatch, addLinkToHub }) => {
+const MobileLinkCards = ({ links, linkId, hubId, hubLinks, handleEdit, handleDelete, dispatch, addLinkToHub }) => {
     const handleCopy = (shortLink) => {
         navigator.clipboard.writeText(shortLink)
             .then(() => toast.success('Se ha copiado el link acortado', { theme: 'dark' }))
@@ -110,7 +111,24 @@ const MobileLinkCards = ({ links, linkId, handleEdit, handleDelete, dispatch, ad
                             </Tooltip>
                             <Tooltip title='Add the link to your hub'>
                                 <IconButton
-                                    onClick={() => dispatch(addLinkToHub(link))}
+                                    onClick={async () => {
+                                        if (!hubId) {
+                                            toast.info('Hub is still loading, please wait', { theme: 'dark' })
+                                            return
+                                        }
+                                        if (hubLinks.some(l => l.id === link.id)) {
+                                            toast.info('This link is already in your hub', { theme: 'dark' })
+                                            return
+                                        }
+                                        try {
+                                            await addLinkToHubService(hubId, link.id)
+                                            dispatch(addLinkToHub(link))
+                                            toast.success('Link added to hub', { theme: 'dark' })
+                                        } catch (error) {
+                                            console.error('Error adding link to hub:', error)
+                                            toast.error('Failed to add link to hub', { theme: 'dark' })
+                                        }
+                                    }}
                                     size='small'
                                     sx={{
                                         color: isEditing ? '#ffb300' : 'secondary.main',

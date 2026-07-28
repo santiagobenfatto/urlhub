@@ -54,6 +54,8 @@ const SortableLink = ({ btn, onDelete }) => {
                 <Tooltip title={btn.title}>
                     <Button
                         href={btn.shortLink}
+                        target='_blank'
+                        rel='noopener noreferrer'
                         startIcon={<DynamicIcon iconName={btn.icon} />}
                         sx={{ flexGrow: 1 }}
                     >

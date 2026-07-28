@@ -88,6 +88,7 @@ const AddLinkForm = () => {
             setBigLinkError({ error: false, message: '' })
             setAliasError({ error: false, message: '' })
             setTitleError({ error: false, message: '' })
+            setFormData({ bigLink: '', alias: '', title: '', icon: '' })
             dispatch(addLinkRedux(linkAdapted))
             toast.success('Link creado exitosamente', { theme: 'dark'})
         } catch (err) {

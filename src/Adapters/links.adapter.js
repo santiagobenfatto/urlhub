@@ -1,12 +1,13 @@
 
 const linksListAdapter = async (linkListData) => {
 	const linkList = linkListData.map(link => ({
+		id: link.id,
 		title: link.title,
 		bigLink: link.big_link, 
-		shortLink: link.short_link,
+		shortLink: link.shortLink || link.short_link,
 		alias: link.alias,
 		icon: link.icon
-}))
+	}))
 return linkList
 }
 

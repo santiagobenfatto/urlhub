@@ -1,3 +1,5 @@
+import { linksListAdapter } from '../Adapters/links.adapter.js'
+
 const serverURL = import.meta.env.VITE_API_SERVER_URL
 const URL = `${serverURL}/api/v1/hubs`
 
@@ -10,8 +12,8 @@ const getUserHub = async () => {
         if (!response.ok) {
             throw new Error(`Error fetching hub. Status: ${response.status}`)
         }
-        const data = await response.json()
-        return data
+        const json = await response.json()
+        return json.data?.data?.[0] || null
     } catch (error) {
         console.error('Error in getUserHub:', error)
         throw error
@@ -37,9 +39,9 @@ const saveHub = async (hubData) => {
     }
 }
 
-const addLinkToHubService = async (linkId) => {
+const addLinkToHubService = async (hubId, linkId) => {
     try {
-        const response = await fetch(`${URL}/links`, {
+        const response = await fetch(`${URL}/${hubId}/links`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -56,9 +58,9 @@ const addLinkToHubService = async (linkId) => {
     }
 }
 
-const removeLinkFromHubService = async (linkId) => {
+const removeLinkFromHubService = async (hubId, linkId) => {
     try {
-        const response = await fetch(`${URL}/links/${linkId}`, {
+        const response = await fetch(`${URL}/${hubId}/links/${linkId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
@@ -74,9 +76,65 @@ const removeLinkFromHubService = async (linkId) => {
     }
 }
 
+const getHubLinks = async (hubId) => {
+    try {
+        const response = await fetch(`${URL}/${hubId}/links`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if (!response.ok) {
+            throw new Error(`Error fetching hub links. Status: ${response.status}`)
+        }
+        const json = await response.json()
+        return json.data?.data || []
+    } catch (error) {
+        console.error('Error in getHubLinks:', error)
+        throw error
+    }
+}
+
+const getPublicHub = async (hubId) => {
+    try {
+        const response = await fetch(`${URL}/public/${hubId}`)
+        if (!response.ok) {
+            throw new Error(`Error fetching public hub. Status: ${response.status}`)
+        }
+        const json = await response.json()
+        const hub = json.data?.data || null
+        if (hub?.links) {
+            hub.links = await linksListAdapter(hub.links)
+        }
+        return hub
+    } catch (error) {
+        console.error('Error in getPublicHub:', error)
+        throw error
+    }
+}
+
+const getPublicHubByAlias = async (alias) => {
+    try {
+        const response = await fetch(`${URL}/public/alias/${alias}`)
+        if (!response.ok) {
+            throw new Error(`Error fetching public hub. Status: ${response.status}`)
+        }
+        const json = await response.json()
+        const hub = json.data?.data || null
+        if (hub?.links) {
+            hub.links = await linksListAdapter(hub.links)
+        }
+        return hub
+    } catch (error) {
+        console.error('Error in getPublicHubByAlias:', error)
+        throw error
+    }
+}
+
 export {
     getUserHub,
     saveHub,
     addLinkToHubService,
-    removeLinkFromHubService
+    removeLinkFromHubService,
+    getHubLinks,
+    getPublicHub,
+    getPublicHubByAlias
 }
