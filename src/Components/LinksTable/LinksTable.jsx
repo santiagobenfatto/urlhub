@@ -70,7 +70,6 @@ const LinksTable = () => {
                 handleEdit={handleEdit}
                 handleDelete={handleDelete}
                 dispatch={dispatch}
-                addLinkToHub={addLinkToHub}
             />
             <TableContainer 
             component={Paper}

@@ -1,10 +1,11 @@
+import { buildShortUrl } from '../Utils/shortLink.js'
 
 const linksListAdapter = async (linkListData) => {
 	const linkList = linkListData.map(link => ({
 		id: link.id,
 		title: link.title,
 		bigLink: link.big_link, 
-		shortLink: link.shortLink || link.short_link,
+		shortLink: buildShortUrl(link.alias),
 		alias: link.alias,
 		icon: link.icon
 	}))
@@ -17,30 +18,19 @@ const addLinkAdapter = async (linkData) => {
 		title: linkData.title,
 		bigLink: linkData.big_link,
 		alias: linkData.alias,
-		shortLink: linkData.short_link,
+		shortLink: buildShortUrl(linkData.alias),
 		icon: linkData.icon || ''
 	}
 	return newLink
 }
 
-const addPublicLinkAdapter = (linkData) => {
-	const newLink = {
-		id: linkData.id,
-		title: linkData.title,
-		bigLink: linkData.big_link,
-		alias: linkData.alias,
-		shortLink: linkData.short_link,
-		icon: linkData.icon || ''
-	}
-	return newLink
-}
 const updateLinkAdapter = async (linkData) => {
 	const newLink = {
 		id: linkData.id,
 		title: linkData.title,
 		bigLink: linkData.big_link,
 		alias: linkData.alias,
-		shortLink: linkData.short_link,
+		shortLink: buildShortUrl(linkData.alias),
 		icon: linkData.icon || ''
 	}
 	return newLink
@@ -49,6 +39,5 @@ const updateLinkAdapter = async (linkData) => {
 export { 
 	linksListAdapter,
 	addLinkAdapter,
-	addPublicLinkAdapter,
 	updateLinkAdapter
 }

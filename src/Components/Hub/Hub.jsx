@@ -8,6 +8,7 @@ import { reorderLinks, removeLinkFromHub, addLinksBulkToHub, setHubId, setHubSho
 import { getUserHub, getHubLinks, removeLinkFromHubService, saveHub } from '../../Service/hub.service.js'
 import { store } from '../../Redux/store.js'
 import SortableLink from './SortableLink.jsx'
+import { buildShortUrl } from '../../Utils/shortLink.js'
 
 
 const Hub = ({ isHome = false }) => {
@@ -25,9 +26,7 @@ const Hub = ({ isHome = false }) => {
                 if (data?.id) {
                     dispatch(setHubId(data.id))
                 }
-                if (data?.short_link) {
-                    dispatch(setHubShortLink(data.short_link))
-                }
+                dispatch(setHubShortLink(data?.short_link || buildShortUrl(data?.alias)))
             } catch (error) {
                 console.error('Error fetching hub:', error)
             }

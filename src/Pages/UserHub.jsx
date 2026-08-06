@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Box, CircularProgress, Container, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Box, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Footer from '../Components/Footer/Footer.jsx'
 import PublicHub from '../Components/Hub/PublicHub.jsx'
-import { getPublicHub, getPublicHubByAlias } from '../Service/hub.service.js'
+import LoadingScreen from '../Components/LoadingScreen.jsx'
+import { getPublicHub } from '../Service/hub.service.js'
 
 function UserHub() {
-    const { hubId, alias } = useParams()
+    const { hubId } = useParams()
     const [hubData, setHubData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -16,9 +17,7 @@ function UserHub() {
         const fetchPublicHub = async () => {
             try {
                 setLoading(true)
-                const data = alias
-                    ? await getPublicHubByAlias(alias)
-                    : await getPublicHub(hubId)
+                const data = await getPublicHub(hubId)
                 setHubData(data)
             } catch (err) {
                 setError(err.message || 'Hub not found')
@@ -27,7 +26,9 @@ function UserHub() {
             }
         }
         fetchPublicHub()
-    }, [hubId, alias])
+    }, [hubId])
+
+    if (loading) return <LoadingScreen />
 
     return (
         <Container disableGutters maxWidth='false' sx={{
@@ -42,11 +43,7 @@ function UserHub() {
             m: 0
         }}>
             <NavBar currentPage='hub' />
-            {loading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
-                    <CircularProgress color='secondary' />
-                </Box>
-            ) : error ? (
+            {error ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
                     <Typography color='error' variant='h6'>{error}</Typography>
                 </Box>

@@ -5,23 +5,18 @@ import { renderWithProviders } from '../test-utils'
 import Login from '@/Pages/Login'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const { mockLoginService, mockLoginAdapter, mockMigratePublicLink } = vi.hoisted(() => ({
+const { mockLoginService, mockLoginAdapter } = vi.hoisted(() => ({
   mockLoginService: vi.fn(),
   mockLoginAdapter: vi.fn((data) => ({
-    userName: data.first_name || '',
-    nickname: data.nickname || '',
-    email: data.email || '',
-    hubSetup: data.hub_setup || null
-  })),
-  mockMigratePublicLink: vi.fn()
+    userName: data?.first_name || '',
+    nickname: data?.nickname || '',
+    email: data?.email || '',
+    hubSetup: data?.hub_setup || null
+  }))
 }))
 
 vi.mock('@/Service/login.service.js', () => ({
   loginService: mockLoginService
-}))
-
-vi.mock('@/Service/links.service.js', () => ({
-  migratePublicLink: mockMigratePublicLink
 }))
 
 vi.mock('@/Adapters/login.adapter.js', () => ({
@@ -43,9 +38,7 @@ describe('Login', () => {
 
     mockLoginService.mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({
-        data: { user: mockUser }
-      })
+      json: () => Promise.resolve({ user: mockUser })
     })
 
     const { store } = renderWithProviders(

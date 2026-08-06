@@ -7,12 +7,11 @@ const getUserLinks = async () => {
             method: 'GET',
             credentials: 'include',
             })
-        
-        if(!response.ok) {
-            throw new Error(`Error fetching ${URL} Status: ${response.status}`)
-        }
-        const data = await response.json()
-        return data.data.data
+            if(!response.ok) {
+                throw new Error(`Error fetching ${URL} Status: ${response.status}`)
+            }
+            const data = await response.json()
+        return data.data
         
     } catch (error) {
         console.error('Error in getUserLinks:', error)
@@ -35,7 +34,7 @@ const addNewLink = async (link) => {
         }
 
         const data = await response.json()
-        return data.data?.data || data
+        return data.data || data
         
     } catch (error) {
         console.error('Error in addLink', error)
@@ -55,14 +54,14 @@ const addPublicLink = async (link) => {
                 big_link: link.bigLink
             })
         })
-
+        console.log('addPublicLink Service:', response)
         if(!response.ok){
             const json = await response.json()
             throw new Error(json.message || `Error fetching ${URL}/short`)
         }
 
         const json = await response.json()
-        return json.data?.data || json.link || json
+        return json.data || json.link || json
         
     } catch (error) {
         console.error('Error creating simple link', error)
@@ -86,7 +85,7 @@ const updateLink = async (linkId, updates) => {
 
         const data = await response.json()
         
-        return data.data?.data || data
+        return data.data || data
     } catch (error) {
         console.error('Error updating the link', error)
         throw error
@@ -115,33 +114,10 @@ const deleteLink = async (linkId) => {
     }
 }
 
-const migratePublicLink = async (linkId) => {
-    try {
-        const response = await fetch(`${URL}/migrate`, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ linkId })
-        })
-
-        if (!response.ok) {
-            const json = await response.json()
-            console.error('Migration error response:', json)
-            throw new Error(json.message || 'Error migrating link')
-        }
-
-        return response.json()
-    } catch (error) {
-        console.error('Error migrating public link:', error)
-        throw error
-    }
-}
-
 export {
     getUserLinks,
     addNewLink,
     addPublicLink,
     updateLink,
-    deleteLink,
-    migratePublicLink
+    deleteLink
 }

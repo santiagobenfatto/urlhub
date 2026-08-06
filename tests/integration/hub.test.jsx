@@ -6,13 +6,15 @@ import UserHub from '@/Pages/UserHub'
 import Dashboard from '@/Pages/Dashboard'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const { mockGetUserHub, mockGetUserLinks } = vi.hoisted(() => ({
+const { mockGetUserHub, mockGetUserLinks, mockGetPublicHub } = vi.hoisted(() => ({
   mockGetUserHub: vi.fn(),
-  mockGetUserLinks: vi.fn()
+  mockGetUserLinks: vi.fn(),
+  mockGetPublicHub: vi.fn()
 }))
 
 vi.mock('@/Service/hub.service.js', () => ({
   getUserHub: mockGetUserHub,
+  getPublicHub: mockGetPublicHub,
   saveHub: vi.fn(),
   addLinkToHubService: vi.fn(),
   removeLinkFromHubService: vi.fn()
@@ -29,7 +31,6 @@ vi.mock('@/Service/links.service.js', () => ({
 vi.mock('@/Adapters/links.adapter.js', () => ({
   addLinkAdapter: vi.fn(),
   linksListAdapter: vi.fn(),
-  addPublicLinkAdapter: vi.fn(),
   updateLinkAdapter: vi.fn()
 }))
 
@@ -44,22 +45,22 @@ describe('Hub', () => {
   })
 
   it('renders hub links from API', async () => {
-    mockGetUserHub.mockResolvedValue({
+    mockGetPublicHub.mockResolvedValue({
       name: 'My Hub',
       links: mockHubLinks
     })
 
     renderWithProviders(
       <Routes>
-        <Route path="/hub" element={<UserHub />} />
+        <Route path="/hub/:hubId" element={<UserHub />} />
         <Route path="*" element={<div data-testid="catch-all">CatchAll</div>} />
       </Routes>,
-      { initialEntries: ['/hub'] }
+      { initialEntries: ['/hub/hub-123'] }
     )
 
-    expect(await screen.findByText('My UrlsHub')).toBeInTheDocument()
+    expect(await screen.findByText('My Hub')).toBeInTheDocument()
     expect(await screen.findByText('Instagram')).toBeInTheDocument()
-    expect(await screen.findByText('Github')).toBeInTheDocument()
+    expect(await screen.findByText('GitHub')).toBeInTheDocument()
   })
 
   it('adds a link to hub from the dashboard table', async () => {
@@ -67,6 +68,7 @@ describe('Hub', () => {
       { id: 1, title: 'Docs', big_link: 'https://docs.com', alias: 'docs', short_link: 'https://urlhub.io/docs', icon: '' }
     ])
     mockGetUserHub.mockResolvedValue({
+      id: 1,
       name: 'My Hub',
       links: [{ id: 1, title: 'Instagram', shortLink: 'https://urlhub.io/insta', icon: 'Instagram' }]
     })
@@ -74,13 +76,14 @@ describe('Hub', () => {
     const { store } = renderWithProviders(
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/hub" element={<UserHub />} />
+        <Route path="/hub/:hubId" element={<UserHub />} />
         <Route path="*" element={<div data-testid="catch-all">CatchAll</div>} />
       </Routes>,
       { initialEntries: ['/dashboard'] }
     )
 
-    await screen.findByText('Docs')
+    const docsLinks = await screen.findAllByText('Docs')
+    expect(docsLinks.length).toBeGreaterThan(0)
 
     const user = userEvent.setup()
     const addToHubButtons = screen.getAllByRole('button', { name: /add the link to your hub/i })

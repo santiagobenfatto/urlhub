@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { buildShortUrl } from '../../Utils/shortLink.js'
 
 const initialState = {
     links: []
@@ -23,7 +24,7 @@ const linkSlice = createSlice({
                 id: link.id,
                 title: link.title,
                 bigLink: link.big_link,
-                shortLink: link.short_link,
+                shortLink: buildShortUrl(link.alias),
                 icon: link.icon || '',
                 alias: `/${link.alias}`
                 })) : []

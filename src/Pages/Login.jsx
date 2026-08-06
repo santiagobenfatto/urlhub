@@ -8,8 +8,7 @@ import { loginAdapter } from '../Adapters/login.adapter.js'
 import { saveUser } from '../Redux/slices/user.slice.js'
 import { emailValidation } from '../Utils/validateRegex.js'
 import { loginService } from '../Service/login.service.js'
-import { getPublicLink } from '../Utils/utils.js'
-import { migratePublicLink } from '../Service/links.service.js'
+import { getPublicLink, removePublicLink } from '../Utils/utils.js'
 
 const Login = () => {
     
@@ -48,7 +47,7 @@ const Login = () => {
         try {
             const response = await loginService({email, pass})
             const parsedResponse = await response.json()
-            const userData = await loginAdapter(parsedResponse.data.user)
+            const userData = await loginAdapter(parsedResponse.user)
             dispatch(saveUser(userData))
             
             setEmail('')
@@ -57,13 +56,8 @@ const Login = () => {
             if(response.ok){
                 const [publicLink] = getPublicLink()
                 if (publicLink?.id) {
-                    try {
-                        await migratePublicLink(publicLink.id)
-                        localStorage.removeItem('publicLinks')
-                        toast.success('Public link imported to your account!', { theme: 'dark' })
-                    } catch {
-                        toast.info('Could not import your public link. You can add it manually.', { theme: 'dark' })
-                    }
+                    removePublicLink()
+                    toast.info('Your public link can be recreated from the dashboard.', { theme: 'dark' })
                 }
                 toast.success('Inicio de sesión exitoso', { theme: 'dark' })
                 navigate('/dashboard')

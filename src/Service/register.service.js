@@ -18,7 +18,7 @@ export const registerService = async (user) => {
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching/post the ${URL}. Error status: ${response.status}`)
+            throw new Error(`Error fetching/post the ${URL}/register. Error status: ${response.status}`)
         }
         return response
     } catch (error) {

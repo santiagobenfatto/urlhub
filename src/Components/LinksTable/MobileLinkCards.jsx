@@ -7,8 +7,9 @@ import EditIcon from '@mui/icons-material/Edit'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { toast } from 'react-toastify'
 import { addLinkToHubService } from '../../Service/hub.service.js'
+import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 
-const MobileLinkCards = ({ links, linkId, hubId, hubLinks, handleEdit, handleDelete, dispatch, addLinkToHub }) => {
+const MobileLinkCards = ({ links, linkId, hubId, hubLinks, handleEdit, handleDelete, dispatch }) => {
     const handleCopy = (shortLink) => {
         navigator.clipboard.writeText(shortLink)
             .then(() => toast.success('Se ha copiado el link acortado', { theme: 'dark' }))

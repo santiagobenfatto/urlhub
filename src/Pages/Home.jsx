@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Box, CircularProgress, Container } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Header from '../Components/Header/Header.jsx'
@@ -7,6 +7,7 @@ import HubContainer from '../Components/Hub/HubContainer.jsx'
 import FooterContainer from '../Components/Footer/FooterContainer.jsx'
 import LinkDrawer from '../Components/LinkDrawer/LinkDrawer.jsx'
 import LinksProvider from '../Context/LinksProvider.jsx'
+import LoadingScreen from '../Components/LoadingScreen.jsx'
 
 const URL = import.meta.env.VITE_API_SERVER_URL
 
@@ -26,19 +27,7 @@ const Home = () => {
         .finally(() => setLoading(false))
     }, [])
 
-    if (loading) {
-        return (
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh',
-                backgroundColor: 'primary.main'
-            }}>
-                <CircularProgress color='secondary' />
-            </Box>
-        )
-    }
+    if (loading) return <LoadingScreen />
 
     return (
         <Container disableGutters maxWidth='false' sx={{

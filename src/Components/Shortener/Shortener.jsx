@@ -5,8 +5,8 @@ import { toast } from 'react-toastify'
 import { validateUrl } from '../../Utils/validateRegex'
 import { useLink } from '../../Context/useLink.jsx'
 import { addPublicLink as addPublicLinkService} from '../../Service/links.service.js'
-import { addPublicLinkAdapter } from '../../Adapters/links.adapter.js'
 import { getPublicLink } from '../../Utils/utils.js'
+import { buildShortUrl } from '../../Utils/shortLink.js'
 
 
 const Shortener = () => {
@@ -46,7 +46,7 @@ const Shortener = () => {
                 title: src.title || '',
                 bigLink: src.big_link || src.bigLink || src.original_url,
                 alias: src.alias || '',
-                shortLink: src.short_link || src.shortLink || src.short_url,
+                shortLink: buildShortUrl(src.alias),
                 icon: src.icon || ''
             }
             setUrlError({ error: false, message: ''})

@@ -25,7 +25,6 @@ vi.mock('@/Service/links.service.js', () => ({
 vi.mock('@/Adapters/links.adapter.js', () => ({
   addLinkAdapter: vi.fn(),
   linksListAdapter: vi.fn(),
-  addPublicLinkAdapter: vi.fn(),
   updateLinkAdapter: vi.fn()
 }))
 

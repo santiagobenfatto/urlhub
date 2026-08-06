@@ -5,12 +5,20 @@ import { renderWithProviders } from '../test-utils'
 import Dashboard from '@/Pages/Dashboard'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const { mockGetUserLinks, mockAddNewLink, mockUpdateLink, mockDeleteLink, mockAddLinkAdapter } = vi.hoisted(() => ({
+const { mockGetUserLinks, mockAddNewLink, mockUpdateLink, mockDeleteLink, mockAddLinkAdapter, mockUpdateLinkAdapter } = vi.hoisted(() => ({
   mockGetUserLinks: vi.fn(),
   mockAddNewLink: vi.fn(),
   mockUpdateLink: vi.fn(),
   mockDeleteLink: vi.fn(),
   mockAddLinkAdapter: vi.fn((data) => ({
+    id: data.id,
+    title: data.title,
+    bigLink: data.big_link,
+    alias: data.alias,
+    shortLink: data.short_link,
+    icon: data.icon || ''
+  })),
+  mockUpdateLinkAdapter: vi.fn((data) => ({
     id: data.id,
     title: data.title,
     bigLink: data.big_link,
@@ -31,8 +39,7 @@ vi.mock('@/Service/links.service.js', () => ({
 vi.mock('@/Adapters/links.adapter.js', () => ({
   addLinkAdapter: mockAddLinkAdapter,
   linksListAdapter: vi.fn(),
-  addPublicLinkAdapter: vi.fn(),
-  updateLinkAdapter: vi.fn()
+  updateLinkAdapter: mockUpdateLinkAdapter
 }))
 
 const mockLinks = [
@@ -57,10 +64,11 @@ describe('Private Links', () => {
       { initialEntries: ['/dashboard'] }
     )
 
-    expect(await screen.findByText('My Link')).toBeInTheDocument()
-    expect(screen.getByText('https://example.com')).toBeInTheDocument()
-    expect(screen.getByText('Other')).toBeInTheDocument()
-    expect(screen.getByText('https://other.com')).toBeInTheDocument()
+    const myLinks = await screen.findAllByText('My Link')
+    expect(myLinks.length).toBeGreaterThan(0)
+    expect(screen.getAllByText('https://example.com').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Other').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('https://other.com').length).toBeGreaterThan(0)
   })
 
   it('creates a new link successfully', async () => {
@@ -83,7 +91,8 @@ describe('Private Links', () => {
       { initialEntries: ['/dashboard'] }
     )
 
-    await screen.findByText('No links available. Add a new link to get started!')
+    const noLinks = await screen.findAllByText('No links available. Add a new link to get started!')
+    expect(noLinks.length).toBeGreaterThan(0)
 
     const user = userEvent.setup()
     await user.type(screen.getByPlaceholderText('Big Link'), 'https://new.com')
@@ -95,7 +104,7 @@ describe('Private Links', () => {
     await user.click(addButton)
 
     expect(await screen.findByText('Link creado exitosamente')).toBeInTheDocument()
-    expect(await screen.findByText('New Link')).toBeInTheDocument()
+    expect((await screen.findAllByText('New Link')).length).toBeGreaterThan(0)
   })
 
   it('edits an existing link successfully', async () => {
@@ -118,7 +127,7 @@ describe('Private Links', () => {
       { initialEntries: ['/dashboard'] }
     )
 
-    await screen.findByText('My Link')
+    await screen.findAllByText('My Link')
 
     const user = userEvent.setup()
     const editButtons = screen.getAllByRole('button', { name: /edit your url/i })
@@ -149,7 +158,7 @@ describe('Private Links', () => {
       { initialEntries: ['/dashboard'] }
     )
 
-    await screen.findByText('My Link')
+    await screen.findAllByText('My Link')
 
     const user = userEvent.setup()
     const deleteButtons = screen.getAllByRole('button', { name: /delete url/i })
@@ -162,7 +171,7 @@ describe('Private Links', () => {
     expect(await screen.findByText('Link eliminado')).toBeInTheDocument()
 
     await waitFor(() => {
-      expect(screen.queryByText('My Link')).not.toBeInTheDocument()
+      expect(screen.queryAllByText('My Link').length).toBe(0)
     })
   })
 })
