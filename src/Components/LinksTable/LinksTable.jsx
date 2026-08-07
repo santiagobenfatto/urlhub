@@ -36,10 +36,10 @@ const LinksTable = () => {
         try {
             await deleteLink(linkIdData)
             dispatch(removeLink(linkIdData))
-            toast.warn('Link eliminado', { theme: 'dark'})
+            toast.warn('Link deleted', { theme: 'dark'})
         } catch (error) {
             console.error('Error al eliminar en backend:', error)
-            toast.error('No se pudo eliminar el link', { theme: 'dark' })
+            toast.error('Could not delete the link', { theme: 'dark' })
         }
     }
 
@@ -50,7 +50,7 @@ const LinksTable = () => {
                 dispatch(addLinksBulk(data))
             } catch (error) {
                 if (error.message.includes('403') || error.message.includes('401')) {
-                    toast.error('Sesión expirada. Redirigiendo...', { theme: 'dark' })
+                    toast.error('Session expired. Redirecting...', { theme: 'dark' })
                     navigate('/home')
                     return
                 }
@@ -58,7 +58,7 @@ const LinksTable = () => {
             }
         }
         fetchLinks()
-    }, [dispatch])
+    }, [dispatch, navigate])
 
     return (
             <>
@@ -145,10 +145,10 @@ const LinksTable = () => {
                         onClick={ () =>{             
                             navigator.clipboard.writeText(link.shortLink)
                             .then( () => {
-                                toast.success('Se ha copiado el link acortado', {theme: 'dark'})
+                                toast.success('Short link copied', {theme: 'dark'})
                             })
                             .catch( () => {
-                                toast.error('Ha ocurrido un error, si persiste contactate', {theme: 'dark'})
+                                toast.error('An error occurred, please try again.', {theme: 'dark'})
                             })
                         }}
                         sx={{

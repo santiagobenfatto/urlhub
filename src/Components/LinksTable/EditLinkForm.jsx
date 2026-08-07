@@ -46,7 +46,7 @@ const EditLinkForm = ({linkId}) => {
             if (!validateAlias(value)) {
                 setAliasError({
                     error: true,
-                    message: 'Máx 5 caracteres, letras y números.'
+                    message: 'Max 5 characters, letters and numbers.'
                 })
             }  else {
                 setAliasError({ error: false, message: '' })
@@ -56,7 +56,7 @@ const EditLinkForm = ({linkId}) => {
             if (value.length > 15) {
                 setTitleError({
                     error: true,
-                    message: 'Máximo 15 caracteres.',
+                    message: 'Maximum 15 characters.',
                 })
             } else {
                 setTitleError({ error: false, message: '' })
@@ -83,7 +83,7 @@ const EditLinkForm = ({linkId}) => {
             }
 
             if (Object.keys(updates).length === 0) {
-                toast.info('No se detectaron cambios', { theme: 'dark' })
+                toast.info('No changes detected', { theme: 'dark' })
                 return
             }
 
@@ -96,11 +96,11 @@ const EditLinkForm = ({linkId}) => {
             dispatch(updateLinkField({ id: linkId, field: 'alias', value: adapted.alias }))
             dispatch(updateLinkField({ id: linkId, field: 'icon', value: adapted.icon }))
             dispatch(updateLinkField({ id: linkId, field: 'shortLink', value: adapted.shortLink }))
-            toast.success('Link actualizado exitosamente', { theme: 'dark'})
+            toast.success('Link updated successfully', { theme: 'dark'})
             handleEditting(linkId)
         } catch (err) {
-            console.log(err)
-            toast.error(err.message || 'Error al actualizar el link', { theme: 'dark' })
+            console.error(err)
+            toast.error(err.message || 'Error updating the link', { theme: 'dark' })
         }
     }
 

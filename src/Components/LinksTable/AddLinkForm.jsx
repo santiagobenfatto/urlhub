@@ -46,7 +46,7 @@ const AddLinkForm = () => {
             if (!validateUrl(value)) {
                 setBigLinkError({
                     error: true,
-                    message: 'La URL no es válida.',
+                    message: 'The URL is not valid.',
                 })
             } else {
                 setBigLinkError({error: false, message: '',})
@@ -56,7 +56,7 @@ const AddLinkForm = () => {
             if (!validateAlias(value)) {
                 setAliasError({
                     error: true,
-                    message: 'Máx 5 caracteres, letras y números.'
+                    message: 'Max 5 characters, letters and numbers.'
                 })
             }  else {
                 setAliasError({ error: false, message: '' })
@@ -66,7 +66,7 @@ const AddLinkForm = () => {
             if (value.length > 15) {
                 setTitleError({
                     error: true,
-                    message: 'Máximo 15 caracteres.',
+                    message: 'Maximum 15 characters.',
                 })
             } else {
                 setTitleError({ error: false, message: '' })
@@ -90,13 +90,13 @@ const AddLinkForm = () => {
             setTitleError({ error: false, message: '' })
             setFormData({ bigLink: '', alias: '', title: '', icon: '' })
             dispatch(addLinkRedux(linkAdapted))
-            toast.success('Link creado exitosamente', { theme: 'dark'})
+            toast.success('Link created successfully', { theme: 'dark'})
         } catch (err) {
             setBigLinkError({
                 error: true,
-                message: err.message || 'El alias ya existe o hubo un error.',
+                message: err.message || 'The alias already exists or an error occurred.',
             })
-            toast.error(err.message || 'Error al crear el link', { theme: 'dark' })
+            toast.error(err.message || 'Error creating the link', { theme: 'dark' })
         }
     }
 

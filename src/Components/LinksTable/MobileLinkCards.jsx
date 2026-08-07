@@ -12,8 +12,8 @@ import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
 const MobileLinkCards = ({ links, linkId, hubId, hubLinks, handleEdit, handleDelete, dispatch }) => {
     const handleCopy = (shortLink) => {
         navigator.clipboard.writeText(shortLink)
-            .then(() => toast.success('Se ha copiado el link acortado', { theme: 'dark' }))
-            .catch(() => toast.error('Ha ocurrido un error, si persiste contactate', { theme: 'dark' }))
+            .then(() => toast.success('Short link copied', { theme: 'dark' }))
+            .catch(() => toast.error('An error occurred, please try again.', { theme: 'dark' }))
     }
 
     if (links.length === 0) {

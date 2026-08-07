@@ -47,6 +47,8 @@ describe('Hub', () => {
   it('renders hub links from API', async () => {
     mockGetPublicHub.mockResolvedValue({
       name: 'My Hub',
+      firstName: 'John',
+      nickname: 'johnny',
       links: mockHubLinks
     })
 
@@ -58,7 +60,8 @@ describe('Hub', () => {
       { initialEntries: ['/hub/hub-123'] }
     )
 
-    expect(await screen.findByText('My Hub')).toBeInTheDocument()
+    expect(await screen.findByText('John')).toBeInTheDocument()
+    expect(screen.getByText('johnny')).toBeInTheDocument()
     expect(await screen.findByText('Instagram')).toBeInTheDocument()
     expect(await screen.findByText('GitHub')).toBeInTheDocument()
   })

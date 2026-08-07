@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { resolveAlias } from '../Service/alias.service.js'
 import { linksListAdapter } from '../Adapters/links.adapter.js'
+import { publicHubAdapter } from '../Adapters/hub.adapter.js'
 import PublicHub from '../Components/Hub/PublicHub.jsx'
 import { Container } from '@mui/material'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import Footer from '../Components/Footer/Footer.jsx'
-import Home from './Home.jsx'
+import NotFound from './NotFound.jsx'
 import LoadingScreen from '../Components/LoadingScreen.jsx'
 
 function AliasResolver() {
@@ -24,12 +25,14 @@ function AliasResolver() {
         }
 
         const fetchAlias = async () => {
+            let redirected = false
             try {
                 const json = await resolveAlias(alias)
 
                 if (json.type === 'link') {
                     const target = json.big_link || json.bigLink
                     if (target) {
+                        redirected = true
                         window.location.replace(target)
                         return
                     }
@@ -38,8 +41,8 @@ function AliasResolver() {
                 }
 
                 if (json.type === 'hub' && json.name) {
-                    const hub = { ...json }
-                    if (hub.links) {
+                    const hub = await publicHubAdapter(json)
+                    if (hub?.links) {
                         hub.links = await linksListAdapter(hub.links)
                     }
                     setHubData(hub)
@@ -50,8 +53,10 @@ function AliasResolver() {
             } catch {
                 setHubData(null)
             } finally {
-                setResolved(true)
-                setLoading(false)
+                if (!redirected) {
+                    setResolved(true)
+                    setLoading(false)
+                }
             }
         }
         fetchAlias()
@@ -74,7 +79,8 @@ function AliasResolver() {
             }}>
                 <NavBar currentPage='hub' />
                 <PublicHub
-                    hubName={hubData?.name}
+                    ownerName={hubData?.firstName}
+                    ownerNickname={hubData?.nickname}
                     links={hubData?.links || []}
                 />
                 <Footer />
@@ -82,7 +88,7 @@ function AliasResolver() {
         )
     }
 
-    return <Home />
+    return <NotFound />
 }
 
 export default AliasResolver

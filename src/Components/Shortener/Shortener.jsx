@@ -20,6 +20,7 @@ const Shortener = () => {
     })
     
     const { addShortURL } = useLink()
+    const shortUrlPrefix = `${window.location.origin}/`
     
 
   const handleSubmit = async (e) => {
@@ -54,12 +55,12 @@ const Shortener = () => {
             setLinkData({bigLink: ''})
             toast.success('Link shortened successfully', { theme:'dark' })
         } catch (err) {
-            console.log(err)
+            console.error(err)
             setUrlError({
                 error: true,
-                message: 'El alias ya existe o hubo un error.',
+                message: 'The alias already exists or an error occurred.',
             })
-            toast.error('Error al acortar el link', { theme: 'dark' })
+            toast.error('Error shortening the link', { theme: 'dark' })
         }
     }
 
@@ -114,11 +115,11 @@ const Shortener = () => {
                 gap: '8px',
                 mb: '8px'
             }}>
-            <Tooltip title='https://urlhub.app/'>
+            <Tooltip title={shortUrlPrefix}>
             <TextField
                 variant="outlined"
                 size="small"
-                defaultValue="https://urlhub.app/"
+                defaultValue={shortUrlPrefix}
                 slotProps={{
                     input: {
                         readOnly: true,

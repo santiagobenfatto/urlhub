@@ -62,7 +62,7 @@ describe('Login', () => {
       })
     })
 
-    expect(await screen.findByText('Inicio de sesión exitoso')).toBeInTheDocument()
+    expect(await screen.findByText('Login successful')).toBeInTheDocument()
     expect(await screen.findByTestId('dashboard-page')).toBeInTheDocument()
 
     const state = store.getState()
@@ -87,6 +87,6 @@ describe('Login', () => {
     await user.type(screen.getByPlaceholderText('Password'), 'wrongpass')
     await user.click(screen.getByRole('button', { name: /login/i }))
 
-    expect(await screen.findByText('Error al iniciar sesión. Verifica tus credenciales.')).toBeInTheDocument()
+    expect(await screen.findByText('Login failed. Check your credentials.')).toBeInTheDocument()
   })
 })

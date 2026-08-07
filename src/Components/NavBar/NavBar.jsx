@@ -79,8 +79,40 @@ const NavBar = ({ currentPage }) => {
                 </Tooltip>
                 </>
             )}
+            {currentPage === 'hub' && (
+                <>
+                <Tooltip title='Home'>
+                    <Button
+                        sx={{ letterSpacing: '1px', mx: 1 }}
+                        href='/home'
+                    >
+                        HOME
+                    </Button>
+                </Tooltip>
+                </>
+            )}
             {currentPage === 'dashboard' && (
                 <>
+                <Tooltip title='Logout'>
+                <Button
+                    sx={{ letterSpacing: '1px', mx: 1 }}
+                    onClick={ () => handleLogout() }
+                >
+                    LOGOUT
+                </Button>
+                </Tooltip>
+                </>
+            )}
+            {currentPage === 'settings' && (
+                <>
+                <Tooltip title='Dashboard'>
+                    <Button
+                        sx={{ letterSpacing: '1px', mx: 1 }}
+                        href='/dashboard'
+                    >
+                        DASHBOARD
+                    </Button>
+                </Tooltip>
                 <Tooltip title='Logout'>
                 <Button
                     sx={{ letterSpacing: '1px', mx: 1 }}

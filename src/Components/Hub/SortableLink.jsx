@@ -76,7 +76,7 @@ const SortableLink = ({ btn, onDelete }) => {
             </Box>
 
             <Dialog open={confirmDelete} onClose={() => setConfirmDelete(false)}>
-                <DialogTitle>Remove "{btn.title}" from hub?</DialogTitle>
+                <DialogTitle>Remove &quot;{btn.title}&quot; from hub?</DialogTitle>
                 <DialogContent>
                     <Typography>This link will be removed from your hub.</Typography>
                 </DialogContent>

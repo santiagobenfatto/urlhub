@@ -1,20 +1,28 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { DndContext, closestCenter } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { reorderLinks, removeLinkFromHub, addLinksBulkToHub, setHubId, setHubShortLink } from '../../Redux/slices/hubs.slice.js'
+import { reorderLinks, removeLinkFromHub, addLinksBulkToHub, setHubId, setHubShortLink, setHubAlias } from '../../Redux/slices/hubs.slice.js'
 import { getUserHub, getHubLinks, removeLinkFromHubService, saveHub } from '../../Service/hub.service.js'
 import { store } from '../../Redux/store.js'
 import SortableLink from './SortableLink.jsx'
+import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { buildShortUrl } from '../../Utils/shortLink.js'
+
+const DEMO_LINKS = [
+    { id: 'facebook', title: 'Facebook', shortLink: 'https://www.facebook.com', icon: 'Facebook' },
+    { id: 'instagram', title: 'Instagram', shortLink: 'https://www.instagram.com', icon: 'Instagram' },
+    { id: 'github', title: 'GitHub', shortLink: 'https://github.com', icon: 'GitHub' }
+]
 
 
 const Hub = ({ isHome = false }) => {
 
     const linkButtons = useSelector(state => state.hub.links)
     const hubId = useSelector(state => state.hub.hubId)
+    const nickname = useSelector(state => state.user.nickname)
     const dispatch = useDispatch()
     const hubLinksFetched = useRef(false)
 
@@ -27,6 +35,7 @@ const Hub = ({ isHome = false }) => {
                     dispatch(setHubId(data.id))
                 }
                 dispatch(setHubShortLink(data?.short_link || buildShortUrl(data?.alias)))
+                dispatch(setHubAlias(data?.alias || null))
             } catch (error) {
                 console.error('Error fetching hub:', error)
             }
@@ -118,8 +127,22 @@ const Hub = ({ isHome = false }) => {
                     fontSize: { xs: '2rem', sm: '2.4rem', md: '3rem' },
                     my: '12px'
                 }}>
-                My UrlsHub
+                {isHome ? 'My UrlsHub' : 'Your Hub'}
             </Typography>
+            {!isHome && nickname && (
+                <Typography
+                    variant='body1'
+                    sx={{
+                        fontFamily: 'Montserrat variable',
+                        fontWeight: 500,
+                        color: 'rgba(255,255,255,0.7)',
+                        textAlign: 'center',
+                        mb: 2,
+                        mt: '-8px'
+                    }}>
+                    {nickname}
+                </Typography>
+            )}
 
                 <Stack
                 spacing={4}
@@ -140,28 +163,44 @@ const Hub = ({ isHome = false }) => {
                     marginLeft: 0
                 }
             }}>
-                <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={linkIds} strategy={verticalListSortingStrategy}>
-                        {linkButtons.map(btn => (
-                            <SortableLink
-                                key={btn.id}
-                                btn={btn}
-                                onDelete={handleDelete}
-                            />
-                        ))}
-                    </SortableContext>
-                </DndContext>
-                {linkButtons.length === 0 && (
-                    <Typography
-                        variant='body1'
-                        sx={{
-                            color: 'rgba(255,255,255,0.5)',
-                            textAlign: 'center',
-                            py: 4,
-                            fontFamily: 'Montserrat variable'
-                        }}>
-                        No links added yet. Add links from the table above.
-                    </Typography>
+                {isHome ? (
+                    DEMO_LINKS.map(link => (
+                        <Button
+                            key={link.id}
+                            href={link.shortLink}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            startIcon={<DynamicIcon iconName={link.icon} />}
+                        >
+                            {link.title}
+                        </Button>
+                    ))
+                ) : (
+                    <>
+                    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                        <SortableContext items={linkIds} strategy={verticalListSortingStrategy}>
+                            {linkButtons.map(btn => (
+                                <SortableLink
+                                    key={btn.id}
+                                    btn={btn}
+                                    onDelete={handleDelete}
+                                />
+                            ))}
+                        </SortableContext>
+                    </DndContext>
+                    {linkButtons.length === 0 && (
+                        <Typography
+                            variant='body1'
+                            sx={{
+                                color: 'rgba(255,255,255,0.5)',
+                                textAlign: 'center',
+                                py: 4,
+                                fontFamily: 'Montserrat variable'
+                            }}>
+                            No links added yet. Add links from the table above.
+                        </Typography>
+                    )}
+                    </>
                 )}
             </Stack>
         </Box>

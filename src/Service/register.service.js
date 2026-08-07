@@ -12,17 +12,23 @@ export const registerService = async (user) => {
             },
             body: JSON.stringify({
                 first_name: user.userName,
-                email_register: user.email,
+                nickname: user.nickname,
+                email: user.email,
                 password: user.pass
             })
         })
 
         if(!response.ok){
-            throw new Error(`Error fetching/post the ${URL}/register. Error status: ${response.status}`)
+            const errorBody = await response.json().catch(() => ({}))
+            const err = new Error(errorBody.error || errorBody.message || 'Registration failed')
+            if (errorBody.field) {
+                err.field = errorBody.field
+            }
+            throw err
         }
         return response
     } catch (error) {
-        console.log(`Error in Register: ${error}`)
+        console.error(`Error in Register: ${error}`)
         throw error
     }
     

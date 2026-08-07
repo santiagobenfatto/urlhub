@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Container, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
@@ -14,6 +16,7 @@ const Login = () => {
     
     const [ email, setEmail ] = useState('')
     const [ pass, setPass ] = useState('')
+    const [ showPassword, setShowPassword ] = useState(false)
     const [ error, setError ] = useState({
         error: false,
         message: ''
@@ -59,13 +62,13 @@ const Login = () => {
                     removePublicLink()
                     toast.info('Your public link can be recreated from the dashboard.', { theme: 'dark' })
                 }
-                toast.success('Inicio de sesión exitoso', { theme: 'dark' })
+                toast.success('Login successful', { theme: 'dark' })
                 navigate('/dashboard')
             }
 
         } catch (error) {
-            console.log(error)
-            toast.error('Error al iniciar sesión. Verifica tus credenciales.', { theme: 'dark' })
+            console.error(error)
+            toast.error('Login failed. Check your credentials.', { theme: 'dark' })
         }
 
     }
@@ -145,10 +148,26 @@ const Login = () => {
                 <TextField 
                     size='small'
                     placeholder='Password'
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     required
                     value={pass} 
-                    onChange={(e)=> setPass(e.target.value)} />
+                    onChange={(e)=> setPass(e.target.value)}
+                    slotProps={{
+                        input: {
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton
+                                        aria-label='Toggle password visibility'
+                                        onClick={() => setShowPassword(prev => !prev)}
+                                        edge='end'
+                                        size='small'
+                                    >
+                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }
+                    }} />
                 </Tooltip>
                 <Box sx={{
                     display: 'flex',

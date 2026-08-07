@@ -20,7 +20,7 @@ export const loginService = async (credentials) => {
         }
         return response
     } catch (error) {
-        console.log(`Error in Login: ${error}`)
+        console.error(`Error in Login: ${error}`)
         throw error
     }
 }

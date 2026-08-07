@@ -2,20 +2,32 @@ import React from 'react'
 import { Box, Button, Container, IconButton, Tooltip, Typography } from '@mui/material'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import LinksTableContainer from '../Components/LinksTable/LinksTableContainer.jsx'
 import HubContainer from '../Components/Hub/HubContainer.jsx'
 import Footer from '../Components/Footer/Footer.jsx'
+import { buildShortUrl } from '../Utils/shortLink.js'
 
 
 const Dashboard = () => {
     const hubUrl = useSelector(state => state.hub.shortLink) || ''
+    const alias = useSelector(state => state.hub.alias)
+    const aliasUrl = alias ? buildShortUrl(alias) : ''
+    const navigate = useNavigate()
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(hubUrl)
         toast.success('Hub link copied!', { theme: 'dark' })
+    }
+
+    const handleCopyAlias = () => {
+        if (!aliasUrl) return
+        navigator.clipboard.writeText(aliasUrl)
+        toast.success('Alias copied to clipboard!', { theme: 'dark' })
     }
 
     return (
@@ -52,6 +64,16 @@ const Dashboard = () => {
                     }}>
                         Dashboard
                 </Typography>
+                <Tooltip title='Settings'>
+                    <IconButton
+                        aria-label='Settings'
+                        color='secondary'
+                        onClick={() => navigate('/settings')}
+                        sx={{ ml: 2, mb: 1 }}
+                    >
+                        <SettingsIcon />
+                    </IconButton>
+                </Tooltip>
             </Box>
             <LinksTableContainer />
             <Box sx={{ display: 'flex', gap: 1, my: 2, alignItems: 'center' }}>
@@ -67,6 +89,20 @@ const Dashboard = () => {
                             endIcon={<OpenInNewIcon />}
                         >
                             View Hub
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title={aliasUrl ? 'Copy your hub alias URL' : 'Alias not available yet'}>
+                    <span>
+                        <Button
+                            variant='outlined'
+                            color='secondary'
+                            size='small'
+                            onClick={handleCopyAlias}
+                            disabled={!aliasUrl}
+                            endIcon={<ContentCopyIcon />}
+                        >
+                            Copy Alias
                         </Button>
                     </span>
                 </Tooltip>

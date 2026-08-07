@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Container, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { toast } from 'react-toastify'
 import NavBar from '../Components/NavBar/NavBar.jsx'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +13,13 @@ const Login = () => {
     const [ email, setEmail ] = useState('')
     const [ pass, setPass ] = useState('')
     const [ userName, setUserName ] = useState('')
+    const [ nickname, setNickname ] = useState('')
+    const [ showPassword, setShowPassword ] = useState(false)
     const [ error, setError ] = useState({
+        error: false,
+        message: ''
+    })
+    const [ nicknameError, setNicknameError ] = useState({
         error: false,
         message: ''
     })
@@ -24,6 +32,9 @@ const Login = () => {
             mb: '12px'
         }
     }
+
+    const isNicknameError = (err) =>
+        err?.field === 'nickname' || /nickname/i.test(err?.message || '')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -41,18 +52,25 @@ const Login = () => {
         })
 
         try {
-            const userData = await registerService({userName, email, pass})
+            const userData = await registerService({userName, nickname, email, pass})
 
             setUserName('')
+            setNickname('')
             setEmail('')
             setPass('')
             if(userData.ok){
-                toast.success('Cuenta creada exitosamente', { theme: 'dark' })
+                toast.success('Account created successfully', { theme: 'dark' })
                 navigate('/home')
             }
 
         } catch (error) {
-            toast.error('Error al registrarse. Intenta de nuevo.', { theme: 'dark' })
+            if (isNicknameError(error)) {
+                setNicknameError({ error: true, message: error.message })
+                toast.error(error.message, { theme: 'dark' })
+            } else {
+                setNicknameError({ error: false, message: '' })
+                toast.error('Registration failed. Try again.', { theme: 'dark' })
+            }
         }
     }
     
@@ -125,6 +143,22 @@ const Login = () => {
                     required 
                     onChange={(e)=> setUserName(e.target.value)} />
                 </Tooltip>
+                <Tooltip title='Insert your unique nickname.'>
+                    <TextField 
+                    size='small'
+                    placeholder='Nickname'
+                    type='text'
+                    value={nickname}
+                    error={nicknameError.error}
+                    helperText={nicknameError.message}
+                    required 
+                    onChange={(e)=> {
+                        setNickname(e.target.value)
+                        if (nicknameError.error) {
+                            setNicknameError({ error: false, message: '' })
+                        }
+                    }} />
+                </Tooltip>
                 <Tooltip title='Insert your email.'>
                 <TextField 
                     size='small'
@@ -140,10 +174,26 @@ const Login = () => {
                 <TextField 
                     size='small'
                     placeholder='Password'
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     required
                     value={pass} 
-                    onChange={(e)=> setPass(e.target.value)} />
+                    onChange={(e)=> setPass(e.target.value)}
+                    slotProps={{
+                        input: {
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton
+                                        aria-label='Toggle password visibility'
+                                        onClick={() => setShowPassword(prev => !prev)}
+                                        edge='end'
+                                        size='small'
+                                    >
+                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }
+                    }} />
                 </Tooltip>
                 <Box sx={{
                     display: 'flex',

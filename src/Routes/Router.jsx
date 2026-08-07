@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Login, Register, Dashboard, UserHub, Home } from '../Pages/index.js'
+import { Login, Register, Dashboard, Settings, UserHub, Home, NotFound } from '../Pages/index.js'
 import AliasResolver from '../Pages/AliasResolver.jsx'
 
 export const router = createBrowserRouter([
@@ -24,8 +24,16 @@ export const router = createBrowserRouter([
         element:<Dashboard />
     },
     {
+        path:'/settings',
+        element:<Settings />
+    },
+    {
         path:'/hub/:hubId',
         element:<UserHub />
+    },
+    {
+        path:'/404',
+        element:<NotFound />
     },
     {
         path:'*',

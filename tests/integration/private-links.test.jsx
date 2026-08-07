@@ -103,7 +103,7 @@ describe('Private Links', () => {
     expect(addButton).not.toBeDisabled()
     await user.click(addButton)
 
-    expect(await screen.findByText('Link creado exitosamente')).toBeInTheDocument()
+    expect(await screen.findByText('Link created successfully')).toBeInTheDocument()
     expect((await screen.findAllByText('New Link')).length).toBeGreaterThan(0)
   })
 
@@ -143,7 +143,7 @@ describe('Private Links', () => {
 
     await user.click(screen.getByRole('button', { name: 'Edit' }))
 
-    expect(await screen.findByText('Link actualizado exitosamente')).toBeInTheDocument()
+    expect(await screen.findByText('Link updated successfully')).toBeInTheDocument()
   })
 
   it('deletes a link successfully', async () => {
@@ -168,7 +168,7 @@ describe('Private Links', () => {
       expect(mockDeleteLink).toHaveBeenCalledWith(1)
     })
 
-    expect(await screen.findByText('Link eliminado')).toBeInTheDocument()
+    expect(await screen.findByText('Link deleted')).toBeInTheDocument()
 
     await waitFor(() => {
       expect(screen.queryAllByText('My Link').length).toBe(0)

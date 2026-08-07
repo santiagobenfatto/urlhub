@@ -49,7 +49,8 @@ function UserHub() {
                 </Box>
             ) : (
                 <PublicHub
-                    hubName={hubData?.name}
+                    ownerName={hubData?.firstName}
+                    ownerNickname={hubData?.nickname}
                     links={hubData?.links || []}
                 />
             )}

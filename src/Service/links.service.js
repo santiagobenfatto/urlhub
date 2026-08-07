@@ -54,7 +54,6 @@ const addPublicLink = async (link) => {
                 big_link: link.bigLink
             })
         })
-        console.log('addPublicLink Service:', response)
         if(!response.ok){
             const json = await response.json()
             throw new Error(json.message || `Error fetching ${URL}/short`)

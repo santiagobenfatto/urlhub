@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Stack, Typography, Button } from '@mui/material'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 
-const PublicHub = ({ hubName, links }) => {
+const PublicHub = ({ ownerName, ownerNickname, links }) => {
     return (
         <Box
             sx={{
@@ -14,18 +14,33 @@ const PublicHub = ({ hubName, links }) => {
                 py: 4
             }}
         >
-            <Typography
-                variant='h3'
-                sx={{
-                    fontFamily: 'kalam',
-                    fontWeight: 700,
-                    color: 'secondary.main',
-                    fontSize: { xs: '2rem', sm: '2.4rem', md: '3rem' },
-                    mb: 4,
-                    textAlign: 'center'
-                }}>
-                {hubName || 'My UrlsHub'}
-            </Typography>
+            {ownerName && (
+                <Typography
+                    variant='h3'
+                    sx={{
+                        fontFamily: 'kalam',
+                        fontWeight: 700,
+                        color: 'secondary.main',
+                        fontSize: { xs: '2rem', sm: '2.4rem', md: '3rem' },
+                        mb: ownerNickname ? 1 : 4,
+                        textAlign: 'center'
+                    }}>
+                    {ownerName}
+                </Typography>
+            )}
+            {ownerNickname && (
+                <Typography
+                    variant='body1'
+                    sx={{
+                        fontFamily: 'Montserrat variable',
+                        fontWeight: 500,
+                        color: 'rgba(255,255,255,0.7)',
+                        mb: 4,
+                        textAlign: 'center'
+                    }}>
+                    {ownerNickname}
+                </Typography>
+            )}
 
             <Stack
                 spacing={2}

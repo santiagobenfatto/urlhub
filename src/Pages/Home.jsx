@@ -25,7 +25,7 @@ const Home = () => {
         })
         .catch(() => {})
         .finally(() => setLoading(false))
-    }, [])
+    }, [navigate])
 
     if (loading) return <LoadingScreen />
 

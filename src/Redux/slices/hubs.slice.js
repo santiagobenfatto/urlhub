@@ -4,6 +4,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 const initialState = {
     hubId: null,
     shortLink: null,
+    alias: null,
     name: 'My Urls Hub!',
     links: []
 }
@@ -17,6 +18,9 @@ const hubSlice = createSlice({
         },
         setHubShortLink(state, action) {
             state.shortLink = action.payload
+        },
+        setHubAlias(state, action) {
+            state.alias = action.payload
         },
         addLinkToHub(state, action) {
             const existingIds = state.links.map(l => l.id)
@@ -54,5 +58,5 @@ const hubSlice = createSlice({
     }
 })
 
-export const { setHubId, setHubShortLink, addLinkToHub, removeLinkFromHub, addLinksBulkToHub, resetHub, modifyTitle, reorderLinks } = hubSlice.actions
+export const { setHubId, setHubShortLink, setHubAlias, addLinkToHub, removeLinkFromHub, addLinksBulkToHub, resetHub, modifyTitle, reorderLinks } = hubSlice.actions
 export default hubSlice.reducer

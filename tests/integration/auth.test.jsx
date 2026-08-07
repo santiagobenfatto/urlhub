@@ -45,7 +45,7 @@ describe('Auth & Navigation', () => {
       { initialEntries: ['/dashboard'] }
     )
 
-    expect(await screen.findByText('Sesión expirada. Redirigiendo...')).toBeInTheDocument()
+    expect(await screen.findByText('Session expired. Redirecting...')).toBeInTheDocument()
     expect(await screen.findByTestId('home-page')).toBeInTheDocument()
   })
 

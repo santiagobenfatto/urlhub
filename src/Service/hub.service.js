@@ -1,4 +1,5 @@
 import { linksListAdapter } from '../Adapters/links.adapter.js'
+import { publicHubAdapter } from '../Adapters/hub.adapter.js'
 
 const serverURL = import.meta.env.VITE_API_SERVER_URL
 const URL = `${serverURL}/api/v1/hubs`
@@ -44,8 +45,7 @@ const getPublicHub = async (hubId) => {
             throw new Error(`Error fetching public hub. Status: ${response.status}`)
         }
         const rawData = await response.json()
-        console.log('getPublicHub', rawData)
-        const hub = rawData.data || null
+        const hub = await publicHubAdapter(rawData.data)
         if (hub?.links) {
             hub.links = await linksListAdapter(hub.links)
         }
@@ -83,8 +83,6 @@ const addLinkToHubService = async (hubId, linkId) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ link_id: linkId })
         })
-        console.log('Add Link to Hub Service function:', response)
-        console.log('hudId, linkId:', hubId, linkId)
         if (!response.ok) {
             throw new Error(`Error adding link to hub. Status: ${response.status}`)
         }

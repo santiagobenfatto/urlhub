@@ -1,3 +1,8 @@
+## Working with AI Agents
+
+If you are an AI coding assistant, read the files inside the `agents/` directory before making any changes.
+Those files define the architecture, conventions, and development rules for this repository.
+
 # UrlHub
 
 A **URL shortening** and **personal hub management** web application. Shorten long URLs, organize them with custom aliases and icons, and display them as button links in a personal hub page.
