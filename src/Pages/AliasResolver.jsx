@@ -3,12 +3,9 @@ import { useParams } from 'react-router-dom'
 import { resolveAlias } from '../Service/alias.service.js'
 import { linksListAdapter } from '../Adapters/links.adapter.js'
 import { publicHubAdapter } from '../Adapters/hub.adapter.js'
-import PublicHub from '../Components/Hub/PublicHub.jsx'
-import { Container } from '@mui/material'
-import NavBar from '../Components/NavBar/NavBar.jsx'
-import Footer from '../Components/Footer/Footer.jsx'
 import NotFound from './NotFound.jsx'
 import LoadingScreen from '../Components/LoadingScreen.jsx'
+import UserHub from './UserHub.jsx'
 
 function AliasResolver() {
     const { '*': path } = useParams()
@@ -65,27 +62,7 @@ function AliasResolver() {
     if (!resolved && loading) return <LoadingScreen />
 
     if (hubData) {
-        return (
-            <Container disableGutters maxWidth='false' sx={{
-                boxSizing: 'border-box',
-                backgroundColor: 'primary.main',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-                width: '100%',
-                minHeight: '100vh',
-                m: 0
-            }}>
-                <NavBar currentPage='hub' />
-                <PublicHub
-                    ownerName={hubData?.firstName}
-                    ownerNickname={hubData?.nickname}
-                    links={hubData?.links || []}
-                />
-                <Footer />
-            </Container>
-        )
+        return <UserHub hubData={hubData} />
     }
 
     return <NotFound />

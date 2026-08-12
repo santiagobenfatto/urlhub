@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLinksBulk, removeLink } from  '../../Redux/slices/links.slice.js'
-import { addLinkToHub } from '../../Redux/slices/hubs.slice.js'
+import { addLinkToHub, removeLinkFromHub } from '../../Redux/slices/hubs.slice.js'
 import DynamicIcon from '../Icons/DynamicIcon.jsx'
 import { deleteLink, getUserLinks } from '../../Service/links.service.js'
 import { addLinkToHubService } from '../../Service/hub.service.js'
@@ -36,6 +36,7 @@ const LinksTable = () => {
         try {
             await deleteLink(linkIdData)
             dispatch(removeLink(linkIdData))
+            dispatch(removeLinkFromHub(linkIdData))
             toast.warn('Link deleted', { theme: 'dark'})
         } catch (error) {
             console.error('Error al eliminar en backend:', error)

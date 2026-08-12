@@ -40,13 +40,23 @@ const Settings = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const updates = {
-            nickname: formData.nickname,
-            first_name: formData.firstName,
-            email: formData.email
+        const original = {
+            nickname: user.nickname || '',
+            first_name: user.userName || '',
+            email: user.email || ''
         }
+
+        const updates = {}
+        if (formData.nickname !== original.nickname) updates.nickname = formData.nickname
+        if (formData.firstName !== original.first_name) updates.first_name = formData.firstName
+        if (formData.email !== original.email) updates.email = formData.email
         if (formData.password) {
             updates.password = formData.password
+        }
+
+        if (Object.keys(updates).length === 0) {
+            toast.info('No changes to save', { theme: 'dark' })
+            return
         }
 
         try {

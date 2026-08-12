@@ -2,6 +2,20 @@
 
 These rules apply to every task.
 
+## Filesystem and Project Scope
+
+- Before executing any command, identify and verify the project root.
+- Treat the project root as the filesystem boundary for the task.
+- Work only inside the project root directory.
+- Do NOT access, inspect, read, list, modify, or execute files outside the project root.
+- Do NOT use absolute paths pointing outside the project root.
+- Do NOT traverse to parent directories (`../`) or inspect sibling projects/directories.
+- All file paths used by commands must resolve inside the project root.
+- Do NOT read or expose the contents of `.env`, `.env.local`, credentials, secrets, tokens, private keys, or other sensitive files unless the task explicitly requires them.
+- Never print, quote, or include secret values in the final response.
+- If information outside the project root appears necessary, STOP and ask for permission before accessing it.
+- Never execute commands such as `ls ..`, `find ..`, `cat ../...`, or equivalent commands that inspect directories outside the project root.
+
 ## Scope
 
 - Modify only what is explicitly requested.

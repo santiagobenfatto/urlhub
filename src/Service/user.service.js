@@ -3,8 +3,8 @@ const URL = `${serverURL}/api/v1/users`
 
 export const updateUser = async (userData) => {
     try {
-        const response = await fetch(URL, {
-            method: 'PUT',
+        const response = await fetch(`${URL}/update`, {
+            method: 'PATCH',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',

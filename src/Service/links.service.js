@@ -71,7 +71,7 @@ const addPublicLink = async (link) => {
 const updateLink = async (linkId, updates) => {
     try {
         const response = await fetch(`${URL}/${linkId}`, {
-            method: 'PUT',
+            method: 'PATCH',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates)

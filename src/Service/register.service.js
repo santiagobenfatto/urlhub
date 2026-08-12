@@ -13,7 +13,7 @@ export const registerService = async (user) => {
             body: JSON.stringify({
                 first_name: user.userName,
                 nickname: user.nickname,
-                email: user.email,
+                email_register: user.email,
                 password: user.pass
             })
         })

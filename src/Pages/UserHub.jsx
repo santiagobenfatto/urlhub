@@ -7,13 +7,14 @@ import PublicHub from '../Components/Hub/PublicHub.jsx'
 import LoadingScreen from '../Components/LoadingScreen.jsx'
 import { getPublicHub } from '../Service/hub.service.js'
 
-function UserHub() {
+function UserHub({ hubData: hubDataProp }) {
     const { hubId } = useParams()
-    const [hubData, setHubData] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [hubData, setHubData] = useState(hubDataProp ?? null)
+    const [loading, setLoading] = useState(!hubDataProp)
     const [error, setError] = useState(null)
 
     useEffect(() => {
+        if (hubDataProp) return
         const fetchPublicHub = async () => {
             try {
                 setLoading(true)
@@ -26,7 +27,7 @@ function UserHub() {
             }
         }
         fetchPublicHub()
-    }, [hubId])
+    }, [hubId, hubDataProp])
 
     if (loading) return <LoadingScreen />
 
@@ -36,13 +37,12 @@ function UserHub() {
             backgroundColor: 'primary.main',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-evenly',
             alignItems: 'center',
             width: '100%',
             minHeight: '100vh',
             m: 0
         }}>
-            <NavBar currentPage='hub' />
+        <NavBar currentPage='hub' />
             {error ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
                     <Typography color='error' variant='h6'>{error}</Typography>
